@@ -5,7 +5,12 @@
 /*
  * Generic
  */
-@font-face { font-family: 'nexa'; src: url("@{font}/nexa.ttf"); font-style: normal; font-weight: normal; }
+@font-face {
+  font-family: 'nexa';
+  src: url("@{font}/nexa.ttf");
+  font-style: normal;
+  font-weight: normal;
+}
 
 .margin-top(@top) {
   margin-top: @top;
@@ -21,6 +26,9 @@ body {
   margin: auto;
   color: #000000;
   position: relative;
+
+  -webkit-overflow-scrolling: touch;
+
   input, button, select, textarea, input:focus, span:focus {
     outline: none;
   }
@@ -107,13 +115,12 @@ header {
         width: 20px;
         height: 22px;
       }
-      img.order-center{
+      img.order-center {
         width: 18px;
       }
     }
   }
 }
-
 
 /*
  * blank

@@ -455,12 +455,24 @@ app.service('service', ['$http', '$q', function ($http, $q) {
     };
 
     // Parse query string
-    this.parseQueryString = function (url) {
+    this.parseQueryString = function (url, hostPart) {
 
         url = url || location.href;
+        hostPart = hostPart || false;
 
-        if (url.indexOf('?') !== -1) {
-            url = url.split('?')[1];
+        var items = {};
+        if (url.indexOf('?') === -1) {
+            return items;
+        }
+
+        var urlArr = url.split('?');
+        if (hostPart) {
+            items['host_part'] = urlArr[0];
+        }
+
+        url = urlArr[1];
+        if (that.isEmpty(url)) {
+            return items;
         }
 
         if (url.indexOf('#')) {
@@ -468,13 +480,50 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         }
 
         url = url.split('&');
-        var items = {};
         $.each(url, function (key, item) {
             item = item.split('=');
             items[item[0]] = item[1];
         });
 
         return items;
+    };
+
+    // Build query with json object
+    this.jsonBuildQuery = function (obj) {
+        var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
+
+        for (name in obj) {
+            if (!obj.hasOwnProperty(name)) {
+                continue;
+            }
+            value = obj[name];
+
+            if (value instanceof Array) {
+                for (i = 0; i < value.length; ++i) {
+                    subValue = value[i];
+                    fullSubName = name + '[' + i + ']';
+                    innerObj = {};
+                    innerObj[fullSubName] = subValue;
+                    query += jsonToUrl(innerObj) + '&';
+                }
+            } else if (value instanceof Object) {
+                for (subName in value) {
+                    if (!value.hasOwnProperty(subName)) {
+                        continue;
+                    }
+                    subValue = value[subName];
+                    fullSubName = name + '[' + subName + ']';
+                    innerObj = {};
+                    innerObj[fullSubName] = subValue;
+                    query += jsonToUrl(innerObj) + '&';
+                }
+            }
+            else if (value !== undefined && value !== null) {
+                query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+            }
+        }
+
+        return query.length ? query.substr(0, query.length - 1) : query;
     };
 
     // Supplement params from current location
@@ -494,6 +543,25 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         }
 
         return href;
+    };
+
+    // Unset params from url
+    this.unsetParams = function (params, url) {
+        url = url || location.href;
+        var queryParams = that.parseQueryString(url, true);
+
+        $.each(params || [], function (k, v) {
+            if (typeof queryParams[v] !== 'undefined') {
+                delete queryParams[v];
+            }
+        });
+
+        var host = queryParams.host_part;
+        delete queryParams.host_part;
+
+        url = host + '?' + that.jsonBuildQuery(queryParams);
+
+        return url;
     };
 
     // Count px of padding and margin
@@ -1484,7 +1552,7 @@ app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $t
 
             var options = {
                 title: title,
-                link: location.href,
+                link: service.unsetParams(['code']),
                 imgUrl: cover,
                 success: function () {
                     $scope.message('分享成功');

@@ -17,10 +17,93 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         return this.replace(new RegExp('(^[' + str + ']*)|([' + str + ']*$)', 'g'), '');
     };
 
+    // Is array
+    this.isArray = function (val) {
+        if (null === val) {
+            return false;
+        }
+        return typeof val === 'object' && val.constructor === Array;
+    };
+
+    // Is object
+    this.isObject = function (val) {
+        if (null === val) {
+            return false;
+        }
+        return typeof val === 'object' && val.constructor === Object;
+    };
+
+    // Is json
+    this.isJson = function (val) {
+        if (null === val) {
+            return false;
+        }
+        return typeof val === 'object' && Object.prototype.toString.call(val).toLowerCase() === '[object object]';
+    };
+
+    // Is string
+    this.isString = function (val) {
+        if (null === val) {
+            return false;
+        }
+        return typeof val === 'string' && val.constructor === String;
+    };
+
+    // Is numeric
+    this.isNumeric = function (val) {
+        if (null === val || '' === val) {
+            return false;
+        }
+        return !isNaN(val);
+    };
+
+    // Is boolean
+    this.isBoolean = function (val) {
+        if (null === val) {
+            return false;
+        }
+        return typeof val === 'boolean' && val.constructor === Boolean;
+    };
+
+    // Is function
+    this.isFunction = function (val) {
+        if (null === val) {
+            return false;
+        }
+        return typeof val === 'function' && Object.prototype.toString.call(val).toLowerCase() === '[object function]';
+    };
+
+    // Is empty
+    this.isEmpty = function (val, outNumZero) {
+        if (typeof val === 'undefined' || val === null) {
+            return true;
+        }
+        if (that.isNumeric(val) && outNumZero) {
+            return Number(val) === 0;
+        } else if (that.isString(val)) {
+            return val.trim() === '';
+        } else if (that.isJson(val)) {
+            return that.jsonLength(val) === 0;
+        } else if (that.isArray(val) || that.isObject(val)) {
+            return val.length === 0;
+        }
+        return !val;
+    };
+
     // Get timestamp
     this.time = function (sec) {
         var time = new Date().getTime();
         return sec ? Math.ceil(time / 1000) : time;
+    };
+
+    // Get json length
+    this.jsonLength = function (json) {
+        var length = 0;
+        var i;
+        for (i in json) {
+            length++;
+        }
+        return length;
     };
 
     // Send post base on ajax
@@ -62,6 +145,24 @@ app.service('service', ['$http', '$q', function ($http, $q) {
 
         return !!items[type].test(param);
     };
+
+    // Get device version
+    this.device = function () {
+        var u = navigator.userAgent;
+        return {
+            ie: u.indexOf('Trident') > -1,
+            opera: u.indexOf('Presto') > -1,
+            chrome: u.indexOf('AppleWebKit') > -1,
+            firefox: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') === -1,
+            mobile: !!u.match(/AppleWebKit.*Mobile.*/),
+            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+            iPhone: u.indexOf('iPhone') > -1,
+            iPad: u.indexOf('iPad') > -1,
+            webApp: u.indexOf('Safari') === -1,
+            version: navigator.appVersion
+        };
+    }();
 
     // Tap
     this.tap = function (target, action) {
@@ -174,7 +275,7 @@ app.directive('kkSms', ['service', function (service) {
          */
         var time = attr.time || 60;
         var type = attr.type;
-        var uri = 'general/ajax-sms';
+        var uri = 'main/ajax-sms';
 
         service.tap(elem[0], function () {
 

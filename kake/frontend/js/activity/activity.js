@@ -28,8 +28,8 @@ app.controller('activity', ['$scope', '$controller', function ($scope, $controll
             return null;
         }
 
-        if (!data.story || data.story.length <= 0 || data.story.length > 100) {
-            $scope.message('故事内容控制在 0 ~ 100 字之间');
+        if (!data.story || data.story.length < 1 || data.story.length > 100) {
+            $scope.message('故事内容长度控制在 1 ~ 100 字之间');
             return null;
         }
 

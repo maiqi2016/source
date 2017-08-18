@@ -6,12 +6,48 @@ app.controller('user', ['$scope', '$controller', function ($scope, $controller) 
     $controller('generic', {$scope: $scope});
 
     $scope.apply = {
-        phone: null,
-        name: null,
-        avatar_id: null
+        phone: '15021275672',
+        name: 'LUFFY',
+        tip: 'luffy.jpg', // 点击选择文件
+        attachment: 2090
+    };
+
+    // 上传后处理
+    $scope.handleUpload = function (data) {
+        $scope.apply.attachment = data.id;
+        $scope.apply.tip = data.name;
     };
 
     $scope.submitApply = function () {
-        // if ($scope.service.check($scope.phone))
+
+        var service = $scope.service;
+        var data = $scope.apply;
+
+        if (!service.check(data.phone, 'phone')) {
+            return $scope.message('请输入正确的手机号码');
+        }
+
+        if (!data.name || data.name.length < 1 || data.name.length > 32) {
+            return $scope.message('名称长度控制在 1 ~ 32 字之间');
+        }
+
+        if (!parseInt(data.attachment)) {
+            return $scope.message('请选择头像图片文件');
+        }
+
+        $scope.request({
+            api: 'user/ajax-apply-distributor',
+            post: data,
+            success: function (res) {
+                if (!res.state) {
+                    return $scope.message(res.info);
+                }
+
+                $scope.message('申请提交成功，请等待审核通过~');
+                $scope.timeout(function () {
+                    location.href = location.origin;
+                }, 2500);
+            }
+        });
     };
 }]);

@@ -458,11 +458,15 @@ app.service('service', ['$http', '$q', function ($http, $q) {
     this.parseQueryString = function (url, hostPart) {
 
         url = url || location.href;
+        url = decodeURIComponent(url);
         hostPart = hostPart || false;
 
         var items = {};
         if (url.indexOf('?') === -1) {
-            return items;
+            if (url.indexOf('http') === 0) {
+                return items;
+            }
+            url = '?' + url;
         }
 
         var urlArr = url.split('?');
@@ -517,8 +521,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
                     innerObj[fullSubName] = subValue;
                     query += jsonToUrl(innerObj) + '&';
                 }
-            }
-            else if (value !== undefined && value !== null) {
+            } else if (value !== undefined && value !== null) {
                 query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
             }
         }
@@ -559,7 +562,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         var host = queryParams.host_part;
         delete queryParams.host_part;
 
-        url = host + '?' + that.jsonBuildQuery(queryParams);
+        url = host + '?' + decodeURI(that.jsonBuildQuery(queryParams));
 
         return url;
     };
@@ -643,8 +646,7 @@ app.config(['$httpProvider', function ($httpProvider) {
                     innerObj[fullSubName] = subValue;
                     query += jsonToUrl(innerObj) + '&';
                 }
-            }
-            else if (value !== undefined && value !== null) {
+            } else if (value !== undefined && value !== null) {
                 query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
             }
         }
@@ -698,7 +700,7 @@ app.directive('kkTap', ['service', '$parse', function (service, $parse) {
 app.directive('kkFocus', ['service', function (service) {
 
     var command = {
-        scope: {},
+        scope: true,
         restrict: 'A'
     };
 
@@ -712,24 +714,24 @@ app.directive('kkFocus', ['service', function (service) {
          * @param attr.numberTpl
          * @param attr.pointCurrent
          */
-        var that = this;
+        var that = {};
 
-        this.scroll = elem.children();
-        this.img = this.scroll.find('img');
-        this.point = $(attr.kkFocus);
+        that.scroll = elem.children();
+        that.img = that.scroll.find('img');
+        that.point = $(attr.kkFocus);
 
-        this.scroll.css({
+        that.scroll.css({
             width: 100 * that.img.length + '%'
         });
 
-        this.img.css({
+        that.img.css({
             width: 100 / that.img.length + '%'
         });
 
-        this.scrollWidth = this.img.width();
+        that.scrollWidth = that.img.width();
 
-        this.stayTime = attr.stayTime || 5000;
-        this.playTime = attr.playTime || 500;
+        that.stayTime = attr.stayTime || 5000;
+        that.playTime = attr.playTime || 500;
 
         if (!attr.id) {
             return service.debug('[kk-focus] Current element must has attribute `id`!');
@@ -750,7 +752,7 @@ app.directive('kkFocus', ['service', function (service) {
         };
 
         changeCurrent();
-        Transform(this.scroll[0], true);
+        Transform(that.scroll[0], true);
 
         try {
             var touch = new AlloyTouch({
@@ -791,7 +793,7 @@ app.directive('kkFocus', ['service', function (service) {
             service.debug(e, 'error');
         }
 
-        this.auto = function (v) {
+        that.auto = function (v) {
 
             v = v || touch.max;
 
@@ -802,7 +804,7 @@ app.directive('kkFocus', ['service', function (service) {
             }, that.stayTime);
         };
 
-        this.auto();
+        that.auto();
     };
 
     return command;
@@ -824,27 +826,27 @@ app.directive('kkScroll', ['service', function (service) {
          * @param attr.id
          * @param attr.kkScroll
          */
-        var that = this;
+        var that = {};
 
         if (!attr.id) {
             return service.debug('[kk-scroll] Current element must has attribute `id`!');
         }
 
-        this.scroll = elem.children();
-        this.img = this.scroll.children();
-        this.pam = service.pam(this.scroll) + service.pam(this.img, this.img.length);
+        that.scroll = elem.children();
+        that.img = that.scroll.children();
+        that.pam = service.pam(that.scroll) + service.pam(that.img, that.img.length);
 
-        this.offset = parseInt(attr.kkScroll) ? parseInt(attr.kkScroll) : 0;
-        this.offset = window.innerWidth - this.pam - this.offset;
+        that.offset = parseInt(attr.kkScroll) ? parseInt(attr.kkScroll) : 0;
+        that.offset = window.innerWidth - that.pam - that.offset;
 
-        Transform(this.scroll[0], true);
+        Transform(that.scroll[0], true);
         try {
             new AlloyTouch({
                 touch: '#' + attr.id,
                 vertical: false,
                 target: that.scroll[0],
                 property: 'translateX',
-                min: that.img.width() * -(that.img.length) + this.offset,
+                min: that.img.width() * -(that.img.length) + that.offset,
                 max: 0,
                 sensitivity: 1,
 
@@ -880,38 +882,38 @@ app.directive('kkCamel', ['service', function (service) {
          * @param attr.id
          * @param attr.scale
          */
-        var that = this;
+        var that = {};
 
         if (!attr.id) {
             return service.debug('[kk-camel] Current element must has attribute `id`!');
         }
 
         // Var
-        this.camel = elem.children();
-        this.img = this.camel.children();
+        that.camel = elem.children();
+        that.img = that.camel.children();
 
-        this.width = this.img.width();
-        this.number = this.img.length;
-        this.pam = service.pam(this.img);
+        that.width = that.img.width();
+        that.number = that.img.length;
+        that.pam = service.pam(that.img);
 
-        this.allPam = service.pam(this.camel) + this.pam * this.number;
-        this.half = (window.innerWidth - this.width) / 2;
-        this.scale = parseFloat(attr.scale) || .9;
+        that.allPam = service.pam(that.camel) + that.pam * that.number;
+        that.half = (window.innerWidth - that.width) / 2;
+        that.scale = parseFloat(attr.scale) || .9;
 
-        this.first = -(this.width + this.pam);
-        this.last = -(this.width + this.pam) * (this.number - 2);
+        that.first = -(that.width + that.pam);
+        that.last = -(that.width + that.pam) * (that.number - 2);
 
         // Transform
-        Transform(this.camel[0], true);
-        this.camel[0].translateX = -(this.width + this.pam);
+        Transform(that.camel[0], true);
+        that.camel[0].translateX = -(that.width + that.pam);
 
-        this.img.each(function (k, v) {
+        that.img.each(function (k, v) {
             Transform(v, true);
             v.translateX = that.half - service.pam(that.img, 1, null, ['left']);
             v.scaleX = v.scaleY = that.scale;
         });
 
-        this.img[1].scaleX = this.img[1].scaleY = 1;
+        that.img[1].scaleX = that.img[1].scaleY = 1;
 
         // Diy to
         var moveTo = function (index, time) {
@@ -938,7 +940,7 @@ app.directive('kkCamel', ['service', function (service) {
                 vertical: false,
                 target: that.camel[0],
                 property: 'translateX',
-                min: that.width * -(that.number) - this.allPam,
+                min: that.width * -(that.number) - that.allPam,
                 max: 0,
                 sensitivity: 1,
                 step: that.width + that.pam,

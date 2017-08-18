@@ -5,28 +5,30 @@ app.controller('activity', ['$scope', '$controller', function ($scope, $controll
 
     $controller('generic', {$scope: $scope});
 
-    $scope.img = null;
+    $scope.story = {
+        img: null,
+        attachment: null,
+        story: null
+    };
 
     // 上传后处理
     $scope.handleUpload = function (data) {
-        $scope.img = data.url;
-        $('#preview').attr('src', data.url).attr('data-id', data.id);
+        $scope.story.img = data.url;
+        $scope.story.attachment = data.id;
+
+        $('#preview').attr('src', data.url);
     };
 
     // 提交我的故事
     $scope.submitStory = function () {
-        var data = {
-            attachment: $('#preview').attr('data-id'),
-            story: $('textarea').val(),
-            img: $scope.img
-        };
+        var data = $scope.story;
 
         if (!parseInt(data.attachment)) {
             $scope.message('请先上传照片');
             return null;
         }
 
-        if (data.story.length <= 0 || data.story.length > 100) {
+        if (!data.story || data.story.length <= 0 || data.story.length > 100) {
             $scope.message('故事内容控制在 0 ~ 100 字之间');
             return null;
         }

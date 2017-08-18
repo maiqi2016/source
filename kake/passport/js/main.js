@@ -207,8 +207,7 @@ app.config(['$httpProvider', function ($httpProvider) {
                     innerObj[fullSubName] = subValue;
                     query += jsonToUrl(innerObj) + '&';
                 }
-            }
-            else if (value !== undefined && value !== null) {
+            } else if (value !== undefined && value !== null) {
                 query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
             }
         }

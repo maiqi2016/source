@@ -461,14 +461,15 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         url = decodeURIComponent(url);
         hostPart = hostPart || false;
 
-        var items = {};
         if (url.indexOf('?') === -1) {
             if (url.indexOf('http') === 0) {
-                return items;
+                url = url + '?';
+            } else {
+                url = '?' + url;
             }
-            url = '?' + url;
         }
 
+        var items = {};
         var urlArr = url.split('?');
         if (hostPart) {
             items['host_part'] = urlArr[0];
@@ -606,7 +607,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
     // Tap
     this.tap = function (target, action) {
         if (that.device.mobile) {
-            new AlloyFinger(target, {tap: action});
+            new AlloyFinger(target, {singleTap: action});
         } else {
             $(target).click(action);
         }

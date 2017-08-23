@@ -6,16 +6,17 @@ app.controller('user', ['$scope', '$controller', function ($scope, $controller) 
     $controller('generic', {$scope: $scope});
 
     $scope.apply = {
-        phone: '15021275672',
-        name: 'LUFFY',
-        tip: 'luffy.jpg', // 点击选择文件
-        attachment: 2090
+        phone: null,
+        name: null,
+        tip: '点击选择文件', // 点击选择文件
+        attachment: null
     };
 
     // 上传后处理
     $scope.handleUpload = function (data) {
         $scope.apply.attachment = data.id;
         $scope.apply.tip = data.name;
+        $('#file').html(data.name);
     };
 
     $scope.submitApply = function () {

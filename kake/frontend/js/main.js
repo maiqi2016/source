@@ -681,7 +681,8 @@ app.directive('kkTap', ['service', '$parse', function (service, $parse) {
         var fn = $parse(attr.kkTap);
         return function ngEventHandler(scope, elem) {
             service.tap(elem[0], function (event) {
-                window.event = event;
+                event = event || window.event;
+                // window.event = event;
                 var callback = function () {
                     fn(scope, {
                         $event: event

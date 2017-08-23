@@ -1,6 +1,69 @@
 @import "../main";
 
-.content {
-  width: 80%;
-  margin: 50px auto;
+
+html{
+    background: url("@{img}/user/apply-bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    body{
+        background-color: transparent;
+    }
+    .apply-bg{
+        .form-group{
+            width:312px;
+            margin:0 auto;
+            label{
+                margin-left:15px;
+                color:white;
+                font-weight: 400;
+            }
+            .form-control{
+                border-radius:19px;
+            }
+        }
+        .phone{
+            height:114px;
+            padding-top:51px;
+        }
+        .name{
+            height:75px;
+            padding-top:13px;
+        }
+        .file{
+            position: relative;
+            height: 128px;
+            padding-top: 13px;
+            padding-bottom: 34px;
+            #file{
+                color: #9F9F9F;
+            }
+            .help-block{
+                position: absolute;
+                right: 13px;
+            }
+        }
+
+        .form-control{
+            border: none;
+            background-color:rgba(255, 255, 255, 0.2) ;
+            color: white;
+
+        }
+
+        .btn{
+            font-size: 16px;
+            width: 129px;
+            height: 38px;
+            border-radius: 19px;
+            color: white;
+            background-color: transparent;
+            &:focus,&:hover,&:active{
+                outline: none;
+                background-color: transparent;
+                color: white;
+            }
+        }
+    }
 }
+
+
+

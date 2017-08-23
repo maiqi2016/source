@@ -1109,6 +1109,21 @@ app.directive('kkMenu', ['service', function (service) {
         $(window).scroll(function () {
             menu.fadeOut('fast');
         });
+
+        var pos = service.offset(elem[0]);
+        var x1 = pos.left, 
+            y1 = pos.top,
+            x2 = pos.left + pos.width,
+            y2 = pos.top + pos.height;
+    
+        $('*').click(function(e) {
+            var x = e.clientX;
+            var y = e.clientY;
+
+            if (!(x > x1 && x < x2 && y > y1 && y < y2)) {
+                menu.fadeOut('fast');
+            }
+        });
     };
 
     return command;
@@ -1343,6 +1358,29 @@ app.directive('kkAjaxUpload', ['service', function (service) {
                 var fn = eval('scope.' + attr.callback);
                 fn && fn.apply(scope, [response.data]);
             }
+        });
+    };
+
+    return command;
+}]);
+
+/**
+ * Directive link
+ */
+app.directive('kkLink', ['service', function (service) {
+
+    var command = {
+        scope: {},
+        restrict: 'A'
+    };
+
+    command.link = function (scope, elem, attr) {
+
+        /**
+         * @param attr.kkLink
+         */
+        service.tap(elem[0], function() {
+            location.href = attr.kkLink;
         });
     };
 

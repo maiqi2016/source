@@ -64,7 +64,7 @@ body {
 
 .carousel {
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
   .scroll {
   }
   .carousel-scroller {
@@ -257,6 +257,17 @@ body {
         & li:last-child {
           border-bottom: none;
         }
+      }
+      .more {
+        display: block;
+        color: #ffd000;
+        width: 100px;
+        height: 24px;
+        background: url("@{img}/morearrow.png") no-repeat 0 3px;
+        background-size: 18px 14px;
+        font-size: 18px;
+        margin: 5px auto 30px;
+        text-indent: 22px;
       }
     }
   }

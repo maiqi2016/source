@@ -1387,6 +1387,50 @@ app.directive('kkLink', ['service', function (service) {
     return command;
 }]);
 
+
+/**
+ * Directive pull up
+ */
+app.directive('kkPullUp', ['service', function (service) {
+
+    var command = {
+        scope: false,
+        restrict: 'A'
+    };
+
+    command.link = function (scope, elem, attr) {
+
+        Transform(elem[0], true);
+        elem[0].scaleX = elem[0].scaleY = 0;
+
+        var gotoTop = false;
+
+        /**
+         * @param attr.kkPullUp
+         */
+        service.reachBottom(function (top, h, _h) {
+            
+            var bottom = top + _h - h;
+            var percentbili = bottom / parseInt(attr.kkPullUp);
+
+            if (percentbili < 1) {
+                if (gotoTop) {
+                    percentbili = 1;
+                }
+                elem[0].scaleX = elem[0].scaleY = percentbili;
+            } else {
+                gotoTop = true;
+                elem[0].scaleX = elem[0].scaleY = 1;
+            };
+
+        });
+    };
+
+    return command;
+}]);
+
+
+
 /**
  * Controller
  */

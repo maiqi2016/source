@@ -33,6 +33,8 @@
   "author": "Leon <jiangxilee@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "alloyfinger": "^0.1.8",
+    "alloytouch": "^0.2.5",
     "angular": "^1.6.5",
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",

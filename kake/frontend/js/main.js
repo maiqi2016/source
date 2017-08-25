@@ -1146,6 +1146,8 @@ app.directive('kkFixed', ['service', function (service) {
          * @param attr.kkFixed
          */
         var prefixHeight = parseInt(attr.kkFixed) || 0;
+        var left = parseInt(attr.left) || 0;
+        var top = parseInt(attr.top) || 0;
         var pos = service.offset(elem[0]);
 
         var fillBoxClass = attr.box || 'fixed-fill-box';
@@ -1157,6 +1159,10 @@ app.directive('kkFixed', ['service', function (service) {
 
             if (prefixHeight + scrollTop >= pos.top) {
                 elem.addClass('fixed-box');
+                elem.css({
+                    top: top,
+                    left: left
+                });
 
                 if (!$(_fillBoxClass).length) {
                     var fillBox = $('<div></div>');
@@ -1387,7 +1393,6 @@ app.directive('kkLink', ['service', function (service) {
     return command;
 }]);
 
-
 /**
  * Directive pull up
  */
@@ -1403,7 +1408,7 @@ app.directive('kkPullUp', ['service', function (service) {
         Transform(elem[0], true);
         elem[0].scaleX = elem[0].scaleY = 0;
 
-        var gotoTop = false;
+        var toTop = false;
 
         /**
          * @param attr.kkPullUp
@@ -1411,25 +1416,22 @@ app.directive('kkPullUp', ['service', function (service) {
         service.reachBottom(function (top, h, _h) {
             
             var bottom = top + _h - h;
-            var percentbili = bottom / parseInt(attr.kkPullUp);
+            var percentBili = bottom / parseInt(attr.kkPullUp);
 
-            if (percentbili < 1) {
-                if (gotoTop) {
-                    percentbili = 1;
+            if (percentBili < 1) {
+                if (toTop) {
+                    percentBili = 1;
                 }
-                elem[0].scaleX = elem[0].scaleY = percentbili;
+                elem[0].scaleX = elem[0].scaleY = percentBili;
             } else {
-                gotoTop = true;
+                toTop = true;
                 elem[0].scaleX = elem[0].scaleY = 1;
-            };
-
+            }
         });
     };
 
     return command;
 }]);
-
-
 
 /**
  * Controller

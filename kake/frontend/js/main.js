@@ -1416,6 +1416,7 @@ app.directive('kkPullUp', ['service', function (service) {
 
         /**
          * @param attr.kkPullUp
+         * @param attr.height
          */
         service.reachBottom(function (top, h, _h) {
 

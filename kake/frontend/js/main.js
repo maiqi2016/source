@@ -818,7 +818,7 @@ app.directive('kkFocus', ['service', function (service) {
 app.directive('kkScroll', ['service', function (service) {
 
     var command = {
-        scope: {},
+        scope: false,
         restrict: 'A'
     };
 

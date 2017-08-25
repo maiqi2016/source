@@ -76,8 +76,18 @@ body {
       display: inline-block;
     }
     .top20 {
-      transform: translateY(25px);
+      animation: topchange .4s 1 ease-in-out;
+      animation-fill-mode: forwards;
     }
+  }
+}
+
+@keyframes topchange{
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(25px);
   }
 }
 

@@ -827,6 +827,7 @@ app.directive('kkScroll', ['service', function (service) {
         /**
          * @param attr.id
          * @param attr.kkScroll
+         * @param attr.callbackEnd
          */
         var that = {};
 
@@ -856,8 +857,11 @@ app.directive('kkScroll', ['service', function (service) {
                     this.preventDefault = true;
                 },
 
-                touchEnd: function () {
+                touchEnd: function (event, value) {
                     this.preventDefault = false;
+
+                    var fn = eval('scope.' + attr.callbackEnd);
+                    fn && fn.apply(scope, [that.img, event, value]);
                 }
             });
         } catch (e) {
@@ -1111,12 +1115,12 @@ app.directive('kkMenu', ['service', function (service) {
         });
 
         var pos = service.offset(elem[0]);
-        var x1 = pos.left, 
+        var x1 = pos.left,
             y1 = pos.top,
             x2 = pos.left + pos.width,
             y2 = pos.top + pos.height;
-    
-        $('*').click(function(e) {
+
+        $('*').click(function (e) {
             var x = e.clientX;
             var y = e.clientY;
 
@@ -1385,7 +1389,7 @@ app.directive('kkLink', ['service', function (service) {
         /**
          * @param attr.kkLink
          */
-        service.tap(elem[0], function() {
+        service.tap(elem[0], function () {
             location.href = attr.kkLink;
         });
     };
@@ -1414,7 +1418,7 @@ app.directive('kkPullUp', ['service', function (service) {
          * @param attr.kkPullUp
          */
         service.reachBottom(function (top, h, _h) {
-            
+
             var bottom = top + _h - h;
             var percentBili = bottom / parseInt(attr.kkPullUp);
 

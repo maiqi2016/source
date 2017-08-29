@@ -1,75 +1,58 @@
 @import "../main";
 
+html {
+  background: url("@{img}/user/apply-bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  body {
+    font-family: PingFangSC-Regular, sans-serif, "Noto SansCJK";
+    background-color: transparent;
+  }
+  .apply-bg {
+    width: 312px;
+    margin: 50px auto 0;
+    .form-group {
+      label {
+        margin-left: 15px;
+        color: white;
+        font-weight: 400;
+      }
+      .form-control {
+        border-radius: 19px;
+      }
+    }
+    .file {
+      position: relative;
+      height: 108px;
+      #file {
+        color: #9F9F9F;
+        text-indent: 5px;
+      }
+      .help-block {
+        position: absolute;
+        right: 13px;
+      }
+    }
 
-html{
-    background: url("@{img}/user/apply-bg.jpg") no-repeat center center fixed;
-    background-size: cover;
-    height:100%;
-    body{
+    .form-control {
+      text-indent: 5px;
+      border: none;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    .btn {
+      font-size: 16px;
+      width: 129px;
+      height: 38px;
+      border-radius: 19px;
+      color: white;
+      background-color: transparent;
+      &:focus, &:hover, &:active {
+        outline: none;
         background-color: transparent;
-        height:100%;
+        color: white;
+      }
     }
-    .apply-bg{
-        .form-group{
-            width:312px;
-            margin:0 auto;
-            label{
-                margin-left:15px;
-                color:white;
-                font-weight: 400;
-            }
-            .form-control{
-                border-radius:19px;
-            }
-        }
-        .phone{
-            height:114px;
-            padding-top:51px;
-        }
-        .name{
-            height:75px;
-            padding-top:13px;
-        }
-        .file{
-            position: relative;
-            height: 128px;
-            padding-top: 13px;
-            padding-bottom: 34px;
-            #file{
-                color: #9F9F9F;
-                line-height: 25px;
-                text-indent: 5px; 
-            }
-            .help-block{
-                position: absolute;
-                right: 13px;
-            }
-        }
-
-        .form-control{
-            padding-top: 8px;
-            text-indent: 5px;
-            border: none;
-            background-color:rgba(255, 255, 255, 0.2) ;
-            color: white;
-
-        }
-
-        .btn{
-            font-size: 16px;
-            width: 129px;
-            height: 38px;
-            border-radius: 19px;
-            color: white;
-            background-color: transparent;
-            &:focus,&:hover,&:active{
-                outline: none;
-                background-color: transparent;
-                color: white;
-            }
-        }
-    }
+  }
 }
-
-
-

@@ -612,6 +612,16 @@ app.service('service', ['$http', '$q', function ($http, $q) {
             $(target).click(action);
         }
     };
+
+    // Rand
+    this.rand = function(end, begin) {
+        begin = begin || 0;
+
+        var rank = begin;
+        var _end = end - rank;
+
+        return Number.parseInt(new Number(Math.random() * _end).toFixed(0)) + rank;
+    };
 }]);
 
 /**
@@ -827,7 +837,7 @@ app.directive('kkScroll', ['service', function (service) {
         /**
          * @param attr.id
          * @param attr.kkScroll
-         * @param attr.callbackEnd
+         * @param attr.callbackMove
          */
         var that = {};
 
@@ -843,6 +853,7 @@ app.directive('kkScroll', ['service', function (service) {
         that.offset = window.innerWidth - that.pam - that.offset;
 
         Transform(that.scroll[0], true);
+
         try {
             new AlloyTouch({
                 touch: '#' + attr.id,
@@ -857,11 +868,13 @@ app.directive('kkScroll', ['service', function (service) {
                     this.preventDefault = true;
                 },
 
-                touchEnd: function (event, value) {
+                touchEnd: function () {
                     this.preventDefault = false;
+                },
 
-                    var fn = eval('scope.' + attr.callbackEnd);
-                    fn && fn.apply(scope, [that.img, event, value]);
+                change:function(value){
+                    var fn = eval('scope.' + attr.callbackChange);
+                    fn && fn.apply(scope, [that.img, value, Math.abs(this.min)]);
                 }
             });
         } catch (e) {

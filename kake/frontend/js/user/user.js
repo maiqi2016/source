@@ -8,7 +8,7 @@ app.controller('user', ['$scope', '$controller', function ($scope, $controller) 
     $scope.apply = {
         phone: null,
         name: null,
-        tip: '点击选择文件', // 点击选择文件
+        tip: '点击上传头像，不上传默认为微信头像', // 点击选择文件
         attachment: null
     };
 
@@ -16,6 +16,7 @@ app.controller('user', ['$scope', '$controller', function ($scope, $controller) 
     $scope.handleUpload = function (data) {
         $scope.apply.attachment = data.id;
         $scope.apply.tip = data.name;
+
         $('#file').html(data.name);
     };
 
@@ -30,10 +31,6 @@ app.controller('user', ['$scope', '$controller', function ($scope, $controller) 
 
         if (!data.name || data.name.length < 1 || data.name.length > 32) {
             return $scope.message('名称长度控制在 1 ~ 32 字之间');
-        }
-
-        if (!parseInt(data.attachment)) {
-            return $scope.message('请选择头像图片文件');
         }
 
         $scope.request({

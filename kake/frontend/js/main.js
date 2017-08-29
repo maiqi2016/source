@@ -614,7 +614,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
     };
 
     // Rand
-    this.rand = function(end, begin) {
+    this.rand = function (end, begin) {
         begin = begin || 0;
 
         var rank = begin;
@@ -872,7 +872,7 @@ app.directive('kkScroll', ['service', function (service) {
                     this.preventDefault = false;
                 },
 
-                change:function(value){
+                change: function (value) {
                     var fn = eval('scope.' + attr.callbackChange);
                     fn && fn.apply(scope, [that.img, value, Math.abs(this.min)]);
                 }
@@ -1342,7 +1342,7 @@ app.directive('kkAjaxLoad', ['service', '$compile', function (service, $compile)
 /**
  * Directive ajax upload
  */
-app.directive('kkAjaxUpload', ['service', function (service) {
+app.directive('kkAjaxUpload', ['service', '$parse', function (service, $parse) {
 
     var command = {
         scope: false,

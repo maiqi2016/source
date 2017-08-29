@@ -5,14 +5,34 @@ app.controller('site', ['$scope', '$controller', function ($scope, $controller) 
 
     $controller('generic', {$scope: $scope});
 
+    $scope.y = 25;
+    $scope.initEffect = function() {
+        $('div#carousel-scroller-aim > div.scroll > div').each(function(key) {
+            Transform(this, true);
+            this.translateY = (key % 2 == 0) ? 0 : $scope.y;
+        });
+    };
+
     // Scroll effect
-    $scope.effect = function (li, e, v) {
-        li.each(function() {
-            if ($(this).hasClass("top20")) {
-                $(this).removeClass("top20");
-            } else{
-                $(this).addClass("top20");
+    $scope.effect = function (li, v, max) {
+
+        var o = $('.hot-aim');
+
+        var px = parseFloat(o.attr('px'));
+        px = px || 0;
+
+        var x = (v - px) / max * $scope.y;
+        
+        li.each(function(key, value) {
+            if (key % 2 == 0) {
+                var y = this.translateY ? parseFloat(this.translateY) : 0;
+                this.translateY = y - x;
+            } else {
+                var y = this.translateY ? parseFloat(this.translateY) : $scope.y;
+                this.translateY = y + x;
             }
         });
+
+        o.attr('px', v);
     };
 }]);

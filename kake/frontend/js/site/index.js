@@ -6,6 +6,7 @@ app.controller('site', ['$scope', '$controller', function ($scope, $controller) 
     $controller('generic', {$scope: $scope});
 
     $scope.y = 25;
+    $scope.showBody = true;
     $scope.initEffect = function() {
         $('div#carousel-scroller-aim > div.scroll > div').each(function(key) {
             Transform(this, true);

@@ -1452,6 +1452,36 @@ app.directive('kkPullUp', ['service', function (service) {
 }]);
 
 /**
+ * Directive print text
+ */
+app.directive('kkPrintText', ['service', function (service) {
+
+    var command = {
+        scope: false,
+        restrict: 'A'
+    };
+
+    command.link = function (scope, elem, attr) {
+        /**
+         * @param attr.kkPrintText
+         * @param attr.time
+         */
+        var index = 0;
+        function type() {
+            if(index >= attr.kkPrintText.length) {
+                clearInterval(interval);
+            }
+            elem.html(attr.kkPrintText.substring(0, index++));
+        }
+        var interval = setInterval(type, parseInt(attr.time || 700));
+    };
+
+    return command;
+}]);
+
+
+
+/**
  * Controller
  */
 app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $timeout, service) {
@@ -1704,5 +1734,26 @@ app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $t
         $('body').imagesLoaded({background: true}).always(function () {
             $scope.loading(false);
         });
+
+        // (function (doc, win) {
+        //     var docEl = doc.documentElement,
+        //         resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        //         recalc = function () {
+        //             var clientWidth = docEl.clientWidth;
+        //             if (!clientWidth) return;
+        //             if(clientWidth>=640){
+        //                 docEl.style.fontSize = '100px';
+        //             }else{
+        //                 docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+        //             }
+        //         };
+
+        //     if (!doc.addEventListener) return;
+        //     win.addEventListener(resizeEvt, recalc, false);
+        //     doc.addEventListener('DOMContentLoaded', recalc, false);
+        // })(document, window);
+        
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
+        
     };
 }]);

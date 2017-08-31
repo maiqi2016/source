@@ -1291,7 +1291,14 @@ app.directive('kkAjaxLoad', ['service', '$compile', function (service, $compile)
          * @param attr.kkAjaxLoad
          * @param attr.message
          */
+
+        var lock = false; 
+
         service.reachBottom(function () {
+            if (lock) {
+                return null;
+            }
+            lock = true;
 
             if (elem.attr('data-over')) {
                 return null;
@@ -1331,6 +1338,8 @@ app.directive('kkAjaxLoad', ['service', '$compile', function (service, $compile)
 
                     elem.append(res.data.html).attr('data-page', page + 1);
                     res.data.over && over();
+
+                    lock = false;
                 }
             });
         });
@@ -1735,24 +1744,7 @@ app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $t
             $scope.loading(false);
         });
 
-        // (function (doc, win) {
-        //     var docEl = doc.documentElement,
-        //         resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
-        //         recalc = function () {
-        //             var clientWidth = docEl.clientWidth;
-        //             if (!clientWidth) return;
-        //             if(clientWidth>=640){
-        //                 docEl.style.fontSize = '100px';
-        //             }else{
-        //                 docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
-        //             }
-        //         };
-
-        //     if (!doc.addEventListener) return;
-        //     win.addEventListener(resizeEvt, recalc, false);
-        //     doc.addEventListener('DOMContentLoaded', recalc, false);
-        // })(document, window);
-        
+        // 设置rem
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
         
     };

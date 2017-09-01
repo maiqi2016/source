@@ -6,11 +6,10 @@ app.controller('site', ['$scope', '$controller', function ($scope, $controller) 
     $controller('generic', {$scope: $scope});
 
     $scope.y = 25;
-    $scope.showBody = true;
     $scope.initEffect = function() {
         $('div#carousel-scroller-aim > div.scroll > div').each(function(key) {
             Transform(this, true);
-            this.translateY = (key % 2 == 0) ? 0 : $scope.y;
+            this.translateY = (key % 2 === 0) ? 0 : $scope.y;
         });
     };
 
@@ -25,11 +24,12 @@ app.controller('site', ['$scope', '$controller', function ($scope, $controller) 
         var x = (v - px) / max * $scope.y;
         
         li.each(function(key, value) {
-            if (key % 2 == 0) {
-                var y = this.translateY ? parseFloat(this.translateY) : 0;
+            var y;
+            if (key % 2 === 0) {
+                y = this.translateY ? parseFloat(this.translateY) : 0;
                 this.translateY = y - x;
             } else {
-                var y = this.translateY ? parseFloat(this.translateY) : $scope.y;
+                y = this.translateY ? parseFloat(this.translateY) : $scope.y;
                 this.translateY = y + x;
             }
         });
@@ -38,6 +38,7 @@ app.controller('site', ['$scope', '$controller', function ($scope, $controller) 
     };
 
     // Click to show
+    $scope.showBody = true;
     $scope.hidden = function () {
         
         var time = 1000;

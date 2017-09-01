@@ -620,7 +620,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         var rank = begin;
         var _end = end - rank;
 
-        return Number.parseInt(new Number(Math.random() * _end).toFixed(0)) + rank;
+        return parseInt(new Number(Math.random() * _end).toFixed(0)) + rank;
     };
 }]);
 
@@ -692,7 +692,6 @@ app.directive('kkTap', ['service', '$parse', function (service, $parse) {
         return function ngEventHandler(scope, elem) {
             service.tap(elem[0], function (event) {
                 event = event || window.event;
-                // window.event = event;
                 var callback = function () {
                     fn(scope, {
                         $event: event
@@ -1292,7 +1291,7 @@ app.directive('kkAjaxLoad', ['service', '$compile', function (service, $compile)
          * @param attr.message
          */
 
-        var lock = false; 
+        var lock = false;
 
         service.reachBottom(function () {
             if (lock) {
@@ -1476,19 +1475,19 @@ app.directive('kkPrintText', ['service', function (service) {
          * @param attr.time
          */
         var index = 0;
+
         function type() {
-            if(index >= attr.kkPrintText.length) {
+            if (index >= attr.kkPrintText.length) {
                 clearInterval(interval);
             }
             elem.html(attr.kkPrintText.substring(0, index++));
         }
+
         var interval = setInterval(type, parseInt(attr.time || 700));
     };
 
     return command;
 }]);
-
-
 
 /**
  * Controller
@@ -1746,6 +1745,6 @@ app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $t
 
         // 设置rem
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
-        
+
     };
 }]);

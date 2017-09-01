@@ -1,7 +1,7 @@
 /**
  * 控制器 - 用户
  */
-app.controller('user', ['$scope', '$controller', function ($scope, $controller) {
+app.controller('producer', ['$scope', '$controller', function ($scope, $controller) {
 
     $controller('generic', {$scope: $scope});
 
@@ -34,7 +34,7 @@ app.controller('user', ['$scope', '$controller', function ($scope, $controller) 
         }
 
         $scope.request({
-            api: 'user/ajax-apply-distributor',
+            api: 'producer/ajax-apply-distributor',
             post: data,
             success: function (res) {
                 if (!res.state) {

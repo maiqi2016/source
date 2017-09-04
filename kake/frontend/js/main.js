@@ -734,16 +734,55 @@ app.directive('kkSpread', ['$timeout', 'service', function ($timeout, service) {
                 overflow: 'hidden'
             });
 
+            var multiple = 2;
+            var cal = function (type, b) {
+                if ($.inArray(type, ['x', 'y']) === -1) {
+                    return null;
+                }
+                var px;
+                if (type === 'x') {
+                    type = e.pageX;
+                    px = pos.left;
+                } else {
+                    type = e.pageY;
+                    px = pos.top;
+                }
+
+                return type - px - b / 2 * multiple;
+            };
+
             var w = elem.width(),
                 h = elem.height(),
                 pos = elem.offset(),
 
-                left = e.pageX - pos.left - w,
-                top = e.pageY - pos.top - h;
+                left = cal('x', w),
+                top = cal('y', h);
+
+            switch (parseInt(attr.kkSpread)) {
+                case 1:
+                    left = cal('x', w * 2);
+                    top = cal('y', h * 2);
+                    break;
+
+                case 2:
+                    left = w;
+                    top = cal('y', h * 2);
+                    break;
+
+                case 3:
+                    left = w;
+                    top = h;
+                    break;
+
+                case 4:
+                    left = cal('x', w * 2);
+                    top = h;
+                    break;
+            }
 
             i.addClass('kk-spread').css({
-                width: w * 2,
-                height: h * 2,
+                width: w * multiple,
+                height: h * multiple,
                 left: left,
                 top: top
             });

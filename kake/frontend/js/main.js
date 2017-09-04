@@ -729,18 +729,21 @@ app.directive('kkSpread', ['$timeout', 'service', function ($timeout, service) {
 
             e = e.changedTouches[0];
 
-            elem.css({position: 'relative'});
+            elem.css({
+                position: 'relative',
+                overflow: 'hidden'
+            });
 
             var w = elem.width(),
                 h = elem.height(),
                 pos = elem.offset(),
 
-                left = e.pageX - pos.left - w / 2,
-                top = e.pageY - pos.top - h / 2;
+                left = e.pageX - pos.left - w,
+                top = e.pageY - pos.top - h;
 
             i.addClass('kk-spread').css({
-                width: w,
-                height: h,
+                width: w * 2,
+                height: h * 2,
                 left: left,
                 top: top
             });

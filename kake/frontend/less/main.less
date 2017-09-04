@@ -429,7 +429,7 @@ div#hit {
   // spread
   @keyframes spread {
     to {
-      transform: scale(2);
+      transform: scale(5);
       opacity: 0;
     }
   }
@@ -437,11 +437,11 @@ div#hit {
   &.kk-spread {
     display: block;
     position: absolute;
-    background: rgba(255, 208, 0, .2);
+    background: rgba(255, 208, 0, .4);
     border-radius: 100%;
     pointer-events: none;
     transform: scale(0);
-    animation: spread .5s ease-out;
+    animation: spread 2s ease-out;
     animation-fill-mode: forwards;
   }
 }

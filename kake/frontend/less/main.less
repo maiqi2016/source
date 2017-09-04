@@ -425,6 +425,25 @@ div#hit {
     animation: opacity-hide .7s 1;
     animation-fill-mode: forwards;
   }
+
+  // spread
+  @keyframes spread {
+    to {
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+
+  &.kk-spread {
+    display: block;
+    position: absolute;
+    background: rgba(255, 208, 0, .2);
+    border-radius: 100%;
+    pointer-events: none;
+    transform: scale(0);
+    animation: spread .5s ease-out;
+    animation-fill-mode: forwards;
+  }
 }
 
 .no-data {

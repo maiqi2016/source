@@ -706,6 +706,51 @@ app.directive('kkTap', ['service', '$parse', function (service, $parse) {
 }]);
 
 /**
+ * Directive spread
+ */
+app.directive('kkSpread', ['$timeout', 'service', function ($timeout, service) {
+
+    var command = {
+        scope: {},
+        restrict: 'A',
+        template: '<i class="kk-animate"></i><span ng-transclude></span>',
+        transclude: true
+    };
+
+    command.link = function (scope, elem, attr) {
+
+        /**
+         * @param attr.kkSpread
+         */
+        service.tap(elem[0], function (e) {
+
+            var i = elem.find('i');
+            i.removeClass('kk-spread').removeAttr('style');
+
+            e = e.changedTouches[0];
+
+            elem.css({position: 'relative'});
+
+            var w = elem.width(),
+                h = elem.height(),
+                pos = elem.offset(),
+
+                left = e.pageX - pos.left - w / 2,
+                top = e.pageY - pos.top - h / 2;
+
+            i.addClass('kk-spread').css({
+                width: w,
+                height: h,
+                left: left,
+                top: top
+            });
+        });
+    };
+
+    return command;
+}]);
+
+/**
  * Directive focus
  */
 app.directive('kkFocus', ['service', function (service) {

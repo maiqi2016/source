@@ -676,6 +676,32 @@ app.config(['$httpProvider', function ($httpProvider) {
 }]);
 
 /**
+ * Directive repeat done
+ */
+app.directive('kkRepeatDone', ['$timeout', function ($timeout) {
+
+    var command = {
+        scope: true,
+        restrict: 'A'
+    };
+
+    command.link = function (scope, elem, attr) {
+
+        /**
+         * @param attr.kkRepeatDone
+         */
+        if (scope.$last) {
+            $timeout(function () {
+                var fn = scope.$eval(attr.kkRepeatDone);
+                fn();
+            }, 0);
+        }
+    };
+
+    return command;
+}]);
+
+/**
  * Directive tap replace ng-click
  */
 app.directive('kkTap', ['service', '$parse', function (service, $parse) {
@@ -911,7 +937,7 @@ app.directive('kkFocus', ['service', function (service) {
 /**
  * Directive scroll
  */
-app.directive('kkScroll', ['service', function (service) {
+app.directive('kkScroll', ['service', '$timeout', function (service, $timeout) {
 
     var command = {
         scope: false,
@@ -959,8 +985,11 @@ app.directive('kkScroll', ['service', function (service) {
                 },
 
                 change: function (value) {
-                    var fn = eval('scope.' + attr.callbackChange);
-                    fn && fn.apply(scope, [that.img, value, Math.abs(this.min)]);
+                    var min = Math.abs(this.min);
+                    $timeout(function () {
+                        var fn = scope.$eval(attr.callbackChange);
+                        fn(that.img, value, min);
+                    }, 0);
                 }
             });
         } catch (e) {
@@ -1437,10 +1466,10 @@ app.directive('kkAjaxLoad', ['service', '$compile', function (service, $compile)
 /**
  * Directive ajax upload
  */
-app.directive('kkAjaxUpload', ['service', '$parse', function (service, $parse) {
+app.directive('kkAjaxUpload', ['service', '$timeout', function (service, $timeout) {
 
     var command = {
-        scope: false,
+        scope: true,
         restrict: 'A'
     };
 
@@ -1473,8 +1502,10 @@ app.directive('kkAjaxUpload', ['service', '$parse', function (service, $parse) {
                     return scope.message(response.info);
                 }
 
-                var fn = eval('scope.' + attr.callback);
-                fn && fn.apply(scope, [response.data]);
+                $timeout(function () {
+                    var fn = scope.$eval(attr.callback);
+                    fn(response.data);
+                }, 0);
             }
         });
     };

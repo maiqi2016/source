@@ -43,7 +43,7 @@ app.controller('producer', ['$scope', '$controller', function ($scope, $controll
 
                 $scope.message('申请提交成功，请等待审核通过~');
                 $scope.timeout(function () {
-                    location.href = location.origin;
+                    location.href = res.data;
                 }, 2500);
             }
         });

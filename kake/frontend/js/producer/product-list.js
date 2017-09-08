@@ -4,6 +4,5 @@
 app.controller('producer', ['$scope', '$controller', function ($scope, $controller) {
 
     $controller('generic', {$scope: $scope});
-
-
+    
 }]);

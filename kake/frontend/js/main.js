@@ -1608,6 +1608,36 @@ app.directive('kkPrintText', ['service', function (service) {
 }]);
 
 /**
+ * Directive copy text
+ */
+app.directive('kkCopyText', ['service', function (service) {
+
+    var command = {
+        scope: false,
+        restrict: 'A'
+    };
+
+    command.link = function (scope, elem, attr) {
+        /**
+         * @param attr.kkCopyText
+         * @param attr.successMessage
+         */
+        var copy = new Clipboard(attr.kkCopyText || '.copy');
+
+        copy.on('success', function(e) {
+            e.clearSelection();
+            scope.message(attr.successMessage || '链接复制成功', 3);
+        });
+
+        copy.on('error', function(e) {
+            showTooltip(fallbackMessage(e.action));
+        });
+    };
+
+    return command;
+}]);
+
+/**
  * Controller
  */
 app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $timeout, service) {

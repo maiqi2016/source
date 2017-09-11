@@ -1,7 +1,7 @@
 /**
  * 控制器 - 分销
  */
-app.controller('distribution', ['$scope', '$controller', '$timeout', function ($scope, $controller, $timeout) {
+app.controller('distribution', ['$scope', '$controller', function ($scope, $controller) {
 
     $controller('generic', {$scope: $scope});
 

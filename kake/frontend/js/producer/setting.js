@@ -36,8 +36,20 @@ app.controller('producer', ['$scope', '$controller', function ($scope, $controll
 
         var c = $scope.setting;
 
-        if (c.name.length <= 0 || c.name.length > 32) {
-            return $scope.message('名称不能为空 [0~32个字符]');
+        if (!c.logo_attachment_id) {
+            return $scope.message('请选择头像文件');
+        }
+
+        if (!c.name || c.name.length < 1 || c.name.length > 32) {
+            return $scope.message('名称长度不符合规范 [1~32个字符]');
+        }
+
+        if (!c.account_type) {
+            return $scope.message('请选择收款账号类型');
+        }
+
+        if (!c.account_number) {
+            return $scope.message('请填写收款账号');
         }
 
         $scope.request({

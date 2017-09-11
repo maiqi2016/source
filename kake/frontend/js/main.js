@@ -1863,9 +1863,9 @@ app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $t
     /**
      * 公用内容
      */
-    $scope.common = function () {
+    $scope.common = function (option) {
 
-        // 分销商标示
+        // 分销商标识
         $('a').on('tap click', function (e) {
             var href = $(this).attr('href');
             if (!href || href.indexOf('javascript:') === 0 || href.indexOf('tel:') === 0) {
@@ -1894,5 +1894,9 @@ app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $t
         // 设置rem
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
 
+        // 刷新提示
+        if (option.message) {
+            $scope.message(option.message);
+        }
     };
 }]);

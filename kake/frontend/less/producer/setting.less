@@ -9,37 +9,45 @@ html,body {
 }
 .out {
     width: 100%;
+    .photo {
+        span {
+            margin-left: 0.29rem;
+        }
+        width: 100%;
+        height: 1.8rem;
+        line-height: 1.8rem;
+        border-bottom: 0.01rem solid #eee;
+        background: url("@{img}/producer/icon/arrow-01.svg") no-repeat 6.85rem center/0.3rem 0.3rem;
+        .right {
+            width: 1.15rem;
+            height: 1.15rem;
+            border-radius: 50%;
+            float: right;
+            margin-right: 0.85rem;
+            margin-top: 0.325rem;
+        }
+
+    }
     .inner {
         width: 6.92rem;
         height: 100%;
         margin:0 auto;
-        .photo {
-            width: 100%;
-            height: 1.8rem;
-            line-height: 1.8rem;
-            border-bottom: 0.01rem solid #eee;
-            background: url("@{img}/producer/icon/arrow-01.svg") no-repeat center right/0.3rem 0.3rem;
-            .right {
-                width: 1.15rem;
-                height: 1.15rem;
-                border-radius: 50%;
-                float: right;
-                margin-right: 0.65rem;
-                margin-top: 0.325rem;
-            }
-
-        }
         .name {
             width: 100%;
             height: 1.08rem;
             border-bottom: 0.01rem solid #eee;
-            line-height: 1.08rem;
+            padding-top: 0.2rem;
+            span {
+                display: inline-block;
+                margin-top: 0.13rem;
+            }
             .right {
                 float: right;
                 margin-right: 0.45rem;
                 background-color: transparent;
                 border:none;
                 text-align: right;
+                height: 0.7rem;
             }
         }
         .style {
@@ -80,13 +88,18 @@ html,body {
         .number {
             width: 100%;
             height: 1.08rem;
-            line-height: 1.08rem;
+            padding-top: 0.2rem;
+            span {
+                display: inline-block;
+                margin-top: 0.13rem;
+            }
             .right {
                 float: right;
                 margin-right: 0.45rem;
                 background-color: transparent;
                 border:none;
                 text-align: right;
+                height: 0.7rem;
             }
         }
         .right {

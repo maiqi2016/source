@@ -551,6 +551,22 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         return href;
     };
 
+    // Set params to url
+    this.setParams = function (params, url) {
+        var queryString = '';
+        $.each(params || {}, function (k, v) {
+            queryString += '&' + k + '=' + v;
+        });
+
+        if (url.indexOf('?')) {
+            url += queryString;
+        } else {
+            url = url + '?' + queryString.leftTrim('&')
+        }
+
+        return url;
+    };
+
     // Unset params from url
     this.unsetParams = function (params, url) {
         url = url || location.href;
@@ -623,6 +639,22 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         var _end = end - rank;
 
         return parseInt(new Number(Math.random() * _end).toFixed(0)) + rank;
+    };
+
+    // Bind key down
+    this.keyBind = function (num, callback, obj, ctrl) {
+        obj = obj || $(document);
+        obj.unbind('keydown').bind('keydown', function (event) {
+            if (ctrl) {
+                if (event.keyCode === num && event.ctrlKey && callback) {
+                    callback();
+                }
+            } else {
+                if (event.keyCode === num && callback) {
+                    callback();
+                }
+            }
+        });
     };
 }]);
 
@@ -1627,14 +1659,37 @@ app.directive('kkCopyText', ['service', function (service) {
          */
         var copy = new Clipboard(attr.kkCopyText || '.copy');
 
-        copy.on('success', function(e) {
+        copy.on('success', function (e) {
             e.clearSelection();
             scope.message(attr.successMessage || '链接复制成功', 3);
         });
+    };
 
-        copy.on('error', function(e) {
-            showTooltip(fallbackMessage(e.action));
-        });
+    return command;
+}]);
+
+/**
+ * Directive location with enter on input
+ */
+app.directive('kkLocationOnInput', ['service', function (service) {
+
+    var command = {
+        scope: false,
+        restrict: 'A'
+    };
+
+    command.link = function (scope, elem, attr) {
+        /**
+         * @param attr.kkLocationOnInput
+         */
+        service.keyBind(13, function () {
+            var query = {};
+            elem.find('input, textarea, select').each(function () {
+                query[$(this).attr('name')] = $(this).val();
+            });
+
+            location.href = service.setParams(query, attr.kkLocationOnInput);
+        }, elem.find('input'));
     };
 
     return command;

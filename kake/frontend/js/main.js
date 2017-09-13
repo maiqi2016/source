@@ -6,6 +6,8 @@ var app = angular.module('kkApp', []);
 app.service('service', ['$http', '$q', function ($http, $q) {
 
     var that = this;
+    // 设置rem
+    document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
 
     // CSRF
     this.csrfKey = document.getElementsByName('csrf-param')[0].getAttribute('content');
@@ -1242,19 +1244,20 @@ app.directive('kkMenu', ['service', function (service) {
             menu.fadeOut('fast');
         });
 
-        var pos = service.offset(elem[0]);
-        var x1 = pos.left,
-            y1 = pos.top,
-            x2 = pos.left + pos.width,
-            y2 = pos.top + pos.height;
-
         $('*').click(function (e) {
+            var pos = service.offset(elem[0]);
+            var x1 = pos.left,
+                y1 = pos.top,
+                x2 = pos.left + pos.width,
+                y2 = pos.top + pos.height;
+
             var x = e.clientX;
             var y = e.clientY;
 
             if (!(x > x1 && x < x2 && y > y1 && y < y2)) {
                 menu.fadeOut('fast');
             }
+            e.stopPropagation();
         });
     };
 
@@ -1890,9 +1893,6 @@ app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $t
         $('body').imagesLoaded({background: true}).always(function () {
             $scope.loading(false);
         });
-
-        // 设置rem
-        document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
 
         // 刷新提示
         if (option.message) {

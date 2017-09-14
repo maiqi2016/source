@@ -36,16 +36,4 @@ app.controller('site', ['$scope', '$controller', function ($scope, $controller) 
 
         o.attr('px', v);
     };
-
-    // Click to show
-    $scope.showBody = true;
-    $scope.hidden = function () {
-        
-        var time = 1000;
-
-        $('.opening').fadeOut(time);
-        $scope.timeout(function() {
-            $scope.showBody = true;
-        }, time);
-    };
 }]);

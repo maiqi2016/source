@@ -1379,7 +1379,8 @@ app.directive('kkTabCard', ['service', function (service) {
         });
 
         $(tabElement[0]).addClass(attr.kkTabCard);
-        $(tab[0]).nextAll().hide();
+        $(tab).hide();
+        $(tab[0]).show();
 
         $.each(tabElement, function () {
             service.tap(this, function () {

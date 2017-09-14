@@ -1277,7 +1277,7 @@ app.directive('kkMenu', ['service', function (service) {
             menu.fadeOut('fast');
         });
 
-        $('body').click(function (e) {
+        $('*').click(function (e) {
             var pos = service.offset(elem[0]);
             var x1 = pos.left,
                 y1 = pos.top,
@@ -1290,7 +1290,6 @@ app.directive('kkMenu', ['service', function (service) {
             if (!(x > x1 && x < x2 && y > y1 && y < y2)) {
                 menu.fadeOut('fast');
             }
-            // e.stopPropagation();
         });
     };
 

@@ -1277,7 +1277,7 @@ app.directive('kkMenu', ['service', function (service) {
             menu.fadeOut('fast');
         });
 
-        $('*').click(function (e) {
+        $('body').click(function (e) {
             var pos = service.offset(elem[0]);
             var x1 = pos.left,
                 y1 = pos.top,
@@ -1377,6 +1377,9 @@ app.directive('kkTabCard', ['service', function (service) {
                 tabElement.push(this);
             }
         });
+
+        $(tabElement[0]).addClass(attr.kkTabCard);
+        $(tab[0]).nextAll().hide();
 
         $.each(tabElement, function () {
             service.tap(this, function () {
@@ -1694,7 +1697,7 @@ app.directive('kkLocationOnInput', ['service', function (service) {
             });
 
             location.href = service.setParams(query, attr.kkLocationOnInput);
-        }, elem.find('input'));
+        }, elem.find('input, textarea, select'));
     };
 
     return command;

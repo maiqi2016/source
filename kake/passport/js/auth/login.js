@@ -9,8 +9,14 @@ app.controller('auth', ['$scope', '$controller', function ($scope, $controller) 
         phone: null,
         captcha: null
     };
-    $scope.login = function () {
 
+    $scope.goBack = function () {
+        $scope.timeout(function () {
+            history.go(-1);
+        }, 3000);
+    };
+
+    $scope.login = function () {
         if (!$scope.service.check($scope.info.phone, 'phone')) {
             return $scope.message('请输入正确的手机号码');
         }

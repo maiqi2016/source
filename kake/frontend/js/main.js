@@ -6,6 +6,7 @@ var app = angular.module('kkApp', []);
 app.service('service', ['$http', '$q', function ($http, $q) {
 
     var that = this;
+
     // 设置rem
     document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
 
@@ -1289,7 +1290,7 @@ app.directive('kkMenu', ['service', function (service) {
             if (!(x > x1 && x < x2 && y > y1 && y < y2)) {
                 menu.fadeOut('fast');
             }
-            e.stopPropagation();
+            // e.stopPropagation();
         });
     };
 
@@ -1662,6 +1663,10 @@ app.directive('kkCopyText', ['service', function (service) {
         copy.on('success', function (e) {
             e.clearSelection();
             scope.message(attr.successMessage || '链接复制成功', 3);
+        });
+
+        copy.on('error', function(e) {
+            console.log(e);
         });
     };
 

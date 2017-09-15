@@ -10,10 +10,14 @@ app.controller('auth', ['$scope', '$controller', function ($scope, $controller) 
         captcha: null
     };
 
+    $scope.second = 5;
     $scope.goBack = function () {
-        $scope.timeout(function () {
-            history.go(-1);
-        }, 3000);
+        $scope.interval(function () {
+            $scope.second--;
+            if ($scope.second <= 0) {
+                history.go(-1);
+            }
+        }, 1000);
     };
 
     $scope.login = function () {

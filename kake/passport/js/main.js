@@ -330,9 +330,10 @@ app.directive('kkSms', ['service', function (service) {
 /**
  * Controller
  */
-app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $timeout, service) {
+app.controller('generic', ['$scope', '$timeout', '$interval', 'service', function ($scope, $timeout, $interval, service) {
 
     $scope.timeout = $timeout;
+    $scope.interval = $interval;
     $scope.service = service;
     $scope.conf = {
         ajaxLock: {},

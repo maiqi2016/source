@@ -1183,8 +1183,8 @@ $(function () {
 
         $.checkPhone(phone);
 
-        if (captcha.length !== 8) {
-            $.alert('验证码长度应为8位');
+        if (!captcha) {
+            $.alert('请输入验证码');
             return false;
         }
 

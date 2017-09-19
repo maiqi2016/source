@@ -1297,6 +1297,35 @@ app.directive('kkMenu', ['service', function (service) {
 }]);
 
 /**
+ * Directive menu-lm
+ */
+app.directive('kkMenuLm', ['service', function (service) {
+
+    var command = {
+        scope: {},
+        restrict: 'A'
+    };
+    var door = false;
+
+    command.link = function (scope, elem, attr) {
+
+        service.tap(elem[0], function () {
+            if (!door) {
+                $(".all-lm").css("animation","changel 0.7s forwards");
+                $(".menu-lm").css("animation","changel 0.7s forwards");
+            }else {
+                $(".all-lm").css("animation","changer 0.7s forwards");
+                $(".menu-lm").css("animation","changer 0.7s forwards");
+            }
+            door = !door;
+            
+        });
+    };
+
+    return command;
+}]);
+
+/**
  * Directive fixed box
  */
 app.directive('kkFixed', ['service', function (service) {

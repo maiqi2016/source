@@ -12,6 +12,18 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
         $scope.scroll(!$scope.showTab);
     };
 
+    $('*').on('touchstart',function (e) {
+        var touch = e.touches[0];
+        var y = Number(touch.pageY);
+        if (y>400) {
+            $scope.timeout(function () {
+                $scope.showTab = false;
+                $scope.scroll(true);
+            });
+        };
+        
+    });
+
     // Click to show
     $scope.showBody = true;
     $scope.hidden = function () {

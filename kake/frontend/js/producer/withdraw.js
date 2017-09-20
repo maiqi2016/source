@@ -9,6 +9,7 @@ app.controller('producer', ['$scope', '$controller', function ($scope, $controll
         quota: null,
         withdraw: null
     };
+    
     $scope.withdrawAll = function () {
         $scope.money.withdraw = parseFloat($('.money').text());
     };

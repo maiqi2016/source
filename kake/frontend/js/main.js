@@ -1308,17 +1308,54 @@ app.directive('kkMenuLm', ['service', function (service) {
     var door = false;
 
     command.link = function (scope, elem, attr) {
+        var body = $('.all-lm'),
+            menu = $('.menu-lm'),
+            header = $('header');
+            width = window.screen.width;
+
+        var left = width / 1.8;
+
+        // 打开菜单
+        var openMenu = function () {
+            
+            door = true;
+            body.css({
+                width: width
+            }).animate({
+                marginLeft: -left,
+                opacity: 0.7
+            });
+            header.animate({right: left});
+            menu.animate({
+                right: 0,
+                opacity: 1
+            });
+            $('body').on('touchStart',function(){
+                door && closeMenu(); 
+            });
+        };
+
+        // 关闭菜单
+        var closeMenu = function () {
+
+            door = false;
+            body.animate({
+                marginLeft: 0,
+                opacity: 1
+            }).removeAttr('width');
+            header.animate({right: 0});
+            menu.animate({
+                right: -205,
+                opacity: 0
+            });
+        };
 
         service.tap(elem[0], function () {
-            if (!door) {
-                $(".all-lm").css("animation","changel 0.7s forwards");
-                $(".menu-lm").css("animation","changel 0.7s forwards");
-            }else {
-                $(".all-lm").css("animation","changer 0.7s forwards");
-                $(".menu-lm").css("animation","changer 0.7s forwards");
-            }
-            door = !door;
-            
+            door ? closeMenu() : openMenu();
+        });
+
+        service.tap($('.menuclose')[0], function() {
+            closeMenu();
         });
     };
 

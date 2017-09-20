@@ -1297,8 +1297,6 @@ app.directive('kkMenu', ['service', function (service) {
 }]);
 
 /**
-<<<<<<< Updated upstream
-=======
  * Directive menu-lm
  */
 app.directive('kkMenuLm', ['service', function (service) {
@@ -1310,7 +1308,6 @@ app.directive('kkMenuLm', ['service', function (service) {
     var door = false;
 
     command.link = function (scope, elem, attr) {
-
         var body = $('.all-lm'),
             menu = $('.menu-lm'),
             header = $('header');
@@ -1366,7 +1363,6 @@ app.directive('kkMenuLm', ['service', function (service) {
 }]);
 
 /**
->>>>>>> Stashed changes
  * Directive fixed box
  */
 app.directive('kkFixed', ['service', function (service) {

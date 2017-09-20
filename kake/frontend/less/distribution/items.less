@@ -187,7 +187,6 @@ html,body {
             a {
                 color: black;
             }
-<<<<<<< Updated upstream
             .photo {
                 position: relative;
                 img {
@@ -202,36 +201,18 @@ html,body {
                     opacity: 0.7;
                     color: white;
                     text-align: center;
-                    .s {
-                        font-size: 15px;
-=======
-            li {
-                width: 3.29rem;
-                float: left;
-                .photo {
-                    position: relative;
-                    img {
-                        width:100%;
-                    }
-                    .price {
-                        width: 1.28rem;
-                        position: absolute;
-                        top: 1.6rem;
-                        left: 0;
-                        background-color: black;
-                        opacity: 0.7;
-                        color: white;
-                        text-align: center;
-                        .s {
-                            font-size: 13px;
-                        }
->>>>>>> Stashed changes
-                    }
-                    .b {
-                        font-size: 27px;
+                    line-height: 30px;
+                    color: #fafafa;
+                    background-color: rgba(34, 34, 34, 0.8);
+                    position: absolute;
+                    padding: 0 14px 0 10px;
+                    font-size: 22px;
+                    margin-top: -45px;
+                    i {
+                        font-size: 14px;
+                        margin-right: 1px;
                     }
                 }
-<<<<<<< Updated upstream
                 h2 {
                     font-size: 18px;
                     padding-bottom: 10px;
@@ -240,50 +221,6 @@ html,body {
                     line-height: 10px;
                     font-size: 15px;
                     color: #969696;
-=======
-            }
-        }
-        ul li:nth-child(2n) {
-            margin-left: 0.34rem;
-        }
-        ul li:nth-child(n+3) {
-            margin-top: 0.36rem;
-        }
-    }
-}
-.product-two {
-    width: 6.92rem;
-    margin: 0 auto;
-    li {
-        width: 100%;
-        height: 7.1rem;
-        border-top: 0.01rem solid #ccc;
-        padding-top: 0.53rem;
-        a {
-            color: black;
-        }
-        .photo {
-            position: relative;
-            img {
-                width:100%;
-            }
-            .price {
-                width: 2.07rem;
-                position: absolute;
-                top: 3.7rem;
-                left: 0;
-                background-color: black;
-                opacity: 0.7;
-                text-align: center;
-                height: 27px;
-                line-height: 27px;
-                color: #fafafa;
-                .s {
-                    font-size: 15px;
-                }
-                .b {
-                    font-size: 22px;
->>>>>>> Stashed changes
                 }
             }
         }
@@ -420,23 +357,6 @@ html,body {
     opacity: 1;
   }
 }
-<<<<<<< Updated upstream
-=======
-to {
-transform:translateX(70px);
-opacity: 1;
-}
-}
-
-@keyframes ghostUpdown{
-    from{margin-top:1rem;}
-    to{margin-top:0.7rem;}
-}
-@keyframes shadow{
-    from{margin-top:0.7rem;opacity:0.3;}
-    to{margin-top:1rem;opacity:0.1;}
-}
-
 
 // 光圈放大缩小
 .out-q {
@@ -464,26 +384,23 @@ opacity: 1;
         animation-fill-mode: forwards;
     }
 }
-      @keyframes in {
-        0% {
-          transform: scale(1);
-        }
-        100% {
-          transform: scale(3);
-          opacity: 0;
-        }
-      }
 
-      @keyframes out {
-        0% {
-          transform: scale(1);
-        }
-        100% {
-          transform: scale(2);
-          opacity: 0;
-        }
-      }
+@keyframes in {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(3);
+      opacity: 0;
+    }
+}
 
-
-
->>>>>>> Stashed changes
+@keyframes out {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+}

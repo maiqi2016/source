@@ -14,7 +14,7 @@ app.controller('order', ['$scope', '$controller', '$interval', function ($scope,
     $scope.refund = [];
     $scope.order = [];
     $scope.bill = [];
-    $scope.second = 15;
+    $scope.second = 15000000;
 
     // 微信吊起支付
     $scope.wxPayment = function (data, orderNumber) {

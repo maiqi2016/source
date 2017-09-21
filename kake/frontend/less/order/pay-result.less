@@ -1,0 +1,57 @@
+@import "../main";
+
+body {
+  height: 100%;
+  background: url("@{img}/pay-failed.jpeg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+.content {
+  @width: 5.88rem;
+  @color: #ffd000;
+
+  width: @width;
+  margin: 3.9rem auto 0;
+
+  .title {
+    @height: 0.44rem;
+
+    text-align: center;
+    height: @height;
+    line-height: @height;
+    font-size: 20px;
+  }
+
+  .timeout {
+    @size: 0.64rem;
+
+    width: @size;
+    height: @size;
+    background-color: #bfbfbf;
+    border-radius: 100%;
+    text-align: center;
+    line-height: @size;
+    margin: 0.5rem auto 0;
+    color: #fefaf2;
+    font-size: 16px;
+  }
+
+  .buttons {
+    @height: 0.88rem;
+
+    display: block;
+    width: @width;
+    height: @height;
+    text-align: center;
+    line-height: @height;
+    border: 1px solid @color;
+    font-size: 18px;
+    color: #000;
+    &.link {
+      margin: 0.76rem auto 0.6rem;
+    }
+    &.active {
+      background-color: @color;
+    }
+  }
+}

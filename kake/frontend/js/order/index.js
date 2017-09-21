@@ -1,7 +1,7 @@
 /**
  * 控制器 - 订单中心
  */
-app.controller('order', ['$scope', '$controller', function ($scope, $controller) {
+app.controller('order', ['$scope', '$controller', '$interval', function ($scope, $controller, $interval) {
 
     $controller('generic', {$scope: $scope});
 
@@ -14,6 +14,7 @@ app.controller('order', ['$scope', '$controller', function ($scope, $controller)
     $scope.refund = [];
     $scope.order = [];
     $scope.bill = [];
+    $scope.second = 15;
 
     // 微信吊起支付
     $scope.wxPayment = function (data, orderNumber) {
@@ -173,6 +174,16 @@ app.controller('order', ['$scope', '$controller', function ($scope, $controller)
             post: bill,
             success: $scope.f5
         });
+    };
+
+    // 倒计时跳转
+    $scope.paidLocation = function (url) {
+        $interval(function () {
+            $scope.second--;
+            if ($scope.second <= 0) {
+                location.href = url;
+            }
+        }, 1000);
     };
 }]);
 

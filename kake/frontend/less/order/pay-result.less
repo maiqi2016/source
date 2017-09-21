@@ -1,17 +1,22 @@
 @import "../main";
-
-body {
+html,body {
   height: 100%;
+}
+body {
   background: url("@{img}/pay-failed.jpeg") no-repeat center center fixed;
   background-size: cover;
+  .all-lm {
+    background-color: transparent;
+    padding-top:3.9rem; 
+  }
 }
 
 .content {
+  margin: 0 auto;
   @width: 5.88rem;
   @color: #ffd000;
 
   width: @width;
-  margin: 3.9rem auto 0;
 
   .title {
     @height: 0.44rem;

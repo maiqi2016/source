@@ -1311,7 +1311,7 @@ app.directive('kkMenuLm', ['service', function (service) {
 
         var body = $('.all-lm'),
             menu = $('.menu-lm'),
-            header = $('header');
+            header = $('header, footer');
             width = window.screen.width;
 
         var left = width / 1.8;

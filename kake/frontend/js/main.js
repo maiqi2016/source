@@ -624,12 +624,19 @@ app.service('service', ['$http', '$q', function ($http, $q) {
     }();
 
     // Tap
-    this.tap = function (target, action) {
-        if (that.device.mobile) {
-            new AlloyFinger(target, {tap: action});
-        } else {
-            $(target).click(action);
+    this.tap = function (target, action, options) {
+
+        if (target.jquery) {
+            target = target[0];
         }
+
+        if (that.device.mobile) {
+            options = options || {};
+            options.singleTap = action;
+            return new AlloyFinger(target, options);
+        }
+
+        return $(target).click(action);
     };
 
     // Rand
@@ -1321,7 +1328,7 @@ app.directive('kkMenuLm', ['service', function (service) {
 
         // 打开菜单
         var openMenu = function () {
-            
+
             door = true;
             body.append(shade);
             body.css({
@@ -1336,11 +1343,11 @@ app.directive('kkMenuLm', ['service', function (service) {
                 opacity: 1
             });
 
-            finger = new AlloyFinger(shade[0], {
-                tap: function () {
-                    closeMenu();
-                }
-            });
+            var fn = function () {
+                closeMenu();
+            };
+
+            finger = service.tap(shade, fn, {swipe: fn});
         };
 
         // 关闭菜单
@@ -1364,7 +1371,7 @@ app.directive('kkMenuLm', ['service', function (service) {
             door ? closeMenu() : openMenu();
         });
 
-        service.tap($('.menuclose')[0], function() {
+        service.tap($('.menuclose')[0], function () {
             closeMenu();
         });
     };
@@ -1744,7 +1751,7 @@ app.directive('kkCopyText', ['service', function (service) {
             scope.message(attr.successMessage || '链接复制成功', 3);
         });
 
-        copy.on('error', function(e) {
+        copy.on('error', function (e) {
             console.log(e);
         });
     };

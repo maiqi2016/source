@@ -664,6 +664,12 @@ app.service('service', ['$http', '$q', function ($http, $q) {
             }
         });
     };
+
+    // Sleep
+    this.sleep = function (second) {
+        var start = new Date();
+        while (new Date() - start < second) {}
+    };
 }]);
 
 /**
@@ -1753,6 +1759,10 @@ app.directive('kkCopyText', ['service', function (service) {
 
         copy.on('error', function (e) {
             console.log(e);
+        });
+
+        // For fixed bug
+        $('*').click(function (e) {
         });
     };
 

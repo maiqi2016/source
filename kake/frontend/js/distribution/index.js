@@ -106,39 +106,45 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
 
             return deferred.promise();
         };
-
-        // 睡眠
-        this.sleep = function (time) {
-            var start = new Date();
-            while (new Date() - start < time) {
-            }
-        };
     };
 
     $('.distri_ani').imagesLoaded({background: true}).always(function (instance) {
+
         var car = new $scope.Car($('.box-false'));
-        car.sleep(1500);
+        $scope.service.sleep(1500);
+
         car.move(-60, 300).then(function () {
+
             return car.brake(-10, 200);
+
         }).then(function () {
+
             console.log('车将停留 3 秒...');
             $('.people').fadeIn(1500);
             console.log('请游客下车');
             return car.stop(3000);
+
         }).then(function () {
+
             console.log('点火');
             return car.ignition(500);
+
         }).then(function () {
+
             console.log('车已启动');
             return car.speedUp(1500, 0, 300);
+
         }).then(function () {
+
             console.log('车已经离开...');
-            car.sleep(1200);
+            $scope.service.sleep(1200);
             var o = $(".distri_ani").fadeOut().promise();
+
             o.done(function () {
                 $(this).remove();
                 $('.distri_content').removeClass('hidden').fadeIn(500);
             });
+
         });
     });
 }]);

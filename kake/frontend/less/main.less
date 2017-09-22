@@ -6,8 +6,8 @@
  * Generic
  */
 @font-face {
-  font-family: 'optima';
-  src: url("@{font}/optima.ttf");
+  font-family: 'nexa';
+  src: url("@{font}/nexa.ttf");
   font-style: normal;
   font-weight: normal;
 }
@@ -20,25 +20,15 @@
   font-size: @size;
 }
 
-html, body {
-  height: 100%;
-}
-
-.noscroll, .noscroll body {
-  overflow-x: hidden;
-}
-
-.noscroll body {
-  position: relative;
-}
-
 body {
-  font-family: optima, PingFangSC-Regular, sans-serif, "Noto SansCJK";
+  font-family: nexa, PingFangSC-Regular, sans-serif, "Noto SansCJK";
   max-width: 768px;
   margin: auto;
   color: #000000;
   position: relative;
+
   -webkit-overflow-scrolling: touch;
+
   input, button, select, textarea, input:focus, span:focus {
     outline: none;
   }
@@ -66,6 +56,7 @@ body {
  * header
  */
 header {
+  z-index:20;
   width: 100%;
   height: 40px;
   text-align: center;
@@ -73,8 +64,6 @@ header {
   .font-size(18px);
   background-color: #2d3e50;
   position: fixed;
-  z-index: 999;
-  top: 0;
   color: #fff;
   .detail {
     width: 30px;
@@ -90,6 +79,50 @@ header {
     }
   }
 }
+
+#menu {
+  display: none;
+  position: fixed;
+  z-index: 998;
+  width: 126px;
+  height: 156px;
+  padding: 0 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+  .triangle {
+    position: absolute;
+    top: -10px;
+    right: 17px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid rgba(0, 0, 0, 0.7);
+  }
+  div {
+    hr {
+      margin: 0;
+    }
+    a {
+      width: 100%;
+      height: 52px;
+      line-height: 52px;
+      .font-size(15px);
+      color: #ffffff;
+      display: inline-block;
+      img {
+        margin-left: 8px;
+        margin-right: 5px;
+        width: 20px;
+        height: 22px;
+      }
+      img.order-center {
+        width: 18px;
+      }
+    }
+  }
+}
+
 
 // 遮罩层
 .shade (@opacity: .3, @index: 998) {
@@ -171,7 +204,7 @@ header {
  * blank
  */
 .blank {
-  height: 0.22rem;
+  height: 20px;
   background-color: #f4f4f4;
 }
 
@@ -196,6 +229,16 @@ header {
   }
 }
 
+.shade (@opacity: .3, @index: 998) {
+  position: fixed;
+  z-index: @index;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, @opacity);
+}
+
 /*
  * Message
  */
@@ -203,21 +246,20 @@ div#message {
   .shade;
   .message-bar {
     @height: 80px;
+    @padding: 15px;
     @color: #333;
     width: 290px;
+    height: @height;
     position: relative;
     z-index: 999;
     margin: 42% auto;
+    padding: @padding;
     color: @color;
     background-color: rgba(255, 204, 0, 0.9);
     border-radius: 8px;
     text-align: center;
-    padding: 25px 15px;
+    line-height: @height - @padding * 2;
     font-size: 16px;
-
-    p {
-      margin: 0;
-    }
 
     button.close {
       @length-px: 30px;
@@ -355,6 +397,8 @@ div#hit {
  */
 .fixed-box {
   position: fixed;
+  top: 0;
+  left: 0;
   z-index: 998;
 }
 
@@ -456,25 +500,6 @@ div#hit {
 
   &.kk-hide {
     animation: opacity-hide .7s 1;
-    animation-fill-mode: forwards;
-  }
-
-  // spread
-  @keyframes spread {
-    to {
-      transform: scale(5);
-      opacity: 0;
-    }
-  }
-
-  &.kk-spread {
-    display: block;
-    position: absolute;
-    background: rgba(255, 208, 0, .4);
-    border-radius: 100%;
-    pointer-events: none;
-    transform: scale(0);
-    animation: spread 2s ease-out;
     animation-fill-mode: forwards;
   }
 }

@@ -7,7 +7,8 @@ app.controller('producer', ['$scope', '$controller', function ($scope, $controll
 
     $scope.money = {
         quota: null,
-        withdraw: null
+        withdraw: null,
+        withdrawBegin: 0
     };
     
     $scope.withdrawAll = function () {
@@ -17,8 +18,12 @@ app.controller('producer', ['$scope', '$controller', function ($scope, $controll
     $scope.withdraw = function () {
         var quota = parseFloat($scope.money.withdraw);
 
-        if (isNaN(quota) || quota <= 0) {
+        if (isNaN(quota) || quota < 0) {
             return $scope.message('请填入合法的提现金额数字');
+        }
+
+        if (quota < $scope.money.withdrawBegin) {
+            return $scope.message('提现金额不能小于' + $scope.money.withdrawBegin);
         }
 
         if (quota > parseFloat($scope.money.quota)) {

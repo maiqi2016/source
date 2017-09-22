@@ -626,7 +626,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
     // Tap
     this.tap = function (target, action) {
         if (that.device.mobile) {
-            new AlloyFinger(target, {singleTap: action});
+            new AlloyFinger(target, {tap: action});
         } else {
             $(target).click(action);
         }
@@ -1311,18 +1311,19 @@ app.directive('kkMenuLm', ['service', function (service) {
 
         var body = $('.all-lm'),
             menu = $('.menu-lm'),
-            header = $('header, footer');
-            width = window.screen.width;
+            header = $('header, footer'),
+            width = window.screen.width,
+            shade = $('<div class="shade"></div>'),
+            finger;
 
         var left = menu.width() + service.pam(menu);
-        var finger;
-
         menu.css('height', window.screen.height);
 
         // 打开菜单
         var openMenu = function () {
             
             door = true;
+            body.append(shade);
             body.css({
                 width: width
             }).animate({
@@ -1335,9 +1336,9 @@ app.directive('kkMenuLm', ['service', function (service) {
                 opacity: 1
             });
 
-            finger = new AlloyFinger(body[0], {
-                swipe: function (evt) {
-                    evt.direction == 'Right' && closeMenu();
+            finger = new AlloyFinger(shade[0], {
+                tap: function () {
+                    closeMenu();
                 }
             });
         };
@@ -1355,6 +1356,7 @@ app.directive('kkMenuLm', ['service', function (service) {
                 right: -205,
                 opacity: 0
             });
+            shade.remove();
             finger.destroy();
         };
 

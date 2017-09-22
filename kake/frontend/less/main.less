@@ -19,15 +19,19 @@
 .font-size(@size) {
   font-size: @size;
 }
-html,body {
+
+html, body {
   height: 100%;
 }
-.noscroll,.noscroll body {
-    overflow-x: hidden;
+
+.noscroll, .noscroll body {
+  overflow-x: hidden;
 }
+
 .noscroll body {
-    position: relative;
+  position: relative;
 }
+
 body {
   font-family: optima, PingFangSC-Regular, sans-serif, "Noto SansCJK";
   max-width: 768px;
@@ -88,9 +92,23 @@ header {
   }
 }
 
+// 遮罩层
+.shade (@opacity: .3, @index: 998) {
+  position: fixed;
+  z-index: @index;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, @opacity);
+}
+
 // 菜单出现
 .all-lm {
   height: 100%;
+  .shade {
+    .shade
+  }
 }
 
 .menu-lm {
@@ -101,7 +119,7 @@ header {
   right: -205px;
   z-index: 999;
   width: 170px;
-  padding: 0 10px 0 20px;
+  padding: 0 15px 0 20px;
   p {
     text-indent: 8px;
     color: rgb(169, 142, 103);
@@ -125,7 +143,8 @@ header {
       margin-right: 5px;
       width: 20px;
       height: 22px;
-      vertical-align: sub;      }
+      vertical-align: sub;
+    }
     img.order-center {
       width: 18px;
     }
@@ -164,16 +183,6 @@ header {
   }
 }
 
-.shade (@opacity: .3, @index: 998) {
-  position: fixed;
-  z-index: @index;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, @opacity);
-}
-
 /*
  * Message
  */
@@ -181,19 +190,21 @@ div#message {
   .shade;
   .message-bar {
     @height: 80px;
-    @padding: 15px;
     @color: #333;
     width: 290px;
     position: relative;
     z-index: 999;
     margin: 42% auto;
-    padding: @padding;
     color: @color;
     background-color: rgba(255, 204, 0, 0.9);
     border-radius: 8px;
     text-align: center;
-    padding-top: 25px;
+    padding: 25px 15px;
     font-size: 16px;
+
+    p {
+      margin: 0;
+    }
 
     button.close {
       @length-px: 30px;

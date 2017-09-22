@@ -39,6 +39,6 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
     $scope.autoHide = function() {
         $scope.timeout(function() {
             $scope.hidden();
-        }, 8000);
+        }, 5000);
     }
 }]);

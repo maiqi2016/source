@@ -33,8 +33,6 @@ body {
   max-width: 768px;
   margin: auto;
   color: #000000;
-  background: url("@{img}/menubj.jpeg") no-repeat center center fixed;
-  background-size: cover;
   position: relative;
   -webkit-overflow-scrolling: touch;
 
@@ -92,54 +90,47 @@ header {
 
 // 菜单出现
 .all-lm {
-  background-color: white;
   height: 100%;
-  .body {
-    background-color: #fff;
-  }
 }
 
 .menu-lm {
-  opacity: 0;
+  background: url("@{img}/menubj.jpeg") no-repeat;
+  background-size: cover;
   position: fixed;
-  top: 20px;
+  top: 0;
   right: -205px;
   z-index: 999;
   width: 170px;
-  padding: 0 10px;
-  border-radius: 5px;
-  div {
-    p {
-      text-indent: 8px;
-      color: rgb(169, 142, 103);
-      width: 100%;
-      height: 80px;
-      line-height: 80px;
-      .font-size(30px);
-      font-weight: bold;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-      margin-bottom: 0;
+  padding: 0 10px 0 20px;
+  p {
+    text-indent: 8px;
+    color: rgb(169, 142, 103);
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+    .font-size(30px);
+    font-weight: bold;
+    border-bottom: 1px solid #2c3e50;
+    margin-bottom: 0;
+  }
+  a {
+    display: inline-block;
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+    .font-size(15px);
+    color: #fff;
+    img {
+      margin-left: 8px;
+      margin-right: 5px;
+      width: 20px;
+      height: 22px;
+      vertical-align: sub;      }
+    img.order-center {
+      width: 18px;
     }
-    a {
-      width: 100%;
-      height: 80px;
-      line-height: 80px;
-      .font-size(15px);
-      color: #ffffff;
-      display: inline-block;
-      img {
-        margin-left: 8px;
-        margin-right: 5px;
-        width: 20px;
-        height: 22px;
-        vertical-align: sub;
-      }
-      img.order-center {
-        width: 18px;
-      }
-      &.hr {
-        border-top: 1px solid rgba(255, 255, 255, 0.5);
-      }
+    &.hr {
+      border-top: 1px solid #2c3e50;
     }
   }
 }

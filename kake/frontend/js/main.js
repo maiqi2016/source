@@ -1314,8 +1314,10 @@ app.directive('kkMenuLm', ['service', function (service) {
             header = $('header, footer');
             width = window.screen.width;
 
-        var left = width / 1.8;
+        var left = menu.width() + service.pam(menu);
         var finger;
+
+        menu.css('height', window.screen.height);
 
         // 打开菜单
         var openMenu = function () {

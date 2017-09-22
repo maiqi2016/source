@@ -7,8 +7,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
 
     var that = this;
 
-    // 设置rem
-    document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
+
 
     // CSRF
     this.csrfKey = document.getElementsByName('csrf-param')[0].getAttribute('content');

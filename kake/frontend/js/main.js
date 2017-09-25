@@ -24,7 +24,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         return false;
     };
 
-    // Array.each
+    // Array.prototype.each
     Array.prototype.each = function (callback) {
         callback = callback || Function.K;
         var a = [];
@@ -38,7 +38,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         return a;
     };
 
-    // Array.contains
+    // Array.prototype.contains
     Array.prototype.contains = function (element) {
         var self = this;
         for (var i = 0; i < self.length; i++) {
@@ -49,7 +49,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         return false;
     };
 
-    // Array.unique
+    // Array.prototype.unique
     Array.prototype.unique = function () {
         var ra = [];
         for (var i = 0; i < this.length; i++) {
@@ -60,49 +60,80 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         return ra;
     };
 
-    // Array.complement
-    Array.complement = function (a, b) {
-        return Array.minus(Array.union(a, b), Array.intersect(a, b));
-    };
-
-    // Array.intersect
-    Array.intersect = function (a, b) {
-        return a.unique().each(function (o) {
-            return b.contains(o) ? o : null;
+    // Array.prototype.intersect
+    Array.prototype.intersect = function (arr) {
+        return this.unique().each(function (o) {
+            return arr.contains(o) ? o : null;
         });
     };
 
-    // Array.minus
-    Array.minus = function (a, b) {
-        return a.unique().each(function (o) {
-            return b.contains(o) ? null : o;
+    // Array.prototype.minus
+    Array.prototype.minus = function (arr) {
+        return this.unique().each(function (o) {
+            return arr.contains(o) ? null : o;
         });
     };
 
-    // Array.union
-    Array.union = function (a, b) {
-        return a.concat(b).unique();
+    // Array.prototype.union
+    Array.prototype.union = function (arr) {
+        return this.concat(arr).unique();
     };
 
-    // String.trim
+    // Array.prototype.complement
+    Array.prototype.complement = function (arr) {
+        return this.union(arr).minus(this.intersect(arr));
+    };
+
+    // Array.prototype.remove
+    Array.prototype.remove = function (val) { // 删除指定值
+        var index = this.indexOf(val);
+        if (index > -1) {
+            this.splice(index, 1);
+        }
+        return this;
+    };
+
+    // Array.prototype.swap
+    Array.prototype.swap = function (first, last) {
+        this[first] = this.splice(last, 1, this[first])[0];
+        return this;
+    };
+
+    // Array.prototype.up
+    Array.prototype.up = function (index) {
+        if (index === 0) {
+            return this;
+        }
+        return this.swap(index, index - 1);
+    };
+
+    // Array.prototype.down
+    Array.prototype.down = function (index) {
+        if (index === this.length - 1) {
+            return this;
+        }
+        return this.swap(index, index + 1);
+    };
+
+    // String.prototype.trim
     String.prototype.trim = function (str) {
         str = str ? ('\\s' + str) : '\\s';
         return this.replace(new RegExp('(^[' + str + ']*)|([' + str + ']*$)', 'g'), '');
     };
 
-    // String.leftTrim
+    // String.prototype.leftTrim
     String.prototype.leftTrim = function (str) {
         str = str ? ('\\s' + str) : '\\s';
         return this.replace(new RegExp('(^[' + str + ']*)', 'g'), '');
     };
 
-    // String.rightTrim
+    // String.prototype.rightTrim
     String.prototype.rightTrim = function (str) {
         str = str ? ('\\s' + str) : '\\s';
         return this.replace(new RegExp('([' + str + ']*$)', 'g'), '');
     };
 
-    // String.lengths (mb length)
+    // String.prototype.lengths (mb length)
     String.prototype.lengths = function () {
 
         var length = 0;
@@ -116,7 +147,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         return length;
     };
 
-    // String.pad
+    // String.prototype.pad
     String.prototype.pad = function (padStr, length, type) {
 
         padStr = padStr.toString();
@@ -155,7 +186,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         return _that;
     };
 
-    // String.fill
+    // String.prototype.fill
     String.prototype.fill = function (fillstr, length, type) {
 
         fillstr = fillstr.toString();
@@ -183,42 +214,42 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         return _that;
     };
 
-    // String.repeat
+    // String.prototype.repeat
     String.prototype.repeat = function (num) {
         num = (isNaN(num) || num < 1) ? 1 : num + 1;
         return new Array(num).join(this)
     };
 
-    // String.ucWords
+    // String.prototype.ucWords
     String.prototype.ucWords = function () {
         return this.replace(/\b(\w)+\b/g, function (word) {
             return word.replace(word.charAt(0), word.charAt(0).toUpperCase());
         });
     };
 
-    // String.ucFirst
+    // String.prototype.ucFirst
     String.prototype.ucFirst = function () {
         return this.replace(this.charAt(0), this.charAt(0).toUpperCase());
     };
 
-    // String.lcFirst
+    // String.prototype.lcFirst
     String.prototype.lcFirst = function () {
         return this.replace(this.charAt(0), this.charAt(0).toLowerCase());
     };
 
-    // String.bigHump
+    // String.prototype.bigHump
     String.prototype.bigHump = function (split) {
         split = split || '-';
         var reg = new RegExp(split, 'g');
         return this.replace(reg, ' ').ucWords().replace(/ /g, '');
     };
 
-    // String.smallHump
+    // String.prototype.smallHump
     String.prototype.smallHump = function (split) {
         return this.bigHump(split).lcFirst();
     };
 
-    // Date.format
+    // Date.prototype.format
     // yyyy-MM-dd hh:mm:ss
     Date.prototype.format = function (fmt) {
         var o = {
@@ -244,7 +275,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         return fmt;
     };
 
-    // AlloyTouch.ratio
+    // AlloyTouch.prototype.ratio
     AlloyTouch.prototype.ratio = function (moveTo, changePx, minDelta) {
 
         changePx = changePx || 30;
@@ -662,6 +693,165 @@ app.service('service', ['$http', '$q', function ($http, $q) {
                 }
             }
         });
+    };
+
+    // Json length
+    this.jsonLength = function (json) {
+        var length = 0;
+        $.each(json, function () {
+            length++;
+        });
+        return length;
+    };
+
+    // Is IE
+    that.isIE = function () {
+        return /msie/.test(navigator.userAgent.toLowerCase());
+    };
+
+    // Json to String
+    this.jsonToString = function (json) {
+        if (!that.isIE() && JSON !== 'undefined') {
+            return JSON.stringify(json);
+        } else {
+            var arr = [];
+            $.each(json, function (key, val) {
+                var next = '\'' + key + '\':\'';
+                next += $.isPlainObject(val) ? that.jsonToString(val) : val;
+                next += '\'';
+                arr.push(next);
+            });
+            return '{' + arr.join(', ') + '}';
+        }
+    };
+
+    // Dump project
+    this.dump = function (val, old) {
+        if (typeof old === 'undefined') {
+            old = true;
+        }
+        if (that.isObject(val)) {
+            if (!that.isIE() && typeof JSON !== 'undefined') {
+                val = JSON.stringify(val);
+            } else {
+                var arr = [];
+                $.each(val, function (key, val) {
+                    var next = key + ':';
+                    next += $.isPlainObject(val) ? that.jsonToString(val) : val;
+                    arr.push(next);
+                });
+                val = '{' + arr.join(',') + '}';
+            }
+        }
+        old ? alert(val) : that.debug(val);
+    };
+
+    // Is Array
+    this.isArray = function (val) {
+        if (null === val) {
+            return false;
+        }
+        return typeof val === 'object' && val.constructor === Array;
+    };
+
+    // Is Object
+    this.isObject = function (val) {
+        if (null === val) {
+            return false;
+        }
+        return typeof val === 'object' && val.constructor === Object;
+    };
+
+    // Is Json
+    this.isJson = function (val) {
+        if (null === val) {
+            return false;
+        }
+        return typeof val === 'object' && Object.prototype.toString.call(val).toLowerCase() === '[object object]';
+    };
+
+    // Is String
+    this.isString = function (val) {
+        if (null === val) {
+            return false;
+        }
+        return typeof val === 'string' && val.constructor === String;
+    };
+
+    // Is Numeric
+    this.isNumeric = function (val) {
+        if (null === val || '' === val) {
+            return false;
+        }
+        return !isNaN(val);
+    };
+
+    // Is Boolean
+    this.isBoolean = function (val) {
+        if (null === val) {
+            return false;
+        }
+        return typeof val === 'boolean' && val.constructor === Boolean;
+    };
+
+    // Is Function
+    this.isFunction = function (val) {
+        if (null === val) {
+            return false;
+        }
+        return typeof val === 'function' && Object.prototype.toString.call(val).toLowerCase() === '[object function]';
+    };
+
+    // Is empty
+    this.isEmpty = function (val, outNumZero) {
+        if (typeof val === 'undefined' || val === null) {
+            return true;
+        }
+        if (that.isNumeric(val) && outNumZero) {
+            return Number(val) === 0;
+        } else if (that.isString(val)) {
+            return val.trim() === '';
+        } else if (that.isJson(val)) {
+            return that.jsonLength(val) === 0;
+        } else if (that.isArray(val) || that.isObject(val)) {
+            return val.length === 0;
+        }
+        return !val;
+    };
+
+    // Cookie
+    this.cookie = {
+        set: function (name, value, time, domain) {
+            var expires = new Date();
+            if (!time) {
+                time = 86400 * 365;
+            }
+            expires.setTime(expires.getTime() + time * 1000);
+            if (that.isEmpty(domain)) {
+                domain = '';
+            } else {
+                domain = '; domain=' + domain;
+            }
+            document.cookie = name + '=' + escape(value) + '; expires=' + expires.toGMTString() + '; path=/' + domain;
+        },
+        get: function (name) {
+            var cookieArray = document.cookie.split('; ');
+            for (var i = 0; i < cookieArray.length; i++) {
+                var arr = cookieArray[i].split('=');
+                if (arr[0] === name) {
+                    return unescape(arr[1]);
+                }
+            }
+            return false;
+        },
+        delete: function (name, domain) {
+            if (that.isEmpty(domain)) {
+                domain = '';
+            } else {
+                domain = '; domain=' + domain;
+            }
+            document.cookie = name + '=; expires=' + (new Date(0)).toGMTString() + '; path=/' + domain;
+        }
     };
 
     // Sleep
@@ -1336,17 +1526,19 @@ app.directive('kkMenuLm', ['service', function (service) {
 
             door = true;
             body.append(shade);
+
+            menu.animate({
+                right: 0,
+                opacity: 1
+            });
             body.css({
                 width: width
             }).animate({
                 marginLeft: -left,
                 opacity: 1
             });
+
             header.animate({right: left});
-            menu.animate({
-                right: 0,
-                opacity: 1
-            });
 
             var fn = function () {
                 closeMenu();
@@ -1359,15 +1551,17 @@ app.directive('kkMenuLm', ['service', function (service) {
         var closeMenu = function () {
 
             door = false;
+
+            menu.animate({
+                right: -205,
+                opacity: 0
+            });
             body.animate({
                 marginLeft: 0,
                 opacity: 1
             }).removeAttr('width');
             header.animate({right: 0});
-            menu.animate({
-                right: -205,
-                opacity: 0
-            });
+
             shade.remove();
             finger.destroy();
         };
@@ -1728,7 +1922,7 @@ app.directive('kkPrintText', ['service', function (service) {
             elem.html(attr.kkPrintText.substring(0, index++));
         }
 
-        var interval = setInterval(type, parseInt(attr.time || 700));
+        var interval = setInterval(type, parseInt(attr.time || 150));
     };
 
     return command;

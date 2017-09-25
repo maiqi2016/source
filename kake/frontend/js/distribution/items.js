@@ -26,7 +26,6 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
     // Click to show
     $scope.showAnimate = true;
     $scope.showBody = false;
-    $scope.key = 'open-animated';
 
     $scope.hidden = function () {
         var time = 500;
@@ -34,17 +33,12 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
         $scope.timeout(function () {
             $scope.showBody = true;
             $scope.showAnimate = false;
-            $scope.service.cookie.set($scope.key, true);
         }, time);
     };
 
     $scope.autoHide = function () {
-        if ($scope.service.cookie.get($scope.key)) {
+        $scope.timeout(function () {
             $scope.hidden();
-        } else {
-            $scope.timeout(function () {
-                $scope.hidden();
-            }, 5000);
-        }
+        }, 5000);
     }
 }]);

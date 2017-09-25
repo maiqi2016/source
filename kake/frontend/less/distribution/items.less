@@ -1,10 +1,9 @@
 @import "../main";
-
-html, body {
-  height:100%;
-}
 body {
-  background-color: #2c3e50;
+  background-color: black;
+  .all-lm {
+    background-color: #2c3e50;
+  }
 }
 
 .header {
@@ -266,12 +265,16 @@ body {
   }
 }
 .opening {
-  height:100%;
-  background-image: url("@{img}/opening/opening_bj.jpg");
-  background-size: cover;
   position: relative;
+  .opening_bj {
+    .opening_bg {
+      width:100%;
+    }
+  }
   .small_bj {
     width: 7.5rem;
+    position: absolute;
+    top: 0;
     img {
       width: 100%;
     }

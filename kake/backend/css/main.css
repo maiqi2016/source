@@ -270,15 +270,6 @@ div.page {
     }
 }
 
-.navbar-brand {
-    font-size: 30px;
-    text-shadow: 3px 3px 0 #101010, 4px 4px 0 #eee;
-}
-
-.navbar-brand:hover {
-    transition: color 1s ease;
-}
-
 /*
  * Below CSS for plugins
  */
@@ -446,16 +437,31 @@ input[type="file"] {
 #menu-toggle {
     float: left;
     cursor: pointer;
-    width: 36px;
+    width: 32px;
     height: 50px;
-    line-height: 50px;
-    font-size: 26px;
+    line-height: 54px;
+    font-size: 20px;
     color: #cccccc;
 }
 
 #menu-toggle:hover {
-    color: #428bca;
+    color: #ffab13;
     transition: color 1s ease;
+}
+
+.navbar-brand {
+    font-size: 26px;
+    line-height: 26px;
+}
+
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a.navbar-brand {
+    text-shadow: 2px 2px 0 #101010, 3px 3px 0 #101010;
+}
+
+.navbar-inverse:hover .navbar-brand, .navbar-inverse .navbar-nav > li > a.navbar-brand {
+    text-shadow: 2px 2px 0 #101010, 3px 3px 0 #ffab13;
+    color: #9d9d9d;
+    transition: text-shadow 1s ease;
 }
 
 .table {

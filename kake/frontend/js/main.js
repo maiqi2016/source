@@ -7,8 +7,6 @@ app.service('service', ['$http', '$q', function ($http, $q) {
 
     var that = this;
 
-
-
     // CSRF
     this.csrfKey = document.getElementsByName('csrf-param')[0].getAttribute('content');
     this.csrfToken = document.getElementsByName('csrf-token')[0].getAttribute('content');
@@ -857,7 +855,8 @@ app.service('service', ['$http', '$q', function ($http, $q) {
     // Sleep
     this.sleep = function (second) {
         var start = new Date();
-        while (new Date() - start < second) {}
+        while (new Date() - start < second) {
+        }
     };
 }]);
 
@@ -1984,6 +1983,87 @@ app.directive('kkLocationOnInput', ['service', function (service) {
 
             location.href = service.setParams(query, attr.kkLocationOnInput);
         }, elem.find('input, textarea, select'));
+    };
+
+    return command;
+}]);
+
+/**
+ * Directive show modal
+ */
+app.directive('kkModal', ['service', '$timeout', function (service, $timeout) {
+
+    var command = {
+        scope: false,
+        restrict: 'A'
+    };
+
+    command.link = function (scope, elem, attr) {
+        /**
+         * @param attr.kkModal
+         * @param attr.close
+         * @param attr.title
+         * @param attr.no
+         * @param attr.yes
+         * @param attr.onNo
+         * @param attr.onYes
+         */
+        var modal = $('.kk-modal > ' + attr.kkModal);
+        if (!modal.length) {
+            return false;
+        }
+
+        modal.addClass('modal-body');
+
+        // begin
+        var tpl = '<div class="modal fade"><div class="modal-dialog"><div class="modal-content">';
+
+        // header
+        if (attr.title || attr.close) {
+            tpl += '<div class="modal-header">';
+            attr.close && (tpl += '<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>');
+            attr.title && (tpl += '<h4 class="modal-title">' + attr.title + '</h4>');
+            tpl += '</div>';
+        }
+
+        // content
+        modal.addClass('modal-body');
+        tpl += modal[0].outerHTML;
+
+        // footer
+        if (attr.yes || attr.no) {
+            tpl += '<div class="modal-footer">';
+            attr.no && (tpl += '<button type="button" class="btn btn-default no">' + attr.no + '</button>');
+            attr.yes && (tpl += '<button type="button" class="btn btn-primary yes">' + attr.yes + '</button>');
+            tpl += '</div>';
+        }
+
+        // end
+        tpl += '</div></div></div>';
+
+        // callback
+        tpl = $(tpl);
+
+        $.each(['no', 'yes'], function (k, v) {
+            var optionName = 'on' + v.ucFirst();
+            if (attr[v]) {
+                service.tap(tpl.find('button.' + v)[0], function () {
+                    $timeout(function () {
+                        var onResult = true;
+                        if (attr[optionName]) {
+                            var fn = scope.$eval(attr[optionName]);
+                            var result = fn();
+                            onResult = (typeof result === 'undefined') ? true : !!result;
+                        }
+                        onResult && tpl.modal('hide');
+                    }, 0);
+                });
+            }
+        });
+
+        service.tap(elem[0], function () {
+            tpl.modal();
+        });
     };
 
     return command;

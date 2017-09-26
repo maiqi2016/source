@@ -163,11 +163,9 @@ header {
     margin-bottom: 0;
   }
   input {
-    width: 5.03rem;
-    height: 0.54rem;
-    background: url("@{img}/search.svg") no-repeat 6px 6px;
+    background: url("@{img}/search.svg") no-repeat 6px 8px;
     background-size: 20px;
-    text-indent: 23px;
+    text-indent: 28px;
     border: none;
     background-color: rgba(255, 255, 255, 0.1);
     width: 100%;
@@ -245,33 +243,20 @@ header {
 div#message {
   .shade;
   .message-bar {
-    @height: 80px;
-    @padding: 15px;
     @color: #333;
     width: 290px;
-    height: @height;
     position: relative;
     z-index: 999;
-    margin: 42% auto;
-    padding: @padding;
+    margin: 150px auto;
     color: @color;
     background-color: rgba(255, 204, 0, 0.9);
     border-radius: 8px;
     text-align: center;
-    line-height: @height - @padding * 2;
+    padding: 25px 15px;
     font-size: 16px;
 
-    button.close {
-      @length-px: 30px;
-      @margin-px: 10px;
-      width: @length-px;
-      height: @length-px;
-      position: absolute;
-      right: @margin-px;
-      top: (@height - @length-px) / 2;
-      color: @color;
-      font-size: @length-px;
-      line-height: @length-px;
+    p {
+      margin: 0;
     }
   }
 }
@@ -286,7 +271,7 @@ div#loading {
     height: 36px;
     position: relative;
     z-index: 999;
-    margin: 42% auto;
+    margin: 150px auto;
 
     &.loading-bounce {
       @keyframes bounce {
@@ -504,6 +489,25 @@ div#hit {
     animation: opacity-hide .7s 1;
     animation-fill-mode: forwards;
   }
+
+  // spread
+  @keyframes spread {
+    to {
+      transform: scale(5);
+      opacity: 0;
+    }
+  }
+
+  &.kk-spread {
+    display: block;
+    position: absolute;
+    background: rgba(255, 208, 0, .4);
+    border-radius: 100%;
+    pointer-events: none;
+    transform: scale(0);
+    animation: spread 2s ease-out;
+    animation-fill-mode: forwards;
+  }
 }
 
 .no-data {
@@ -515,4 +519,20 @@ div#hit {
 
 .scroll-y {
   overflow-y: hidden;
+}
+
+/*
+ * Modal
+ */
+.modal.in .modal-dialog {
+  top: 38%;
+  transform: translateY(-50%);
+}
+
+.modal.fade {
+  transition: unset;
+}
+
+.kk-modal {
+  display: none;
 }

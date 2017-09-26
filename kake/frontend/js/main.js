@@ -2008,62 +2008,84 @@ app.directive('kkModal', ['service', '$timeout', function (service, $timeout) {
          * @param attr.onNo
          * @param attr.onYes
          */
-        var modal = $('.kk-modal > ' + attr.kkModal);
-        if (!modal.length) {
-            return false;
-        }
+        var content;
 
-        modal.addClass('modal-body');
+        var createModal = function (html) {
+            // begin
+            var tpl = '<div class="modal fade"><div class="modal-dialog"><div class="modal-content">';
 
-        // begin
-        var tpl = '<div class="modal fade"><div class="modal-dialog"><div class="modal-content">';
-
-        // header
-        if (attr.title || attr.close) {
-            tpl += '<div class="modal-header">';
-            attr.close && (tpl += '<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>');
-            attr.title && (tpl += '<h4 class="modal-title">' + attr.title + '</h4>');
-            tpl += '</div>';
-        }
-
-        // content
-        modal.addClass('modal-body');
-        tpl += modal[0].outerHTML;
-
-        // footer
-        if (attr.yes || attr.no) {
-            tpl += '<div class="modal-footer">';
-            attr.no && (tpl += '<button type="button" class="btn btn-default no">' + attr.no + '</button>');
-            attr.yes && (tpl += '<button type="button" class="btn btn-primary yes">' + attr.yes + '</button>');
-            tpl += '</div>';
-        }
-
-        // end
-        tpl += '</div></div></div>';
-
-        // callback
-        tpl = $(tpl);
-
-        $.each(['no', 'yes'], function (k, v) {
-            var optionName = 'on' + v.ucFirst();
-            if (attr[v]) {
-                service.tap(tpl.find('button.' + v)[0], function () {
-                    $timeout(function () {
-                        var onResult = true;
-                        if (attr[optionName]) {
-                            var fn = scope.$eval(attr[optionName]);
-                            var result = fn();
-                            onResult = (typeof result === 'undefined') ? true : !!result;
-                        }
-                        onResult && tpl.modal('hide');
-                    }, 0);
-                });
+            // header
+            if (attr.title || attr.close) {
+                tpl += '<div class="modal-header">';
+                attr.close && (tpl += '<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>');
+                attr.title && (tpl += '<h4 class="modal-title">' + attr.title + '</h4>');
+                tpl += '</div>';
             }
-        });
 
-        service.tap(elem[0], function () {
-            tpl.modal();
-        });
+            tpl += '<div class="modal-body">' + html + '</div>';
+
+            // footer
+            if (attr.yes || attr.no) {
+                tpl += '<div class="modal-footer">';
+                attr.no && (tpl += '<button type="button" class="btn btn-default no">' + attr.no + '</button>');
+                attr.yes && (tpl += '<button type="button" class="btn btn-primary yes">' + attr.yes + '</button>');
+                tpl += '</div>';
+            }
+
+            // end
+            tpl += '</div></div></div>';
+            tpl = $(tpl);
+
+            $.each(['no', 'yes'], function (k, v) {
+                var optionName = 'on' + v.ucFirst();
+                if (attr[v]) {
+                    service.tap(tpl.find('button.' + v)[0], function () {
+                        $timeout(function () {
+                            var onResult = true;
+                            if (attr[optionName]) {
+                                var fn = scope.$eval(attr[optionName]);
+                                var result = fn();
+                                onResult = (typeof result === 'undefined') ? true : !!result;
+                            }
+                            onResult && tpl.modal('hide');
+                        }, 0);
+                    });
+                }
+            });
+
+            return tpl;
+        };
+
+        var tpl;
+        if (attr.kkModal.indexOf('/') !== -1) {
+            tpl = createModal(null);
+            service.tap(elem[0], function () {
+                scope.request({
+                    api: attr.kkModal,
+                    post: {},
+                    success: function (res) {
+                        if (!res.state) {
+                            return scope.message(res.info);
+                        }
+
+                        tpl.find('.modal-body').html(res.data.message);
+                        tpl.modal();
+                    }
+                });
+            });
+            content = '';
+        } else {
+            var modal = $('.kk-modal > ' + attr.kkModal);
+            if (!modal.length) {
+                return false;
+            }
+
+            // content
+            tpl = createModal(modal.html());
+            service.tap(elem[0], function () {
+                tpl.modal();
+            });
+        }
     };
 
     return command;

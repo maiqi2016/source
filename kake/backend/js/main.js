@@ -1469,9 +1469,11 @@ $(function () {
     };
 
     // 复制
-    var clipboard = new Clipboard('.copy');
-    clipboard.on('success', function (e) {
-        e.clearSelection();
-        $.alert('内容复制成功', 'success');
-    });
+    if (typeof Clipboard !== 'undefined' && Clipboard.toString().indexOf('[native code]') === -1) {
+        var clipboard = new Clipboard('.copy');
+        clipboard.on('success', function (e) {
+            e.clearSelection();
+            $.alert('内容复制成功', 'success');
+        });
+    }
 });

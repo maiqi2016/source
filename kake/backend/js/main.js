@@ -950,7 +950,7 @@ $(function () {
         }
 
         var url = options.data.url;
-        var url = url.indexOf('http') === 0 ? (url + '?' + $.time()) : url;
+        url = url.indexOf('http') === 0 ? (url + '?' + $.time()) : url;
         previewObj.append('' +
             '<div class="col-sm-' + options.previewLabel + '">' +
             '   <a href="javascript:void(0)" class="thumbnail sortable-box">' + action +
@@ -1402,12 +1402,6 @@ $(function () {
         ajaxModel = ajaxModel || false;
 
         var index = ['natural', 'desc', 'asc'];
-        var map = {
-            natural: 'glyphicon-sort',
-            desc: 'glyphicon-sort-by-alphabet-alt',
-            asc: 'glyphicon-sort-by-alphabet'
-        };
-
         var sortIndex = parseInt(that.attr('sort-index')) || 0;
         var nextIndex = (sortIndex >= index.length - 1) ? 0 : (sortIndex + 1);
         that.attr('sort-index', nextIndex);
@@ -1447,7 +1441,7 @@ $(function () {
             size: 'sm',
             title: '手动排序',
             message: '' +
-                '<input class="form-control" value="' + defaultSort + '"><h4><small>大于零的整数，越小越靠前</small></h4>',
+            '<input class="form-control" value="' + defaultSort + '"><h4><small>大于零的整数，越小越靠前</small></h4>',
             yes: '提交',
             yesCallback: function (obj) {
                 var sort = parseInt(obj.find('input').val());
@@ -1473,4 +1467,11 @@ $(function () {
             }
         }).modal();
     };
+
+    // 复制
+    var clipboard = new Clipboard('.copy');
+    clipboard.on('success', function (e) {
+        e.clearSelection();
+        $.alert('内容复制成功', 'success');
+    });
 });

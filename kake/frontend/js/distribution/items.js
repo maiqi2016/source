@@ -12,17 +12,6 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
         $scope.scroll(!$scope.showTab);
     };
 
-    $('*').on('touchstart', function (e) {
-        var touch = e.touches[0];
-        var y = Number(touch.pageY);
-        if (y > 400) {
-            $scope.timeout(function () {
-                $scope.showTab = false;
-                $scope.scroll(true);
-            });
-        }
-    });
-
     // Click to show
     $scope.showAnimate = true;
     $scope.showBody = false;
@@ -37,6 +26,7 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
     };
 
     $scope.autoHide = function () {
+        $('.opening_bj img').css('height', window.screen.height);
         $scope.timeout(function () {
             $scope.hidden();
         }, 5000);

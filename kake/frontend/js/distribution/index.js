@@ -110,6 +110,7 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
 
     $('.distri_ani').imagesLoaded({background: true}).always(function (instance) {
 
+        $('.distri_ani, .content').css('height', window.screen.height);
         var car = new $scope.Car($('.box-false'));
         $scope.service.sleep(1500);
 

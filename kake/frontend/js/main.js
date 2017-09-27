@@ -973,7 +973,7 @@ app.directive('kkTap', ['service', '$parse', function (service, $parse) {
 app.directive('kkSpread', ['$timeout', 'service', function ($timeout, service) {
 
     var command = {
-        scope: {},
+        scope: true,
         restrict: 'A',
         template: '<i class="kk-animate"></i><span ng-transclude></span>',
         transclude: true
@@ -1176,7 +1176,7 @@ app.directive('kkFocus', ['service', function (service) {
 app.directive('kkScroll', ['service', '$timeout', function (service, $timeout) {
 
     var command = {
-        scope: false,
+        scope: true,
         restrict: 'A'
     };
 
@@ -1242,7 +1242,7 @@ app.directive('kkScroll', ['service', '$timeout', function (service, $timeout) {
 app.directive('kkCamel', ['service', function (service) {
 
     var command = {
-        scope: {},
+        scope: true,
         restrict: 'A'
     };
 
@@ -1374,7 +1374,7 @@ app.directive('kkCamel', ['service', function (service) {
 app.directive('kkSms', ['service', function (service) {
 
     var command = {
-        scope: false,
+        scope: true,
         restrict: 'A'
     };
 
@@ -1446,7 +1446,7 @@ app.directive('kkSms', ['service', function (service) {
 app.directive('kkMenu', ['service', function (service) {
 
     var command = {
-        scope: {},
+        scope: true,
         restrict: 'A'
     };
 
@@ -1503,65 +1503,40 @@ app.directive('kkMenu', ['service', function (service) {
 app.directive('kkMenuLm', ['service', function (service) {
 
     var command = {
-        scope: {},
+        scope: true,
         restrict: 'A'
     };
     var door = false;
 
     command.link = function (scope, elem, attr) {
 
-        var body = $('.all-lm'),
-            menu = $('.menu-lm'),
-            header = $('header, footer'),
-            width = window.screen.width,
+        var menu = $('.menu-lm'),
             shade = $('<div class="shade"></div>'),
             finger;
 
-        var left = menu.width() + service.pam(menu);
         menu.css('height', window.screen.height);
 
         // 打开菜单
         var openMenu = function () {
-
             door = true;
-            body.append(shade);
-
             menu.animate({
                 right: 0,
                 opacity: 1
             });
-            // body.css({
-            //     width: width
-            // }).animate({
-            //     marginLeft: -left,
-            //     opacity: 1
-            // });
-
-            header.animate({right: left});
-
-            var fn = function () {
-                closeMenu();
-            };
-
-            finger = service.tap(shade, fn, {swipe: fn});
+            $('body').append(shade);
+            scope.scroll(false);
+            finger = service.tap(shade, closeMenu);
         };
 
         // 关闭菜单
         var closeMenu = function () {
-
             door = false;
-
             menu.animate({
                 right: -205,
                 opacity: 0
             });
-            body.animate({
-                marginLeft: 0,
-                opacity: 1
-            }).removeAttr('width');
-            header.animate({right: 0});
-
             shade.remove();
+            scope.scroll(true);
             finger.destroy();
         };
 
@@ -1583,7 +1558,7 @@ app.directive('kkMenuLm', ['service', function (service) {
 app.directive('kkFixed', ['service', function (service) {
 
     var command = {
-        scope: {},
+        scope: true,
         restrict: 'A'
     };
 
@@ -1636,7 +1611,7 @@ app.directive('kkFixed', ['service', function (service) {
 app.directive('kkTabCard', ['service', function (service) {
 
     var command = {
-        scope: {},
+        scope: true,
         restrict: 'A'
     };
 
@@ -1685,7 +1660,7 @@ app.directive('kkTabCard', ['service', function (service) {
 app.directive('kkInputCancel', ['service', function (service) {
 
     var command = {
-        scope: {},
+        scope: true,
         restrict: 'A'
     };
 
@@ -1715,7 +1690,7 @@ app.directive('kkInputCancel', ['service', function (service) {
 app.directive('kkAjaxLoad', ['service', '$compile', function (service, $compile) {
 
     var command = {
-        scope: false,
+        scope: true,
         restrict: 'A'
     };
 
@@ -1839,7 +1814,7 @@ app.directive('kkAjaxUpload', ['service', '$timeout', function (service, $timeou
 app.directive('kkLink', ['service', function (service) {
 
     var command = {
-        scope: {},
+        scope: true,
         restrict: 'A'
     };
 
@@ -1862,7 +1837,7 @@ app.directive('kkLink', ['service', function (service) {
 app.directive('kkPullUp', ['service', function (service) {
 
     var command = {
-        scope: false,
+        scope: true,
         restrict: 'A'
     };
 
@@ -1903,7 +1878,7 @@ app.directive('kkPullUp', ['service', function (service) {
 app.directive('kkPrintText', ['service', function (service) {
 
     var command = {
-        scope: false,
+        scope: true,
         restrict: 'A'
     };
 
@@ -1921,7 +1896,7 @@ app.directive('kkPrintText', ['service', function (service) {
             elem.html(attr.kkPrintText.substring(0, index++));
         }
 
-        var interval = setInterval(type, parseInt(attr.time || 150));
+        var interval = setInterval(type, parseInt(attr.time || 250));
     };
 
     return command;
@@ -1933,7 +1908,7 @@ app.directive('kkPrintText', ['service', function (service) {
 app.directive('kkCopyText', ['service', function (service) {
 
     var command = {
-        scope: false,
+        scope: true,
         restrict: 'A'
     };
 
@@ -1967,7 +1942,7 @@ app.directive('kkCopyText', ['service', function (service) {
 app.directive('kkLocationOnInput', ['service', function (service) {
 
     var command = {
-        scope: false,
+        scope: true,
         restrict: 'A'
     };
 
@@ -1994,7 +1969,7 @@ app.directive('kkLocationOnInput', ['service', function (service) {
 app.directive('kkModal', ['service', '$timeout', function (service, $timeout) {
 
     var command = {
-        scope: false,
+        scope: true,
         restrict: 'A'
     };
 

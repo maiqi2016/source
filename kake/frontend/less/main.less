@@ -145,12 +145,13 @@ header {
 .menu-lm {
   background: url("@{img}/menubj.jpeg") no-repeat;
   background-size: cover;
-  position: fixed;
+  position: absolute;
+  overflow-y: scroll;
   top: 0;
   right: -205px;
   z-index: 999;
   width: 170px;
-  padding: 0 15px 0 20px;
+  padding: 0 15px 30px 20px;
   p {
     text-indent: 8px;
     color: rgb(169, 142, 103);
@@ -164,7 +165,7 @@ header {
   input {
     background: url("@{img}/search.svg") no-repeat 6px 8px;
     background-size: 20px;
-    text-indent: 28px;
+    text-indent: 23px;
     border: none;
     background-color: rgba(255, 255, 255, 0.1);
     width: 100%;

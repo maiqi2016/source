@@ -1530,12 +1530,12 @@ app.directive('kkMenuLm', ['service', function (service) {
                 right: 0,
                 opacity: 1
             });
-            body.css({
-                width: width
-            }).animate({
-                marginLeft: -left,
-                opacity: 1
-            });
+            // body.css({
+            //     width: width
+            // }).animate({
+            //     marginLeft: -left,
+            //     opacity: 1
+            // });
 
             header.animate({right: left});
 

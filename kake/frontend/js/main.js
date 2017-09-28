@@ -956,7 +956,8 @@ app.directive('kkTap', ['service', '$parse', function (service, $parse) {
                 event = event || window.event;
                 var callback = function () {
                     fn(scope, {
-                        $event: event
+                        $event: event,
+                        $elem: elem
                     });
                 };
                 scope.$apply(callback);

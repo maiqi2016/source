@@ -185,5 +185,10 @@ app.controller('order', ['$scope', '$controller', '$interval', function ($scope,
             }
         }, 1000);
     };
+
+    $scope.posBox = function (e, box) {
+        var pos = $scope.service.offset(box[0]);
+        $('body, html').animate({scrollTop: pos.top});
+    }
 }]);
 

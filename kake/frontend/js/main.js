@@ -1514,7 +1514,7 @@ app.directive('kkMenuLm', ['service', function (service) {
     command.link = function (scope, elem, attr) {
 
         var menu = $('.menu-lm'),
-            shade = $('<div class="shade"></div>'),
+            shade = $('<div class="shade animated fadeIn"></div>'),
             finger;
 
         menu.css('height', window.screen.height);
@@ -1522,10 +1522,7 @@ app.directive('kkMenuLm', ['service', function (service) {
         // 打开菜单
         var openMenu = function () {
             door = true;
-            menu.animate({
-                right: 0,
-                opacity: 1
-            });
+            menu.removeClass('hidden flipOutY').addClass('flipInY');
             $('body').append(shade);
             scope.scroll(false);
             finger = service.tap(shade, closeMenu);
@@ -1534,10 +1531,7 @@ app.directive('kkMenuLm', ['service', function (service) {
         // 关闭菜单
         var closeMenu = function () {
             door = false;
-            menu.animate({
-                right: -205,
-                opacity: 0
-            });
+            menu.removeClass('flipInY').addClass('flipOutY');
             shade.remove();
             scope.scroll(true);
             finger && finger.destroy();

@@ -36,6 +36,7 @@
     "alloyfinger": "^0.1.8",
     "alloytouch": "^0.2.5",
     "angular": "^1.6.5",
+    "animate.css": "^3.5.2",
     "bootstrap": "^3.3.7",
     "canvas2image": "^1.0.5",
     "clipboard": "^1.7.1",

@@ -11,11 +11,12 @@ app.controller('auth', ['$scope', '$controller', function ($scope, $controller) 
     };
 
     $scope.second = 5;
-    $scope.goBack = function () {
+    $scope.goBack = function (backurl) {
         $scope.interval(function () {
             $scope.second--;
-            if ($scope.second <= 0) {
-                history.go(-1);
+            if ($scope.second <= 1) {
+                location.href = backurl;
+                return null;
             }
         }, 1000);
     };

@@ -5,7 +5,7 @@ module.exports = function (grunt) {
             common: {
                 options: {
                     sourceMap: true,
-                    sourceMapRootpath: '/kake'
+                    sourceMapRootpath: '/kake/frontend'
                 },
                 files: [{
                     expand: true,

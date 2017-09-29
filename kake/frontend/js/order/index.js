@@ -43,14 +43,13 @@ app.controller('order', ['$scope', '$controller', '$interval', function ($scope,
     };
 
     // 轮询订单是否完成（支付宝专用）
-    $scope.pollOrder = function (orderNumber, userId, time) {
+    $scope.pollOrder = function (orderNumber, userId) {
         $scope.request({
             api: 'order/ajax-poll-order',
             loading: false,
             post: {
                 order_number: orderNumber,
                 user_id: userId,
-                time: time,
                 channel: $scope.service.parseQueryString().channel
             },
             success: function (res) {
@@ -58,7 +57,7 @@ app.controller('order', ['$scope', '$controller', '$interval', function ($scope,
             },
             fail: function () {
                 setTimeout(function () {
-                    $scope.pollOrder(orderNumber, userId, time);
+                    $scope.pollOrder(orderNumber, userId);
                 }, 3000);
             }
         });

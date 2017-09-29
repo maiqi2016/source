@@ -1,48 +1,48 @@
 @import "../main";
 
 html {
-  background: url("@{img}/auth/login-bg.jpg") no-repeat center center fixed;
-  background-size: cover;
-  height: 100%;
-  body {
-    background-color: transparent;
-    .login-bg {
-      padding-top: 100px;
-    }
-  }
-  .login-bg {
-    width: 312px;
-    margin: 0 auto;
-
-    .form-control {
-      text-indent: 5px;
-      border: 1px solid rgba(255, 255, 255, 0);
-      background-color: rgba(255, 255, 255, 0.2);
-      color: white;
-    }
-
-    .captcha-btn {
-      border: 1px solid rgba(255, 255, 255, 0);
-      border-left: 1px dashed rgba(255, 255, 255, 0.1);
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .login-btn {
-      display: block;
-      margin: 38px auto;
-      font-size: 16px;
-      border-radius: 100px;
-      padding: 10px 25px;
-      background-color: transparent;
-    }
-
-    .btn {
-      color: white;
-      &:focus, &:hover, &:active {
-        outline: none;
+    background: url("@{img}/auth/login-bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    body {
         background-color: transparent;
-        color: white;
-      }
+        .login-bg {
+            padding-top: 100px;
+        }
     }
-  }
+    .login-bg {
+        width: 312px;
+        margin: 0 auto;
+
+        .form-control {
+            text-indent: 5px;
+            border: 1px solid rgba(255, 255, 255, 0);
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .captcha-btn {
+            border: 1px solid rgba(255, 255, 255, 0);
+            border-left: 1px dashed rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .login-btn {
+            display: block;
+            margin: 38px auto;
+            font-size: 16px;
+            border-radius: 100px;
+            padding: 10px 25px;
+            background-color: transparent;
+        }
+
+        .btn {
+            color: white;
+            &:focus, &:hover, &:active {
+                outline: none;
+                background-color: transparent;
+                color: white;
+            }
+        }
+    }
 }

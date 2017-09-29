@@ -664,7 +664,9 @@ app.service('service', ['$http', '$q', function ($http, $q) {
             return new AlloyFinger(target, options);
         }
 
-        return $(target).click(action);
+        $(target).click(action);
+
+        return false;
     };
 
     // Rand
@@ -1538,7 +1540,7 @@ app.directive('kkMenuLm', ['service', function (service) {
             });
             shade.remove();
             scope.scroll(true);
-            finger.destroy();
+            finger && finger.destroy();
         };
 
         service.tap(elem[0], function () {

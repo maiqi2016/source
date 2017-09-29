@@ -1522,7 +1522,7 @@ app.directive('kkMenuLm', ['service', function (service) {
         // 打开菜单
         var openMenu = function () {
             door = true;
-            menu.removeClass('hidden flipOutY').addClass('flipInY');
+            menu.removeClass('hidden fadeOutRight').addClass('fadeInRight');
             $('body').append(shade);
             scope.scroll(false);
             finger = service.tap(shade, closeMenu);
@@ -1531,7 +1531,7 @@ app.directive('kkMenuLm', ['service', function (service) {
         // 关闭菜单
         var closeMenu = function () {
             door = false;
-            menu.removeClass('flipInY').addClass('flipOutY');
+            menu.removeClass('fadeInRight').addClass('fadeOutRight');
             shade.remove();
             scope.scroll(true);
             finger && finger.destroy();

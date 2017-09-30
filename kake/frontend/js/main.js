@@ -1503,7 +1503,7 @@ app.directive('kkMenu', ['service', function (service) {
 /**
  * Directive menu-lm
  */
-app.directive('kkMenuLm', ['service', function (service) {
+app.directive('kkMenuLm', ['service', '$timeout', function (service, $timeout) {
 
     var command = {
         scope: true,
@@ -1513,28 +1513,34 @@ app.directive('kkMenuLm', ['service', function (service) {
 
     command.link = function (scope, elem, attr) {
 
+        var animateShadeIn = 'fadeIn',
+            animateShadeOut = 'fadeOut',
+            animateMenuIn = 'fadeInRight',
+            animateMenuOut = 'fadeOutRight';
+
         var menu = $('.menu-lm'),
-            shade = $('<div class="shade animated fadeIn"></div>'),
-            finger;
+            shade = $('<div class="shade hidden animated"></div>');
 
         menu.css('height', window.screen.height);
+        $('body').append(shade);
 
         // 打开菜单
         var openMenu = function () {
             door = true;
-            menu.removeClass('hidden fadeOutRight').addClass('fadeInRight');
-            $('body').append(shade);
-            scope.scroll(false);
-            finger = service.tap(shade, closeMenu);
+            menu.removeClass('hidden ' + animateMenuOut).addClass(animateMenuIn);
+            shade.removeClass('hidden ' + animateShadeOut).addClass(animateShadeIn);
+            service.tap(shade, closeMenu);
         };
 
         // 关闭菜单
         var closeMenu = function () {
             door = false;
-            menu.removeClass('fadeInRight').addClass('fadeOutRight');
-            shade.remove();
-            scope.scroll(true);
-            finger && finger.destroy();
+            menu.removeClass(animateMenuIn).addClass(animateMenuOut);
+            shade.removeClass(animateShadeIn).addClass(animateShadeOut);
+            $timeout(function () {
+                menu.addClass('hidden');
+                shade.addClass('hidden');
+            }, 600);
         };
 
         service.tap(elem[0], function () {

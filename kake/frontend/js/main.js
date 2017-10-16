@@ -1270,7 +1270,7 @@ app.directive('kkCamel', ['service', function (service) {
         that.pam = service.pam(that.img);
 
         that.allPam = service.pam(that.camel) + that.pam * that.number;
-        that.half = (window.innerWidth - that.width) / 2;
+        that.half = (elem.width() - that.width) / 2;
         that.scale = parseFloat(attr.scale) || .9;
 
         that.first = -(that.width + that.pam);

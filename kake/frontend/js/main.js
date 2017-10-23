@@ -1985,6 +1985,7 @@ app.directive('kkModal', ['service', '$timeout', function (service, $timeout) {
          * @param attr.yes
          * @param attr.onNo
          * @param attr.onYes
+         * @param attr.width
          */
         var content;
 
@@ -2040,12 +2041,13 @@ app.directive('kkModal', ['service', '$timeout', function (service, $timeout) {
             service.tap(elem[0], function () {
                 scope.request({
                     api: attr.kkModal,
-                    post: {},
+                    post: attr.params ? service.parseQueryString(attr.params) : {},
                     success: function (res) {
                         if (!res.state) {
                             return scope.message(res.info);
                         }
 
+                        tpl.find('.modal-dialog').css('width', attr.width);
                         tpl.find('.modal-body').html(res.data.message);
                         tpl.modal();
                     }
@@ -2060,6 +2062,7 @@ app.directive('kkModal', ['service', '$timeout', function (service, $timeout) {
 
             // content
             tpl = createModal(modal.html());
+            tpl.find('.modal-dialog').css('width', attr.width);
             service.tap(elem[0], function () {
                 tpl.modal();
             });

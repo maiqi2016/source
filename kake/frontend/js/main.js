@@ -2293,6 +2293,14 @@ app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $t
             options.desc = description;
             wx.onMenuShareAppMessage(options);
         });
+
+        // 扫一扫
+        service.tap($('.lift-scan'), function () {
+            wx.scanQRCode({
+                needResult: 1,
+                scanType: ['qrCode']
+            });
+        });
     };
 
     /**

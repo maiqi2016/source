@@ -2299,7 +2299,7 @@ app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $t
         if (scanBtn.length) {
             service.tap(scanBtn, function () {
                 wx.scanQRCode({
-                    needResult: 1,
+                    needResult: 0,
                     scanType: ['qrCode']
                 });
             });

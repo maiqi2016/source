@@ -15,6 +15,7 @@ app.controller('order', ['$scope', '$controller', '$interval', function ($scope,
     $scope.order = [];
     $scope.bill = [];
     $scope.second = 15;
+    $scope.code = '';
 
     // 微信吊起支付
     $scope.wxPayment = function (data, orderNumber) {
@@ -188,6 +189,31 @@ app.controller('order', ['$scope', '$controller', '$interval', function ($scope,
     $scope.posBox = function (e, box) {
         var pos = $scope.service.offset(box[0]);
         $('body, html').animate({scrollTop: pos.top});
-    }
+    };
+
+    //核销页面js
+    $scope.$watch('code', function (n, o) {
+
+        var add = true;
+
+        if (o.length > n.length) {
+            add = false
+        }
+
+        if (add) {
+            n = n.replace(/ /g, '');
+            o = o.replace(/ /g, '');
+
+            if (n === o || n.length >= 12) {
+                return;
+            }
+
+            if (n.length % 4 === 0) {
+                $scope.code += ' ';
+            }
+        } else {
+            $scope.code = $scope.code.trim();
+        }
+    });
 }]);
 

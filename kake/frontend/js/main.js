@@ -2295,12 +2295,15 @@ app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $t
         });
 
         // 扫一扫
-        service.tap($('.lift-scan'), function () {
-            wx.scanQRCode({
-                needResult: 1,
-                scanType: ['qrCode']
+        var scanBtn = $('.lift-scan');
+        if (scanBtn.length) {
+            service.tap(scanBtn, function () {
+                wx.scanQRCode({
+                    needResult: 1,
+                    scanType: ['qrCode']
+                });
             });
-        });
+        }
     };
 
     /**

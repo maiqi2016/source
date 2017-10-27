@@ -1329,17 +1329,20 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
         }
 
         var zIndex = attr.zIndex || 99;
-        var idTag = attr.idTag || 'focus_card_';
 
         var child = elem.children();
         var len = child.length;
 
+        var smallScale = .9;
+        var smallTranX = 49;
+        var smallTranY = 11;
+
         // 小图复位
         var recoverySmall = function (item) {
             $(item).css('opacity', 1);
-            item.scaleX = item.scaleY = 0.9;
-            item.translateX = 49;
-            item.translateY = 11;
+            item.scaleX = item.scaleY = smallScale;
+            item.translateX = smallTranX;
+            item.translateY = smallTranY;
         };
 
         //大图复位
@@ -1348,28 +1351,30 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
                 if (item.scaleX >= 1 || item.translateX <= 0) {
                     return false;
                 }
-                item.scaleX += 0.01;
-                item.scaleY += 0.01;
-                item.translateX -= 4.9;
-                item.translateY -= 1.1;
+                var step = 10;
+                item.scaleX += (1 - smallScale) / step;
+                item.scaleY += (1 - smallScale) / step;
+                item.translateX -= smallTranX / step;
+                item.translateY -= smallTranY / step;
             });
         };
 
         child.each(function (i, item) {
             Transform(item, true);
-            $(item).attr('id', idTag + i).css('z-index', zIndex + len - i);
+            $(item).css('z-index', zIndex + len - i);
             i && recoverySmall(item);
         });
 
-        var move = function (index) {
+        var touch;
+        var effect = function (item) {
 
-            var item = $('#' + idTag + index);
-            var width = item.width();
+            var touchSelector = '#' + attr.id;
+            var width = $(item).width();
 
             return new AlloyTouch({
-                touch: '#' + attr.id,
+                touch: touchSelector,
                 vertical: false,
-                target: item[0],
+                target: item,
                 property: "translateX",
                 inertia: false,
                 sensitivity: 1,
@@ -1378,14 +1383,12 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
                 step: screen.width,
 
                 pressMove: function () {
-
                 },
 
                 change: function (value) {
                     var v = Math.abs(value);
                     v = v > width ? width : v;
-
-                    item.css('opacity', 1 - (v / width) * 0.7);
+                    $(this.target).css('opacity', 1 - (v / width) * 0.7);
                 },
 
                 touchMove: function (evt, value) {
@@ -1394,36 +1397,34 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
 
                 touchEnd: function (evt, value) {
                     this.preventDefault = false;
-                    var time = 600;
+                    var time = 300;
 
-                    if (value < -70) {
-
-                        this.to(this.min + $(this.target).offset().left, time);
-
-                        var that = this.target;
-                        $timeout(function () {
-                            $(that).parent().append(that);
-                            recoverySmall(that);
-                            $(that).parent().children().each(function (i, item) {
-                                $(item).css('z-index', zIndex + len - i);
-                            });
-                            recoveryBig(that.parentNode.firstElementChild);
-                            move(index+1);
-                        }, time + 20);
-
-
-                    } else {
+                    if (value >= -70) {
                         this.to(this.max, time);
+                        return false;
                     }
 
+                    this.to(this.step * -1, time);
+                    var that = this.target;
+
+                    $timeout(function () {
+                        $(touchSelector).append(that);
+                        var child = $(touchSelector).children();
+                        recoveryBig(child.get(0));
+                        child.each(function (i) {
+                            $(this).css('z-index', zIndex + len - i);
+                        });
+                        recoverySmall(that);
+
+                        touch = effect(child.get(0));
+                    }, time + 10);
 
                     return false;
                 }
             });
         };
 
-        move(0);
-
+        touch = effect(child.get(0));
     };
 
     return command;
@@ -1494,7 +1495,6 @@ app.directive('kkScroll', ['service', '$timeout', function (service, $timeout) {
 
     return command;
 }]);
-
 
 /**
  * Directive sms

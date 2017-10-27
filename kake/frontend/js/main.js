@@ -1174,75 +1174,9 @@ app.directive('kkFocus', ['service', function (service) {
 }]);
 
 /**
- * Directive scroll
+ * Directive focus camel
  */
-app.directive('kkScroll', ['service', '$timeout', function (service, $timeout) {
-
-    var command = {
-        scope: true,
-        restrict: 'A'
-    };
-
-    command.link = function (scope, elem, attr) {
-
-        /**
-         * @param attr.id
-         * @param attr.kkScroll
-         * @param attr.callbackMove
-         */
-        var that = {};
-
-        if (!attr.id) {
-            return service.debug('[kk-scroll] Current element must has attribute `id`!');
-        }
-
-        that.scroll = elem.children();
-        that.img = that.scroll.children();
-        that.pam = service.pam(that.scroll) + service.pam(that.img, that.img.length);
-
-        that.offset = parseInt(attr.kkScroll) ? parseInt(attr.kkScroll) : 0;
-        that.offset = window.innerWidth - that.pam - that.offset;
-
-        Transform(that.scroll[0], true);
-
-        try {
-            new AlloyTouch({
-                touch: '#' + attr.id,
-                vertical: false,
-                target: that.scroll[0],
-                property: 'translateX',
-                min: that.img.width() * -(that.img.length) + that.offset,
-                max: 0,
-                sensitivity: 1,
-
-                touchMove: function () {
-                    this.preventDefault = true;
-                },
-
-                touchEnd: function () {
-                    this.preventDefault = false;
-                },
-
-                change: function (value) {
-                    var min = Math.abs(this.min);
-                    $timeout(function () {
-                        var fn = scope.$eval(attr.callbackChange);
-                        fn(that.img, value, min);
-                    }, 0);
-                }
-            });
-        } catch (e) {
-            service.debug(e, 'error');
-        }
-    };
-
-    return command;
-}]);
-
-/**
- * Directive camel
- */
-app.directive('kkCamel', ['service', function (service) {
+app.directive('kkFocusCamel', ['service', function (service) {
 
     var command = {
         scope: true,
@@ -1258,7 +1192,7 @@ app.directive('kkCamel', ['service', function (service) {
         var that = {};
 
         if (!attr.id) {
-            return service.debug('[kk-camel] Current element must has attribute `id`!');
+            return service.debug('[kk-focus-camel] Current element must has attribute `id`!');
         }
 
         // Var
@@ -1370,6 +1304,197 @@ app.directive('kkCamel', ['service', function (service) {
 
     return command;
 }]);
+
+/**
+ * Directive focus card
+ */
+app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout) {
+
+    var command = {
+        scope: true,
+        restrict: 'A'
+    };
+
+    command.link = function (scope, elem, attr) {
+
+        /**
+         * @param attr.id
+         * @param attr.kkFocusCard
+         * @param attr.zIndex
+         * @param attr.idTag
+         */
+
+        if (!attr.id) {
+            return service.debug('[kk-focus-card] Current element must has attribute `id`!');
+        }
+
+        var zIndex = attr.zIndex || 99;
+        var idTag = attr.idTag || 'focus_card_';
+
+        var child = elem.children();
+        var len = child.length;
+
+        // 小图复位
+        var recoverySmall = function (item) {
+            $(item).css('opacity', 1);
+            item.scaleX = item.scaleY = 0.9;
+            item.translateX = 49;
+            item.translateY = 11;
+        };
+
+        //大图复位
+        var recoveryBig = function (item) {
+            tick(function () {
+                if (item.scaleX >= 1 || item.translateX <= 0) {
+                    return false;
+                }
+                item.scaleX += 0.01;
+                item.scaleY += 0.01;
+                item.translateX -= 4.9;
+                item.translateY -= 1.1;
+            });
+        };
+
+        child.each(function (i, item) {
+            Transform(item, true);
+            $(item).attr('id', idTag + i).css('z-index', zIndex + len - i);
+            i && recoverySmall(item);
+        });
+
+        var move = function (index) {
+
+            var item = $('#' + idTag + index);
+            var width = item.width();
+
+            return new AlloyTouch({
+                touch: '#' + attr.id,
+                vertical: false,
+                target: item[0],
+                property: "translateX",
+                inertia: false,
+                sensitivity: 1,
+                min: width * -1,
+                max: 0,
+                step: screen.width,
+
+                pressMove: function () {
+
+                },
+
+                change: function (value) {
+                    var v = Math.abs(value);
+                    v = v > width ? width : v;
+
+                    item.css('opacity', 1 - (v / width) * 0.7);
+                },
+
+                touchMove: function (evt, value) {
+                    this.preventDefault = true;
+                },
+
+                touchEnd: function (evt, value) {
+                    this.preventDefault = false;
+                    var time = 600;
+
+                    if (value < -70) {
+
+                        this.to(this.min + $(this.target).offset().left, time);
+
+                        var that = this.target;
+                        $timeout(function () {
+                            $(that).parent().append(that);
+                            recoverySmall(that);
+                            $(that).parent().children().each(function (i, item) {
+                                $(item).css('z-index', zIndex + len - i);
+                            });
+                            recoveryBig(that.parentNode.firstElementChild);
+                            move(index+1);
+                        }, time + 20);
+
+
+                    } else {
+                        this.to(this.max, time);
+                    }
+
+
+                    return false;
+                }
+            });
+        };
+
+        move(0);
+
+    };
+
+    return command;
+}]);
+
+/**
+ * Directive scroll
+ */
+app.directive('kkScroll', ['service', '$timeout', function (service, $timeout) {
+
+    var command = {
+        scope: true,
+        restrict: 'A'
+    };
+
+    command.link = function (scope, elem, attr) {
+
+        /**
+         * @param attr.id
+         * @param attr.kkScroll
+         * @param attr.callbackMove
+         */
+        var that = {};
+
+        if (!attr.id) {
+            return service.debug('[kk-scroll] Current element must has attribute `id`!');
+        }
+
+        that.scroll = elem.children();
+        that.img = that.scroll.children();
+        that.pam = service.pam(that.scroll) + service.pam(that.img, that.img.length);
+
+        that.offset = parseInt(attr.kkScroll) ? parseInt(attr.kkScroll) : 0;
+        that.offset = window.innerWidth - that.pam - that.offset;
+
+        Transform(that.scroll[0], true);
+
+        try {
+            new AlloyTouch({
+                touch: '#' + attr.id,
+                vertical: false,
+                target: that.scroll[0],
+                property: 'translateX',
+                min: that.img.width() * -(that.img.length) + that.offset,
+                max: 0,
+                sensitivity: 1,
+
+                touchMove: function () {
+                    this.preventDefault = true;
+                },
+
+                touchEnd: function () {
+                    this.preventDefault = false;
+                },
+
+                change: function (value) {
+                    var min = Math.abs(this.min);
+                    $timeout(function () {
+                        var fn = scope.$eval(attr.callbackChange);
+                        fn(that.img, value, min);
+                    }, 0);
+                }
+            });
+        } catch (e) {
+            service.debug(e, 'error');
+        }
+    };
+
+    return command;
+}]);
+
 
 /**
  * Directive sms
@@ -1571,7 +1696,13 @@ app.directive('kkFixed', ['service', function (service) {
          * @param attr.box
          * @param attr.kkFixed
          */
-        var prefixHeight = parseInt(attr.kkFixed) || 0;
+        var prefixHeight;
+        if (isNaN(attr.kkFixed)) {
+            prefixHeight = eval(attr.kkFixed);
+        } else {
+            prefixHeight = parseInt(attr.kkFixed);
+        }
+
         var left = parseInt(attr.left) || 0;
         var top = parseInt(attr.top) || 0;
         var pos = service.offset(elem[0]);
@@ -1650,6 +1781,53 @@ app.directive('kkTabCard', ['service', function (service) {
                 var tabDiv = $(this).attr('data-card');
                 $(tab).hide();
                 $(tabDiv).fadeIn();
+            });
+        });
+    };
+
+    return command;
+}]);
+
+/**
+ * Directive anchor
+ */
+app.directive('kkAnchor', ['service', function (service) {
+
+    var command = {
+        scope: true,
+        restrict: 'A'
+    };
+
+    command.link = function (scope, elem, attr) {
+
+        /**
+         * @param attr.element
+         * @param attr.kkAnchor
+         */
+
+        var anchorElements = elem.find(attr.element || '*');
+        var anchor = [];
+        var anchorElement = [];
+        anchorElements.each(function () {
+            var anchorDiv = $(this).attr('data-anchor');
+
+            if (anchorDiv) {
+                anchor.push($(anchorDiv)[0]);
+                anchorElement.push(this);
+            }
+        });
+
+        $(anchorElement[0]).addClass(attr.kkAnchor);
+
+        $.each(anchorElement, function () {
+            service.tap(this, function () {
+                // action tab
+                $(anchorElement).removeClass(attr.kkAnchor);
+                $(this).addClass(attr.kkAnchor);
+
+                // action card
+                var anchorDiv = $(this).attr('data-anchor');
+                $('body, html').animate({scrollTop: $(anchorDiv).offset().top - $(anchorDiv).height() / 2}, 500);
             });
         });
     };

@@ -31,4 +31,7 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
             $scope.hidden();
         }, 5000);
     }
+
+
+
 }]);

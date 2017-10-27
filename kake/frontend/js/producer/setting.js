@@ -22,11 +22,17 @@ app.controller('producer', ['$scope', '$controller', function ($scope, $controll
         var radio = $('.style-2 > span');
         radio.each(function () {
             $scope.service.tap(this, function () {
-                radio.removeClass('active');
-                $(this).addClass('active');
 
-                $('span.right').html($(this).html());
-                $scope.setting.account_type = $(this).attr('data-key');
+                var that = $(this);
+                radio.removeClass('active');
+                that.addClass('active');
+
+                $('span.right').html(that.html());
+
+                $scope.timeout(function () {
+                    $scope.setting.account_number = null;
+                    $scope.setting.account_type = that.attr('data-key');
+                }, 0);
             });
         });
     };
@@ -44,11 +50,11 @@ app.controller('producer', ['$scope', '$controller', function ($scope, $controll
             return $scope.message('名称长度不符合规范 [1~32个字符]');
         }
 
-        if (!c.account_type) {
+        if (isNaN(c.account_type)) {
             return $scope.message('请选择收款账号类型');
         }
 
-        if (!c.account_number) {
+        if (parseInt(c.account_type) !== 0 && !c.account_number) {
             return $scope.message('请填写收款账号');
         }
 

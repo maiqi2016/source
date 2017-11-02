@@ -13,8 +13,8 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
     };
 
     // Click to show
-    $scope.showAnimate = false;
-    $scope.showBody = true;
+    $scope.showAnimate = true;
+    $scope.showBody = false;
 
     $scope.hidden = function () {
         var time = 500;

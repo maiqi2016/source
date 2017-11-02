@@ -1318,37 +1318,51 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
     command.link = function (scope, elem, attr) {
 
         /**
-         * @param attr.id
          * @param attr.kkFocusCard
+         * @param attr.smallScale
+         * @param attr.smallTranX
+         * @param attr.smallTranY
          * @param attr.zIndex
-         * @param attr.idTag
+         * @param attr.time
          */
 
         if (!attr.id) {
             return service.debug('[kk-focus-card] Current element must has attribute `id`!');
         }
 
-        var zIndex = attr.zIndex || 99;
+        var big = elem.find('div:first'),
+            small = elem.find('ul'),
+            firstLi = small.find('li:first'),
 
-        var child = elem.children();
-        var len = child.length;
+            zIndex = attr.zIndex || 99,
+            smallScale = attr.smallScale || .9,
+            smallTranX = attr.smallTranX || 55,
+            smallTranY = attr.smallTranY || 10;
 
-        var smallScale = .9;
-        var smallTranX = 49;
-        var smallTranY = 11;
-
-        // 小图复位
-        var recoverySmall = function (item) {
-            $(item).css('opacity', 1);
+        // 复位到小图
+        var toSmall = function (item) {
+            item.jquery && (item = item[0]);
             item.scaleX = item.scaleY = smallScale;
             item.translateX = smallTranX;
             item.translateY = smallTranY;
         };
 
-        //大图复位
-        var recoveryBig = function (item) {
-            tick(function () {
+        // 复位到大图
+        var toBig = function (item) {
+            item.jquery && (item = item[0]);
+            item.scaleX = item.scaleY = 1;
+            item.translateX = item.translateY = 0;
+        };
+
+        // 动画到大图
+        var smallToBig = function (item) {
+
+            var tickID;
+            item.jquery && (item = item[0]);
+
+            var toTick = function () {
                 if (item.scaleX >= 1 || item.translateX <= 0) {
+                    cancelAnimationFrame(tickID);
                     return false;
                 }
                 var step = 10;
@@ -1356,75 +1370,105 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
                 item.scaleY += (1 - smallScale) / step;
                 item.translateX -= smallTranX / step;
                 item.translateY -= smallTranY / step;
-            });
+
+                tickID = requestAnimationFrame(toTick);
+            };
+            toTick();
         };
 
-        child.each(function (i, item) {
+        // 初始化
+        big.html(firstLi.html());
+        small.append(firstLi);
+
+        big.addClass('animated');
+        Transform(big[0], true);
+
+        var li = small.children();
+        li.each(function (i, item) {
             Transform(item, true);
-            $(item).css('z-index', zIndex + len - i);
-            i && recoverySmall(item);
+            $(item).css('z-index', zIndex + li.length - i).addClass('animated');
+            toSmall(item);
         });
 
-        var touch;
-        var effect = function (item) {
+        var animateTime = 500;
 
-            var touchSelector = '#' + attr.id;
-            var width = $(item).width();
+        // 下一张
+        var next = function (ami) {
 
-            return new AlloyTouch({
-                touch: touchSelector,
-                vertical: false,
-                target: item,
-                property: "translateX",
-                inertia: false,
-                sensitivity: 1,
-                min: width * -1,
-                max: 0,
-                step: screen.width,
+            ami = ami || 'fadeOutLeft';
+            var first = small.children().first();
+            big.addClass(ami);
 
-                pressMove: function () {
-                },
+            setTimeout(function () {
+                smallToBig(first);
+            }, animateTime / 2);
 
-                change: function (value) {
-                    var v = Math.abs(value);
-                    v = v > width ? width : v;
-                    $(this.target).css('opacity', 1 - (v / width) * 0.7);
-                },
+            setTimeout(function () {
+                big.css('opacity', 1).html(first.html()).removeClass(ami);
+                toBig(big);
+                small.append(first);
 
-                touchMove: function (evt, value) {
-                    this.preventDefault = true;
-                },
+                var li = small.children();
+                li.each(function (i, item) {
+                    $(item).css('z-index', zIndex + li.length - i);
+                });
+                toSmall(first);
 
-                touchEnd: function (evt, value) {
-                    this.preventDefault = false;
-                    var time = 300;
-
-                    if (value >= -70) {
-                        this.to(this.max, time);
-                        return false;
-                    }
-
-                    this.to(this.step * -1, time);
-                    var that = this.target;
-
-                    $timeout(function () {
-                        $(touchSelector).append(that);
-                        var child = $(touchSelector).children();
-                        recoveryBig(child.get(0));
-                        child.each(function (i) {
-                            $(this).css('z-index', zIndex + len - i);
-                        });
-                        recoverySmall(that);
-
-                        touch = effect(child.get(0));
-                    }, time + 10);
-
-                    return false;
-                }
-            });
+                auto();
+            }, animateTime + 10);
         };
 
-        touch = effect(child.get(0));
+        // 自动轮播
+        var run;
+        var auto = function () {
+            run && clearInterval(run);
+            run = setInterval(function () {
+                next();
+            }, attr.time || 3000);
+        };
+        auto();
+
+        // 手动轮播
+        var width = big.find('img').width();
+        new AlloyTouch({
+            touch: '#focus-card',
+            vertical: false,
+            target: big[0],
+            property: "translateX",
+            inertia: false,
+            sensitivity: 1,
+            min: width * -1,
+            max: 0,
+
+            change: function (value) {
+                var v = Math.abs(value);
+                v = v > width ? width : v;
+                $(this.target).css('opacity', 1 - (v / width) * 0.7);
+            },
+
+            touchStart: function () {
+                this.preventDefault = true;
+                clearInterval(run);
+            },
+
+            touchEnd: function (evt, value) {
+                this.preventDefault = false;
+
+                if (value >= -80 && value <= 40) {
+                    this.to(this.max, 100);
+                    auto();
+                    return false;
+                }
+
+                if (value < -80) {
+                    next();
+                } else if (value > 40) {
+                    next('fadeOutRight');
+                }
+
+                return false;
+            }
+        });
     };
 
     return command;
@@ -1585,6 +1629,13 @@ app.directive('kkMenu', ['service', function (service) {
          * @param attr.posY
          * @param attr.kkMenu
          */
+
+
+
+
+
+
+
         var menu = $(attr.kkMenu);
 
         service.tap(elem[0], function () {

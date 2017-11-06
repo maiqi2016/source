@@ -1426,7 +1426,9 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
                 next();
             }, attr.time || 3000);
         };
-        auto();
+        setTimeout(function () {
+            auto();
+        },3000);
 
         // 手动轮播
         var width = big.find('img').width();

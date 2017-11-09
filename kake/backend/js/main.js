@@ -1127,7 +1127,7 @@ $(function () {
 
     // ajax 分页
     $.ajaxPageList = function (action) {
-        body.on('click', '.pagination a', function (event) {
+        $('.pagination a').unbind('click').bind('click', function () {
             event.preventDefault();
 
             var url = $(this).attr('href');
@@ -1295,7 +1295,7 @@ $(function () {
     };
 
     // 产品分销时变更产品时自动填写开始销量
-    $('.product_producer-product_id input, .product_producer-type select').change(function () {
+    $.productProducerStart = function () {
 
         var productId = parseInt($('.product_producer-product_id input').val());
         var type = $('.product_producer-type select').val();
@@ -1313,7 +1313,7 @@ $(function () {
                 $.alert(data.info);
             }
         });
-    });
+    };
 
     // 显示二维码
     $.showQrCode = function (url) {

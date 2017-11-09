@@ -1418,6 +1418,26 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
             }, animateTime + 10);
         };
 
+        //上一张
+        var prev = function () {
+            var third = small.children().eq(2),
+                fourth = small.children().eq(3);
+            toSmall(big);
+            small.prepend(fourth);
+            toBig(big);
+            var li = small.children();
+            li.each(function (i, item) {
+                $(item).css('z-index', zIndex + li.length - i);
+            });
+            big.html(third.html());
+            big.addClass('fadeInLeft');
+            setTimeout(function () {
+                big.removeClass('fadeInLeft');
+            }, 1000);
+            big.css('opacity', 1);
+            auto();
+
+        }
         // 自动轮播
         var run;
         var auto = function () {
@@ -1465,7 +1485,7 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
                 if (value < -80) {
                     next();
                 } else if (value > 40) {
-                    next('fadeOutRight');
+                    prev();
                 }
 
                 return false;
@@ -1880,7 +1900,7 @@ app.directive('kkAnchor', ['service', function (service) {
 
                 // action card
                 var anchorDiv = $(this).attr('data-anchor');
-                $('body, html').animate({scrollTop: $(anchorDiv).offset().top - $(anchorDiv).height() / 2}, 500);
+                $('body, html').animate({scrollTop: $(anchorDiv).offset().top - $(anchorDiv).height() / 2 + 4}, 500);
             });
         });
     };

@@ -165,6 +165,7 @@ body {
                 width: 300px;
                 position: relative;
                 margin: 0 5px;
+                overflow: hidden;
                 a {
                     img {
                         width: 300px;
@@ -181,9 +182,32 @@ body {
                     margin: 0;
                     padding: 8px 0 6px 8px;
                     background: rgba(16, 31, 49, 0.7);
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
+                    line-height: 65px;
+                    height: 30px;
+                    b {
+                        z-index: 100;
+                        display: inline-block;
+                        position: absolute;
+                        bottom: 0;
+                        width: 1.57rem;
+                        height: 1.18rem;
+                        line-height: 1.35rem;
+                        background: url("@{img}/price-logo.png") no-repeat;
+                        background-size: cover;
+                        color: black;
+                        font-size: 13px;
+                        text-indent: 12px;
+                    }
+                    span {
+                        position: absolute;
+                        display: inline-block;
+                        width: 206px;
+                        left: 1.4rem;
+                        bottom: -17px;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
                 }
             }
         }

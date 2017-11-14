@@ -1420,16 +1420,16 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
 
         //上一张
         var prev = function () {
-            var third = small.children().eq(2),
-                fourth = small.children().eq(3);
+            var ulLast = small.children().last(),
+                lastTwo = ulLast.prev();
             toSmall(big);
-            small.prepend(fourth);
+            small.prepend(ulLast);
             toBig(big);
             var li = small.children();
             li.each(function (i, item) {
                 $(item).css('z-index', zIndex + li.length - i);
             });
-            big.html(third.html());
+            big.html(lastTwo.html());
             big.addClass('fadeInLeft');
             setTimeout(function () {
                 big.removeClass('fadeInLeft');
@@ -1787,7 +1787,7 @@ app.directive('kkFixed', ['service', function (service) {
 
             var scrollTop = $(window).scrollTop();
 
-            if (prefixHeight + scrollTop >= pos.top) {
+            if (prefixHeight + scrollTop >= pos.top + elem.height()) {
                 elem.addClass('fixed-box');
                 elem.css({
                     top: top,

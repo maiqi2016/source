@@ -286,8 +286,8 @@ body {
         width: 100%;
         a {
             display: inline-block;
-            width: 1.08rem;
-            height: 1.08rem;
+            width: 1.18rem;
+            color: black;
             right: 0.25rem;
             .mw;
             position: fixed;
@@ -355,9 +355,10 @@ body {
     height: 100%;
     position: relative;
     .opening_bj {
+        z-index: 5;
         width: 100%;
         height: 100%;
-        background: url("@{img}/opening/opening_bj.jpg") no-repeat;
+        background: url("@{img}/opening/opening_bj2.jpg") no-repeat;
         background-size: cover;
     }
     .small_bj {
@@ -368,45 +369,39 @@ body {
             width: 100%;
         }
     }
-    .hang {
-        width: 2.03rem;
-        position: absolute;
-        top: -0.28rem;
-        right: 1rem;
-        img {
-            width: 100%;
-        }
-    }
     .photo {
-        width: 1.59rem;
-        height: 1.59rem;
+        width: 1.6rem;
+        height: 1.6rem;
         position: absolute;
-        top: 0.7rem;
-        right: 1.23rem;
+        top: 5.2rem;
+        left: 50%;
+        transform: translateX(-0.8rem);
         border-radius: 0.8rem;
     }
-    .guangquan {
-        width: 2.5rem;
+    .flower {
         position: absolute;
-        top: 0.25rem;
-        right: 0.77rem;
-        img {
-            width: 100%;
-            animation: rot 2s ease-in-out;
-            animation-iteration-count: infinite;
-        }
+        top: 5.2rem;
+        width: 2.6rem;
+        left: 50%;
+        transform: translateX(-1.3rem);
+    }
+    .old_people {
+        position: absolute;
+        width: 2rem;
+        bottom: 0.3rem;
+        left: 0.2rem;
     }
     .txt {
         width: 3.6rem;
         height: 1.4rem;
         line-height: 1.4rem;
         position: absolute;
-        top: 5.9rem;
+        top: 7rem;
         left: 50%;
         transform: translateX(-1.8rem);
         text-align: center;
-        color: #ffd000;
-        font-size: 20px;
+        color: #af2028;
+        font-size: 19px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

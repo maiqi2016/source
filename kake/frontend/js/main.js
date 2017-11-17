@@ -1390,7 +1390,7 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
             toSmall(item);
         });
 
-        var animateTime = 500;
+        var animateTime = 800;
 
         // 下一张
         var next = function (ami) {
@@ -1416,6 +1416,9 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
 
                 auto();
             }, animateTime + 10);
+
+
+
         };
 
         //上一张
@@ -1717,7 +1720,8 @@ app.directive('kkMenuLm', ['service', '$timeout', function (service, $timeout) {
             animateMenuOut = 'fadeOutRight';
 
         var menu = $('.menu-lm'),
-            shade = $('<div class="shade hidden animated"></div>');
+            shade = $('<div class="shade hidden animated"></div>'),
+            shapeF = $('.shape-fixed');
 
         menu.css('height', window.screen.height);
         $('body').append(shade);
@@ -1738,7 +1742,7 @@ app.directive('kkMenuLm', ['service', '$timeout', function (service, $timeout) {
             $timeout(function () {
                 menu.addClass('hidden');
                 shade.addClass('hidden');
-            }, 600);
+            }, 400);
         };
 
         service.tap(elem[0], function () {

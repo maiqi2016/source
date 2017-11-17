@@ -1476,4 +1476,19 @@ $(function () {
             $.alert('内容复制成功', 'success');
         });
     }
+    
+    // 导出 excel
+    $('.export-excel').click(function () {
+        var form = $(this).parent('form');
+        var item = form.find('input[name="r"]');
+
+        var oldValue = item.val();
+        item.val(oldValue + '-export');
+        form.attr('target', '_blank');
+
+        form.submit();
+
+        item.val(oldValue);
+        form.removeAttr('target');
+    });
 });

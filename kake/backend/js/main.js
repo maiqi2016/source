@@ -838,7 +838,7 @@ $(function () {
             modal.remove();
         });
 
-        modal.find('[data-toggle="tooltip"]').tooltip();
+        modal.find('[data-toggle="tooltip"]').tooltip({delay: {show: 500}});
 
         return modal;
     };
@@ -854,7 +854,7 @@ $(function () {
     });
 
     // 提示气泡
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip({delay: {show: 500}});
 
     // 收起/展现菜单
     $.toggleMenu = function () {
@@ -1491,4 +1491,10 @@ $(function () {
         item.val(oldValue);
         form.removeAttr('target');
     });
+
+    // 滚动条美化
+    new PerfectScrollbar('#menu-div', {
+        suppressScrollX: true
+    });
+    new PerfectScrollbar($('html')[0]);
 });

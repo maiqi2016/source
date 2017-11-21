@@ -191,6 +191,16 @@ body {
                     width: 3.29rem;
                     height: 3.1rem;
                     float: left;
+                    position: relative;
+                    .hot {
+                        position: absolute;
+                        width: 35px;
+                        height: 35px;
+                        top: 2px;
+                        right: 5px;
+                        background: url("@{img}/distribution/hot.png") no-repeat;
+                        background-size: cover;
+                    }
                     .photo {
                         position: relative;
                         img {
@@ -218,6 +228,11 @@ body {
             }
             ul li:nth-child(n+3) {
                 margin-top: 0.36rem;
+            }
+            ul li:last-child {
+                .hot {
+                    background-size: 0;
+                }
             }
         }
     }

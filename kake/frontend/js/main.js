@@ -16,7 +16,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
 
         type = type || 'error';
 
-        console.log('%c' + type.ucFirst() + ':', 'color:red;');
+        console.log('%c' + type.ucFirst() + ':', 'color:blue;');
         console.log(message);
 
         return false;
@@ -860,6 +860,60 @@ app.service('service', ['$http', '$q', function ($http, $q) {
         while (new Date() - start < second) {
         }
     };
+
+    // Bootstrap modal
+    this.bootstrapModal = function (html, option) {
+
+        if (typeof option === 'undefined') {
+            option = {};
+        }
+
+        // begin
+        var tpl = '<div class="modal fade"><div class="modal-dialog"><div class="modal-content">';
+
+        // header
+        if (option.title || option.close) {
+            tpl += '<div class="modal-header">';
+            option.close && (tpl += '<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>');
+            option.title && (tpl += '<h4 class="modal-title">' + option.title + '</h4>');
+            tpl += '</div>';
+        }
+
+        tpl += '<div class="modal-body">' + html + '</div>';
+
+        // footer
+        if (option.yes || option.no) {
+            tpl += '<div class="modal-footer">';
+            option.no && (tpl += '<button type="button" class="btn btn-default no">' + option.no + '</button>');
+            option.yes && (tpl += '<button type="button" class="btn btn-primary yes">' + option.yes + '</button>');
+            tpl += '</div>';
+        }
+
+        // end
+        tpl += '</div></div></div>';
+        tpl = $(tpl);
+
+        $.each(['no', 'yes'], function (k, v) {
+            var optionName = 'on' + v.ucFirst();
+            if (!option[v]) {
+                return true; // continue
+            }
+
+            service.tap(tpl.find('button.' + v)[0], function () {
+                $timeout(function () {
+                    var onResult = true;
+                    if (option[optionName]) {
+                        var fn = scope.$eval(option[optionName]);
+                        var result = fn();
+                        onResult = (typeof result === 'undefined') ? true : !!result;
+                    }
+                    onResult && tpl.modal('hide');
+                }, 0);
+            });
+        });
+
+        return tpl;
+    };
 }]);
 
 /**
@@ -1416,31 +1470,32 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
 
                 auto();
             }, animateTime + 10);
-
-
-
         };
 
         //上一张
         var prev = function () {
             var ulLast = small.children().last(),
                 lastTwo = ulLast.prev();
+
             toSmall(big);
             small.prepend(ulLast);
             toBig(big);
+
             var li = small.children();
             li.each(function (i, item) {
                 $(item).css('z-index', zIndex + li.length - i);
             });
+
             big.html(lastTwo.html());
             big.addClass('fadeInLeft');
             setTimeout(function () {
                 big.removeClass('fadeInLeft');
             }, 1000);
+
             big.css('opacity', 1);
             auto();
+        };
 
-        }
         // 自动轮播
         var run;
         var auto = function () {
@@ -1449,9 +1504,10 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
                 next();
             }, attr.time || 3000);
         };
+
         setTimeout(function () {
             auto();
-        },5000);
+        }, 5000);
 
         // 手动轮播
         var width = big.find('img').width();
@@ -1654,13 +1710,6 @@ app.directive('kkMenu', ['service', function (service) {
          * @param attr.posY
          * @param attr.kkMenu
          */
-
-
-
-
-
-
-
         var menu = $(attr.kkMenu);
 
         service.tap(elem[0], function () {
@@ -1904,7 +1953,8 @@ app.directive('kkAnchor', ['service', function (service) {
 
                 // action card
                 var anchorDiv = $(this).attr('data-anchor');
-                $('body, html').animate({scrollTop: $(anchorDiv).offset().top - $(anchorDiv).height() / 2 + 4}, 500);
+                var top = $(anchorDiv).offset().top - $(anchorDiv).height() / 2 + 4;
+                $('body, html').animate({scrollTop: top}, 500);
             });
         });
     };
@@ -2186,7 +2236,7 @@ app.directive('kkCopyText', ['service', function (service) {
             console.log(e);
         });
 
-        // For fixed bug
+        // For fixed bug (Must write it)
         $('*').click(function (e) {
         });
     };
@@ -2244,55 +2294,9 @@ app.directive('kkModal', ['service', '$timeout', function (service, $timeout) {
          */
         var content;
 
-        var createModal = function (html) {
-            // begin
-            var tpl = '<div class="modal fade"><div class="modal-dialog"><div class="modal-content">';
-
-            // header
-            if (attr.title || attr.close) {
-                tpl += '<div class="modal-header">';
-                attr.close && (tpl += '<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>');
-                attr.title && (tpl += '<h4 class="modal-title">' + attr.title + '</h4>');
-                tpl += '</div>';
-            }
-
-            tpl += '<div class="modal-body">' + html + '</div>';
-
-            // footer
-            if (attr.yes || attr.no) {
-                tpl += '<div class="modal-footer">';
-                attr.no && (tpl += '<button type="button" class="btn btn-default no">' + attr.no + '</button>');
-                attr.yes && (tpl += '<button type="button" class="btn btn-primary yes">' + attr.yes + '</button>');
-                tpl += '</div>';
-            }
-
-            // end
-            tpl += '</div></div></div>';
-            tpl = $(tpl);
-
-            $.each(['no', 'yes'], function (k, v) {
-                var optionName = 'on' + v.ucFirst();
-                if (attr[v]) {
-                    service.tap(tpl.find('button.' + v)[0], function () {
-                        $timeout(function () {
-                            var onResult = true;
-                            if (attr[optionName]) {
-                                var fn = scope.$eval(attr[optionName]);
-                                var result = fn();
-                                onResult = (typeof result === 'undefined') ? true : !!result;
-                            }
-                            onResult && tpl.modal('hide');
-                        }, 0);
-                    });
-                }
-            });
-
-            return tpl;
-        };
-
         var tpl;
         if (attr.kkModal.indexOf('/') !== -1) {
-            tpl = createModal(null);
+            tpl = service.bootstrapModal(null, attr);
             service.tap(elem[0], function () {
                 scope.request({
                     api: attr.kkModal,
@@ -2316,7 +2320,7 @@ app.directive('kkModal', ['service', '$timeout', function (service, $timeout) {
             }
 
             // content
-            tpl = createModal(modal.html());
+            tpl = service.bootstrapModal(modal.html(), attr);
             tpl.find('.modal-dialog').css('width', attr.width);
             service.tap(elem[0], function () {
                 tpl.modal();
@@ -2330,13 +2334,20 @@ app.directive('kkModal', ['service', '$timeout', function (service, $timeout) {
 /**
  * Controller
  */
-app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $timeout, service) {
+app.controller('generic', ['$scope', '$timeout', '$compile', 'service', function ($scope, $timeout, $compile, service) {
 
     $scope.timeout = $timeout;
+    $scope.compile = $compile;
     $scope.service = service;
     $scope.conf = {
         ajaxLock: {},
-        timeout: null
+        timeout: null,
+        rsaPublicKey: '-----BEGIN PUBLIC KEY-----\
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCyhl+6jZ/ENQvs24VpT4+o7Ltc\
+B4nFBZ9zYSeVbqYHaXMVpFSZTpAKkgqoy2R9kg7lM6QWnpDcVIPlbE6iqzzJ4Zm5\
+IZ18C43C4jhtcNncjY6HRDTykkgul8OX2t6eJrRhRcWFYI7ygoYMZZ7vEfHImsXH\
+NydhxUEs0y8aMzWbGwIDAQAB\
+-----END PUBLIC KEY-----'
     };
 
     /**
@@ -2506,6 +2517,18 @@ app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $t
     };
 
     /**
+     * RSA js 端加密
+     *
+     * @param text
+     */
+    $scope.rsaEncrypt = function (text) {
+        var encrypt = new JSEncrypt();
+        encrypt.setPublicKey($scope.conf.rsaPublicKey);
+
+        return encrypt.encrypt(text);
+    };
+
+    /**
      * 微信 SDK
      *
      * @param conf
@@ -2566,6 +2589,8 @@ app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $t
      */
     $scope.common = function (option) {
 
+        var body = $('body');
+
         // 分销商标识
         $('a').on('tap click', function (e) {
             var href = $(this).attr('href');
@@ -2588,13 +2613,36 @@ app.controller('generic', ['$scope', '$timeout', 'service', function ($scope, $t
 
         // 图片加载
         $scope.loading(true);
-        $('body').imagesLoaded({background: true}).always(function () {
+        body.imagesLoaded({background: true}).always(function () {
             $scope.loading(false);
         });
 
-        // 刷新提示
+        // 初始化提示
         if (option.message) {
             $scope.message(option.message);
+        }
+
+        // 初始化弹窗
+        var params = service.parseQueryString();
+        if (params.popup && $.inArray(params.popup, ['lottery-code']) !== -1) {
+
+            var pop = true;
+            try {
+                var msg = Base64.decode(params.msg);
+            } catch (e) {
+                service.debug(e.message, 'success');
+                pop = false;
+            }
+
+            if (!pop) {
+                return false;
+            }
+
+            var html = '<div class="' + params.popup + '">' + msg + '</div>';
+            service.bootstrapModal(html).modal({
+                backdrop: false,
+                keyboard: false
+            });
         }
     };
 }]);

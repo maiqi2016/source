@@ -3,7 +3,7 @@ var app = angular.module('kkApp', []);
 /**
  * Service
  */
-app.service('service', ['$http', '$q', function ($http, $q) {
+app.service('service', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
 
     var that = this;
 
@@ -899,7 +899,7 @@ app.service('service', ['$http', '$q', function ($http, $q) {
                 return true; // continue
             }
 
-            service.tap(tpl.find('button.' + v)[0], function () {
+            that.tap(tpl.find('button.' + v)[0], function () {
                 $timeout(function () {
                     var onResult = true;
                     if (option[optionName]) {

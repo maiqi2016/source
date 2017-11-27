@@ -2641,7 +2641,7 @@ NydhxUEs0y8aMzWbGwIDAQAB\
 
                     service.tap(popup.find('.close'), function () {
                         popup.modal('hide');
-                        location.href = service.unsetParams(['popup', 'msg']);
+                        // location.href = service.unsetParams(['popup', 'msg']);
                     });
                 }
             });

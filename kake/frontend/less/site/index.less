@@ -94,9 +94,40 @@ body {
     }
 }
 
-//.index-banner-height {
-//    height: 225px;
-//}
+//模态框
+.modal.in {
+    background-color: rgba(0,0,0,0.4);
+    .modal-dialog {
+        top: 3rem;
+    }
+    .modal-content {
+        background-color: transparent;
+        box-shadow: none;
+        border: none;
+        .modal-body {
+            width: 6rem;
+            margin: 0 auto;
+            .code {
+                width: 100%;
+                background-color: #ffd000;
+                margin: 0.2rem auto 0 auto;
+                text-align: center;
+                line-height: 30px;
+                font-size: 15px;
+                padding: 30px 40px;
+            }
+            .close {
+                background: url("@{img}/message/modal-close.svg") no-repeat;
+                background-size: cover;
+                width: 40px;
+                height: 40px;
+                margin: 1rem auto 0 auto;
+                opacity: 1;
+                float: none;
+            }
+        }
+    }
+}
 
 .kake-box {
     color: #ffd000;

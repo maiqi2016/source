@@ -2630,7 +2630,7 @@ NydhxUEs0y8aMzWbGwIDAQAB\
             try {
                 var msg = Base64.decode(params.msg);
             } catch (e) {
-                service.debug(e.message, 'success');
+                service.debug(e.message, 'info');
                 pop = false;
             }
 

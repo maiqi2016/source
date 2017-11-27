@@ -561,8 +561,8 @@ app.service('service', ['$http', '$q', '$timeout', function ($http, $q, $timeout
         return query.length ? query.substr(0, query.length - 1) : query;
     };
 
-    // Supplement params from current location
-    this.supplyParams = function (href, params) {
+    // Supplement params from current location do merge where same key
+    this.supplyParams = function (url, params) {
         var queryParams = that.parseQueryString();
         var queryString = '';
         $.each(params || [], function (k, v) {
@@ -571,13 +571,13 @@ app.service('service', ['$http', '$q', '$timeout', function ($http, $q, $timeout
             }
         });
 
-        if (href.indexOf('?')) {
-            href += queryString;
+        if (url.indexOf('?')) {
+            url += queryString;
         } else {
-            href = href + '?' + queryString.leftTrim('&')
+            url = url + '?' + queryString.leftTrim('&')
         }
 
-        return href;
+        return url.rightTrim('?');
     };
 
     // Set params to url
@@ -593,7 +593,7 @@ app.service('service', ['$http', '$q', '$timeout', function ($http, $q, $timeout
             url = url + '?' + queryString.leftTrim('&')
         }
 
-        return url;
+        return url.rightTrim('?');
     };
 
     // Unset params from url
@@ -612,7 +612,7 @@ app.service('service', ['$http', '$q', '$timeout', function ($http, $q, $timeout
 
         url = host + '?' + decodeURI(that.jsonBuildQuery(queryParams));
 
-        return url;
+        return url.rightTrim('?');
     };
 
     // Count px of padding and margin
@@ -2625,23 +2625,25 @@ NydhxUEs0y8aMzWbGwIDAQAB\
         // 初始化弹窗
         var params = service.parseQueryString();
         if (params.popup && $.inArray(params.popup, ['lottery-code']) !== -1) {
+            $scope.request({
+                api: 'popup/' + params.popup,
+                post: params,
+                success: function (res) {
+                    if (!res.state) {
+                        return $scope.message(res.info);
+                    }
 
-            var pop = true;
-            try {
-                var msg = Base64.decode(params.msg);
-            } catch (e) {
-                service.debug(e.message, 'info');
-                pop = false;
-            }
+                    var popup = service.bootstrapModal(res.data.message);
+                    popup.modal({
+                        backdrop: false,
+                        keyboard: false
+                    });
 
-            if (!pop) {
-                return false;
-            }
-
-            var html = '<div class="' + params.popup + '">' + msg + '</div>';
-            service.bootstrapModal(html).modal({
-                backdrop: false,
-                keyboard: false
+                    service.tap(popup.find('.close'), function () {
+                        popup.modal('hide');
+                        location.href = service.unsetParams(['popup', 'msg']);
+                    });
+                }
             });
         }
     };

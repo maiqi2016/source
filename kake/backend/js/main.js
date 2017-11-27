@@ -1444,9 +1444,9 @@ $(function () {
             '<input class="form-control" value="' + defaultSort + '"><h4><small>大于零的整数，越小越靠前</small></h4>',
             yes: '提交',
             yesCallback: function (obj) {
-                var sort = parseInt(obj.find('input').val());
-                if (!$._isNumeric(sort)) {
-                    $.alert('请输入大于零的整数');
+                var sort = obj.find('input').val();
+                if (sort !== '' && (!$._isNumeric(sort) || sort <= 0)) {
+                    $.alert('请输入大于零的整数或留空');
                     return null;
                 }
 

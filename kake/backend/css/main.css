@@ -129,6 +129,9 @@ div#message {
 .alert {
     width: 90%;
     margin: 2px auto;
+    word-wrap: break-word;
+    max-height: 500px;
+    overflow: auto;
 }
 
 code {
@@ -341,15 +344,16 @@ div.upload-div > div button, button.browse {
     margin-top: 1px;
 }
 
+pre {
+    border-radius: 0;
+}
+
 td pre {
-    padding: 0;
     margin: 0;
     font-size: inherit;
     word-break: normal;
     word-wrap: normal;
     white-space: pre-wrap;
-    background-color: transparent;
-    border: none;
     overflow: hidden;
 }
 
@@ -401,10 +405,6 @@ p.list-p {
     padding: 10px;
 }
 
-form p.bg-info {
-    padding: 10px;
-}
-
 .modal-footer {
     border-top: none;
 }
@@ -417,8 +417,12 @@ h1 small {
     font-size: 50%;
 }
 
-p.bg-warning, p.bg-success, p.bg-info {
+p.bg-warning, p.bg-primary, p.bg-success, p.bg-info {
     padding: 12px;
+}
+
+pre.bg-warning, pre.bg-primary, pre.bg-success, pre.bg-info {
+    border: none;
 }
 
 div.site-error h1 {

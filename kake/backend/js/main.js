@@ -1315,6 +1315,25 @@ $(function () {
         });
     };
 
+    // 重建模板消息字段
+    $.createTplMsgField = function (tpl) {
+        var value = $('[name="tpl"]').val();
+
+        var html = '';
+        $.each(tpl[value], function (k, v) {
+            html += '' +
+                '<div class="form-group box_header auto_tpl_msg_field">' +
+                '   <label class="col-sm-2 control-label">' + v + '</label>' +
+                '   <div class="col-sm-3">' +
+                '       <input class="form-control" name="field[' + k + ']" placeholder="' + k + '，必填字段" type="text">' +
+                '   </div>' +
+                '</div>';
+        });
+
+        $('div.auto_tpl_msg_field').remove();
+        $('div.box_header').after(html);
+    };
+
     // 显示二维码
     $.showQrCode = function (url) {
         url = requestUrl + 'general/ajax-get-qr-code&url=' + encodeURIComponent(url);
@@ -1476,20 +1495,22 @@ $(function () {
             $.alert('内容复制成功', 'success');
         });
     }
-    
-    // 导出 excel
-    $('.export-excel').click(function () {
+
+    // 自定义全局条件事件 - 包括导出excel、自定义事件
+    $('.condition-global-event').click(function () {
         var form = $(this).parent('form');
+        var event = $(this).attr('event');
+        var blank = $(this).attr('blank');
         var item = form.find('input[name="r"]');
 
         var oldValue = item.val();
-        item.val(oldValue + '-export');
-        form.attr('target', '_blank');
+        item.val(oldValue + '-' + event);
+        blank && form.attr('target', '_blank');
 
         form.submit();
 
         item.val(oldValue);
-        form.removeAttr('target');
+        blank && form.removeAttr('target');
     });
 
     // 滚动条美化

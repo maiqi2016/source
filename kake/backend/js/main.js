@@ -962,14 +962,18 @@ $(function () {
     };
 
     // 拖拽排序
-    $.sortable = function (htmlSelector, inputSelector) {
+    $.sortable = function (htmlSelector, inputSelector, indexOffset) {
+
         var htmlBox = $(htmlSelector)[0];
+        indexOffset = (typeof indexOffset === 'undefined') ? -1 : indexOffset;
+
         Sortable.create(htmlBox, {
             group: 'slave',
             animation: 200,
             onEnd: function (e) {
-                var _old = e.oldIndex - 1;
-                var _new = e.newIndex - 1;
+                var _old = e.oldIndex + indexOffset;
+                var _new = e.newIndex + indexOffset;
+
                 if (_new !== _old) {
                     var valueBox = $(inputSelector);
                     var value = valueBox.val().split(',');

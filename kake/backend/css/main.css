@@ -126,7 +126,7 @@ div#message {
 /*
  * General
  */
-.alert {
+#message .alert {
     width: 90%;
     margin: 2px auto;
     word-wrap: break-word;
@@ -417,16 +417,20 @@ h1 small {
     font-size: 50%;
 }
 
-p.bg-warning, p.bg-primary, p.bg-success, p.bg-info {
+p.bg-warning, p.bg-primary, p.bg-success, p.bg-info, p.bg-danger {
     padding: 12px;
 }
 
-pre.bg-warning, pre.bg-primary, pre.bg-success, pre.bg-info {
+pre.bg-warning, pre.bg-primary, pre.bg-success, pre.bg-info, pre.bg-danger {
     border: none;
 }
 
 div.site-error h1 {
     margin: 25px auto;
+}
+
+div.site-error p {
+    font-size: 18px;
 }
 
 .sortable-box {

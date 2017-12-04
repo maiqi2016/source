@@ -25,11 +25,11 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
         }, time);
     };
 
-    $scope.autoHide = function () {
+    $scope.autoHide = function (time) {
         $('.opening_bj img').css('height', window.screen.height);
         $scope.timeout(function () {
             $scope.hidden();
-        }, 7000);
+        }, time);
     };
 
     //下雪

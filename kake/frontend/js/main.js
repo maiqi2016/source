@@ -1501,12 +1501,12 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
         var auto = function () {
             run && clearInterval(run);
             run = setInterval(function () {
-                next();
+                // next();
             }, attr.time || 3000);
         };
 
         setTimeout(function () {
-            auto();
+            // auto();
         }, 5000);
 
         // 手动轮播

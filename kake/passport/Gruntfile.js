@@ -83,6 +83,20 @@ module.exports = function (grunt) {
                     interrupt: true
                 }
             }
+        },
+        htmlmin: {
+            html: {
+                options: {
+                    removeComments: true,
+                    collapseWhitespace: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'frontend/runtime/static',
+                    src: ['*.html'],
+                    dest: 'frontend/runtime/static'
+                }]
+            }
         }
     });
 
@@ -91,6 +105,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-htmlmin');
 
     grunt.registerTask('css-less', ['less']);
     grunt.registerTask('css-post', ['postcss']);
@@ -99,5 +114,6 @@ module.exports = function (grunt) {
     grunt.registerTask('listen', ['watch']);
     grunt.registerTask('handle-css', ['less', 'postcss', 'cssmin']);
     grunt.registerTask('handle-js', ['uglify']);
+    grunt.registerTask('html-compress', ['htmlmin']);
     grunt.registerTask('handle-all', ['less', 'postcss', 'cssmin', 'uglify']);
 };

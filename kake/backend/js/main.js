@@ -759,6 +759,7 @@ $(function () {
                 $.alert(data.info, 'danger');
             } else {
                 $.placeModal({
+                    size: params.modal_size ? params.modal_size : 'lg',
                     id: 'show-page',
                     title: data.data.title,
                     message: data.data.message,

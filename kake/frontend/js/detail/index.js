@@ -6,6 +6,7 @@ app.controller('detail', ['$scope', '$controller', function ($scope, $controller
     $controller('generic', {$scope: $scope});
 
     $scope.totalPrice = 0;
+    $scope.bind = null;
     $scope.buy = {
         package: {},
         user_info: {
@@ -16,6 +17,45 @@ app.controller('detail', ['$scope', '$controller', function ($scope, $controller
         payment_method: 'wx'
     };
 
+    // 初始化
+    $scope.init = function (list, bind) {
+        $.each(list, function (index, obj) {
+            $scope.buy.package['limit_' + index] = {
+                id: parseInt(index),
+                number: 0,
+                price: obj.min_price
+            };
+        });
+
+        $scope.bind = bind;
+    };
+
+
+    // 点击选择框
+    $scope.packageTap = function (id, showP) {
+
+        if (!showP) {
+            return null;
+        }
+
+        var key = 'limit_' + id;
+        var obj = $scope.buy.package[key];
+
+        // 捆绑销售
+        var n = obj.number;
+        $.each($scope.bind, function (key, value) {
+            if ($.inArray(id.toString(), value) !== -1) {
+                $.each(value, function (k, v) {
+                    $scope.buy.package['limit_' + v].number = n ? 0 : 1;
+                });
+            }
+        });
+
+        obj.number = n ? 0 : 1;
+
+        $scope.calPrice()
+    };
+
     // 删减商品
     $scope.goodsDel = function (packageId) {
 
@@ -23,7 +63,13 @@ app.controller('detail', ['$scope', '$controller', function ($scope, $controller
         var number = $scope.buy.package[key].number - 1;
 
         if (number < 1) {
-            $scope.buy.package[key] = null;
+            $.each($scope.bind, function (key, value) {
+                if ($.inArray(packageId.toString(), value) !== -1) {
+                    $.each(value, function (k, v) {
+                        $scope.buy.package['limit_' + v].number = 0;
+                    });
+                }
+            });
         } else {
             $scope.buy.package[key].number -= 1;
         }
@@ -52,7 +98,7 @@ app.controller('detail', ['$scope', '$controller', function ($scope, $controller
     $scope.calPrice = function () {
 
         var price = 0;
-        $.each($scope.buy.package, function(k, v) {
+        $.each($scope.buy.package, function (k, v) {
             if ($scope.service.isEmpty(v)) {
                 return true; // continue
             }
@@ -87,7 +133,7 @@ app.controller('detail', ['$scope', '$controller', function ($scope, $controller
         var url = requestUrl + 'detail/prefix-payment';
 
         url += '&product_id=' + $('.body').attr('product-id');
-        
+
         $.each($scope.buy.package, function (k, v) {
             if ($scope.service.isEmpty(v)) {
                 return true;

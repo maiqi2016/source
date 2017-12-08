@@ -759,7 +759,7 @@ $(function () {
                 $.alert(data.info, 'danger');
             } else {
                 $.placeModal({
-                    size: params.modal_size ? params.modal_size : 'lg',
+                    size: typeof params.modal_size === 'undefined' ? 'lg' : params.modal_size,
                     id: 'show-page',
                     title: data.data.title,
                     message: data.data.message,
@@ -1519,8 +1519,11 @@ $(function () {
     });
 
     // 滚动条美化
-    new PerfectScrollbar('#menu-div', {
-        suppressScrollX: true
-    });
+
+    if ($('#menu-div').length) {
+        new PerfectScrollbar('#menu-div', {
+            suppressScrollX: true
+        });
+    }
     new PerfectScrollbar($('html')[0]);
 });

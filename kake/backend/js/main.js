@@ -758,8 +758,14 @@ $(function () {
             if (!data.state) {
                 $.alert(data.info, 'danger');
             } else {
+
+                var size = 'lg';
+                if (params && modal.modal_size) {
+                    size = modal.modal_size;
+                }
+
                 $.placeModal({
-                    size: typeof params.modal_size === 'undefined' ? 'lg' : params.modal_size,
+                    size: size,
                     id: 'show-page',
                     title: data.data.title,
                     message: data.data.message,

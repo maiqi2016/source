@@ -760,7 +760,7 @@ $(function () {
             } else {
 
                 var size = 'lg';
-                if (params && modal.modal_size) {
+                if (params && params.modal_size) {
                     size = modal.modal_size;
                 }
 

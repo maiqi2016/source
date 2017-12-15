@@ -17,6 +17,13 @@ app.controller('detail', ['$scope', '$controller', function ($scope, $controller
         payment_method: 'wx'
     };
 
+    $scope.run = function () {
+        $scope.service.reachBottom(function () {
+            $('.classify-1-2').click();
+            return false;
+        })
+    };
+
     // 初始化
     $scope.init = function (list, bind) {
         $.each(list, function (index, obj) {

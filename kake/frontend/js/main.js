@@ -652,18 +652,18 @@ app.service('service', ['$http', '$q', '$timeout', function ($http, $q, $timeout
     }();
 
     // Tap
-    this.tap = function (target, action, options) {
+    this.tap = function (target, action, options, bindClick) {
 
         if (target.jquery) {
             target = target[0];
         }
 
-        if (that.device.mobile) {
+        bindClick = typeof bindClick !== 'undefined';
+        if (!bindClick && that.device.mobile) {
             options = options || {};
             options.singleTap = action;
             return new AlloyFinger(target, options);
         }
-
         $(target).click(action);
 
         return false;
@@ -1907,7 +1907,7 @@ app.directive('kkTabCard', ['service', function (service) {
                 var tabDiv = $(this).attr('data-card');
                 $(tab).hide();
                 $(tabDiv).fadeIn();
-            });
+            }, null, attr.bindClick);
         });
     };
 
@@ -1953,8 +1953,11 @@ app.directive('kkAnchor', ['service', function (service) {
 
                 // action card
                 var anchorDiv = $(this).attr('data-anchor');
-                var top = $(anchorDiv).offset().top - $(anchorDiv).height() / 2 + 4;
-                $('body, html').animate({scrollTop: top}, 500);
+                if($(anchorDiv).offset()){
+                    var top = $(anchorDiv).offset().top - $(anchorDiv).height() / 2 + 4;
+                    $('body, html').animate({scrollTop: top}, 500);
+                }
+
             });
         });
     };

@@ -6,7 +6,7 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
     $controller('generic', {$scope: $scope});
 
     // 筛选二级菜单
-    $scope.showTab = false;
+    $scope.showTab = true;
     $scope.toggle = function () {
         $scope.showTab = !$scope.showTab;
         $scope.scroll(!$scope.showTab);
@@ -14,7 +14,7 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
 
     // Click to show
     $scope.showAnimate = true;
-    $scope.showBody = false;
+    $scope.showBody = true;
 
     $scope.hidden = function () {
         var time = 500;

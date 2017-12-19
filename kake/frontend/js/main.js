@@ -2538,8 +2538,9 @@ NydhxUEs0y8aMzWbGwIDAQAB\
      * @param title
      * @param description
      * @param cover
+     * @param url
      */
-    $scope.wxSDK = function (conf, title, description, cover) {
+    $scope.wxSDK = function (conf, title, description, cover, url) {
 
         wx.config(conf);
         wx.ready(function () {
@@ -2560,7 +2561,7 @@ NydhxUEs0y8aMzWbGwIDAQAB\
 
             var options = {
                 title: title,
-                link: service.unsetParams(['code']),
+                link: service.unsetParams(['code'], url),
                 imgUrl: cover,
                 success: function () {
                     $scope.message('分享成功');

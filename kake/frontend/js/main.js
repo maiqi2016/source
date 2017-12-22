@@ -2559,7 +2559,6 @@ NydhxUEs0y8aMzWbGwIDAQAB\
             ];
             wx.hideMenuItems({menuList: hideList});
 
-            console.log(service.unsetParams(['code'], url.trim()));
             var options = {
                 title: title,
                 link: service.unsetParams(['code'], url.trim()),

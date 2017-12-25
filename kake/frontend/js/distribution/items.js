@@ -136,12 +136,16 @@ app.controller('distribution', ['$scope', '$controller', '$sce', function ($scop
             cls += $scope.days[day]==='1' ? ' eat' : '';
             cls += $scope.days[day]==='2' ? ' play' : '';
             cls += i<d ? ' prev' : ' next';
+
+            var url = requestUrl + 'distribution/activity-boot&date=' + day;
+            url = $scope.service.supplyParams(url, ['channel']);
+
             if($scope.days[day] === 'today'){
-                $scope.li += '<a href="http://www.kakehotels.com/?r=distribution/activity-boot&channel=nubXnej7&flag=1"><li class="' + cls.trim() + '">' + i + '<b></b>' + '<div></div>' + '</li></a>';
+                $scope.li += '<a href="' + url + '"><li class="' + cls.trim() + '">' + i + '<b></b>' + '<div></div>' + '</li></a>';
             }else if ($scope.days[day] === '0' || $scope.days[day] === '1' || $scope.days[day] === '2'){
-                $scope.li += '<a href="http://www.kakehotels.com/?r=distribution/activity-boot&channel=nubXnej7&flag=0"><li class="' + cls.trim() + '">' + i + '<div></div>' + '</li></a>';
+                $scope.li += '<a href="' + url + '"><li class="' + cls.trim() + '">' + i + '<div></div>' + '</li></a>';
             }else if($scope.days[day] === 'signed'){
-                $scope.li += '<a href="http://www.kakehotels.com/?r=distribution/activity-boot&channel=nubXnej7&flag=2"><li class="' + cls.trim() + '">' + i + '<div></div>' + '</li></a>';
+                $scope.li += '<a href="' + url + '"><li class="' + cls.trim() + '">' + i + '<div></div>' + '</li></a>';
             }else {
                 $scope.li += '<li class="' + cls.trim() + '">' + i + '<div></div>' + '</li>';
             }

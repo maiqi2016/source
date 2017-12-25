@@ -141,7 +141,7 @@ app.controller('distribution', ['$scope', '$controller', '$sce', function ($scop
             url = $scope.service.supplyParams(url, ['channel']);
 
             if($scope.days[day] === 'today'){
-                $scope.li += '<a href="' + url + '"><li class="' + cls.trim() + '">' + i + '<b></b>' + '<div></div>' + '</li></a>';
+                $scope.li += '<a href="' + url + '"><li class="' + cls.trim() + '">' + i + '<b></b>' + '<div></div>' + '<p></p>' + '</li></a>';
             }else if ($scope.days[day] === '0' || $scope.days[day] === '1' || $scope.days[day] === '2'){
                 $scope.li += '<a href="' + url + '"><li class="' + cls.trim() + '">' + i + '<div></div>' + '</li></a>';
             }else if($scope.days[day] === 'signed'){

@@ -1,2 +1,208 @@
 @import "../main";
 
+//抽奖码页面
+.header{
+    width: 100%;
+    height: 3.6rem;
+    padding-top: 0.55rem;
+    background: url("@{img}/distribution/lottery-draw.png") no-repeat center center/100% 100%;
+    text-align: center;
+    img {
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+    }
+    .txt{
+        text-align: center;
+        margin-top: 0.2rem;
+    }
+}
+.lottery-draw{
+    padding: 0 0.5rem 20px;
+    span{
+        display: inline-block;
+    };
+    .up{
+        width: 100%;
+        height: 0.6rem;
+        line-height: 0.6rem;
+        .txt{
+            color: #757575;
+            float: left;
+        }
+        .invite{
+            width: 2.3rem;
+            height: 0.6rem;
+            line-height: 0.6rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: #ffd000;
+            float: right;
+        }
+    }
+    .down{
+        margin-top: 10px;
+        .lottery{
+            font-size: 23px;
+            width: 85px;
+            word-wrap: break-word;
+        }
+        .date{
+            float: right;
+            color: #757575;
+            margin: 0.15rem 0.38rem 0 0;
+        }
+    }
+
+}
+.blank{
+    height: 14px;
+    background-color: #f4f4f4;
+}
+
+
+//抽奖页面
+.header-two{
+    position: relative;
+    img{
+        width: 100%;  
+    }
+    .detail{
+        width: 6.5rem;
+        padding: 0 0.6rem 0.2rem;
+        position: absolute;
+        background-color: #FFFFFF;
+        bottom: -1.3rem;
+        margin-left: 50%;
+        transform: translateX(-3.25rem);
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(8, 10, 10, 0.5);
+        border-radius: 0.1rem;
+        h1{
+            font-size: 19px;
+        }
+        p{
+            color: #757575;
+            margin-bottom: 0;
+            text-align: left;
+        }
+        span{
+            font-size: 16px;
+            float: left;
+            margin-top: 8px;
+        }
+        .has-yes{
+            float: right;
+            width: 2.3rem;
+            height: 0.6rem;
+            line-height: 0.6rem;
+            color: black;
+            background-color: #ffd000;
+            border-radius: 1rem;
+            margin-top: 8px;
+            display: none;
+        }
+        .has-no{
+            float: right;
+            width: 2.3rem;
+            height: 0.6rem;
+            line-height: 0.6rem;
+            color: black;
+            background-color: #c0c0c0;
+            border-radius: 1rem;
+            margin-top: 8px;
+            display: none;
+        }
+    }
+}
+.blank-two{
+    height: 1.6rem;
+    background-color: #eeeeee;
+}
+.description{
+    text-align: center;
+    padding-bottom: 20px;
+    a{
+        color: black;
+    }
+}
+.hot-list{
+    width: 100%;
+    img{
+        width: 100%;
+    }
+    ul{
+        width: 92%;
+        margin: 0.6rem auto;
+        li{
+            width: 100%;
+            margin-bottom: 0.45rem;
+        }
+    }
+}
+.destination{
+    width: 100%;
+    img{
+        width: 100%;
+    }
+    ul{
+        width: 92%;
+        margin: 0.6rem auto;
+        li{
+            width: 3.35rem;
+            float: left;
+            img{
+                width: 100%;
+            }
+        }
+    }
+    ul li:nth-child(2n) {
+        float: right;
+    }
+    ul li:nth-child(n+3) {
+        margin-top: 0.35rem;
+    }
+}
+.qr-code{
+    width: 100%;
+    img{
+        width: 100%;
+    }
+}
+
+//模态框样式
+.modal.in .modal-dialog{
+    top:200px;
+    .modal-body{
+        padding: 25px 15px;
+        img{
+            position: absolute;
+            width: 27px;
+            top: -60px;
+            right: 9px;
+        }
+        input{
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #eee;
+            padding: 13px;
+        }
+        span{
+            position: absolute;
+            top: 86px;
+            right: 22px;
+        }
+        div{
+            width: 95%;
+            background-color: #ffd000;
+            margin: 30px 11px 15px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+        }
+    }
+}
+//message样式
+div#message .message-bar{
+    margin: 250px auto;
+}

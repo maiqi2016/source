@@ -1,7 +1,7 @@
 /**
  * 控制器 - 分销
  */
-app.controller('distribution', ['$scope', '$controller', function ($scope, $controller) {
+app.controller('distribution', ['$scope', '$controller', '$sce', function ($scope, $controller, $sce) {
 
     $controller('generic', {$scope: $scope});
 
@@ -114,4 +114,52 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
     //     }
     //     requestAnimationFrame(move);
     // })()
+
+    //日历
+    $scope.li = '';
+    $scope.days = {};
+    $scope.cal = function () {
+        var d1 = new Date(),
+            y = d1.getFullYear(),
+            m = d1.getMonth() + 1,
+            d = d1.getDate(),
+            firstDay = new Date(y, m - 1, 1).getDay(),
+            dayCount = new Date(y, m, 0).getDate(),
+            blank = '<li></li>';
+
+        $scope.li = blank.repeat(firstDay);
+
+        for (var i = 1; i <= dayCount; i++) {
+            var day = y + '-' + m + '-' + i;
+            var cls = $scope.days[day] ? $scope.days[day] : '';
+            cls += $scope.days[day]==='0' ? ' hotel' : '';
+            cls += $scope.days[day]==='1' ? ' eat' : '';
+            cls += $scope.days[day]==='2' ? ' play' : '';
+            cls += i<d ? ' prev' : ' next';
+            if($scope.days[day] === 'today'){
+                $scope.li += '<a href="http://www.kakehotels.com/?r=distribution/activity-boot&channel=nubXnej7&flag=1"><li class="' + cls.trim() + '">' + i + '<b></b>' + '<div></div>' + '</li></a>';
+            }else if ($scope.days[day] === '0' || $scope.days[day] === '1' || $scope.days[day] === '2'){
+                $scope.li += '<a href="http://www.kakehotels.com/?r=distribution/activity-boot&channel=nubXnej7&flag=0"><li class="' + cls.trim() + '">' + i + '<div></div>' + '</li></a>';
+            }else if($scope.days[day] === 'signed'){
+                $scope.li += '<a href="http://www.kakehotels.com/?r=distribution/activity-boot&channel=nubXnej7&flag=2"><li class="' + cls.trim() + '">' + i + '<div></div>' + '</li></a>';
+            }else {
+                $scope.li += '<li class="' + cls.trim() + '">' + i + '<div></div>' + '</li>';
+            }
+        }
+
+        $scope.li += blank.repeat(7 - (firstDay + dayCount) % 7);
+
+        $scope.li = $sce.trustAsHtml($scope.li);
+
+    //    点击切换日历
+        $scope.showCal = false;
+        $scope.change = function () {
+            $scope.showCal = !$scope.showCal;
+            if($scope.showCal){
+                $('.luck-draw').css({'display':'block'})
+            }else {
+                $('.luck-draw').css({'display':'none'})
+            }
+        }
+    }
 }]);

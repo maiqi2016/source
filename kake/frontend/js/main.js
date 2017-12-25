@@ -1868,7 +1868,7 @@ app.directive('kkFixed', ['service', function (service) {
 /**
  * Directive table card
  */
-app.directive('kkTabCard', ['service', function (service) {
+app.directive('kkTabCard', ['service','$timeout', function (service,$timeout) {
 
     var command = {
         scope: true,
@@ -1915,7 +1915,7 @@ app.directive('kkTabCard', ['service', function (service) {
 }]);
 
 /**
- * Directive anchor
+ * Directive anchor 滑动到锚点
  */
 app.directive('kkAnchor', ['service', function (service) {
 
@@ -1956,6 +1956,57 @@ app.directive('kkAnchor', ['service', function (service) {
                 if($(anchorDiv).offset()){
                     var top = $(anchorDiv).offset().top - $(anchorDiv).height() / 2 + 4;
                     $('body, html').animate({scrollTop: top}, 500);
+                }
+
+            });
+        });
+    };
+
+    return command;
+}]);
+
+/**
+ * Directive anchor tab 直接跳到锚点
+ */
+app.directive('kkAnchorTab', ['service', function (service) {
+
+    var command = {
+        scope: true,
+        restrict: 'A'
+    };
+
+    command.link = function (scope, elem, attr) {
+
+        /**
+         * @param attr.element
+         * @param attr.kkAnchorTab
+         */
+
+        var anchorElements = elem.find(attr.element || '*');
+        var anchor = [];
+        var anchorElement = [];
+        anchorElements.each(function () {
+            var anchorDiv = $(this).attr('data-anchor-tab');
+
+            if (anchorDiv) {
+                anchor.push($(anchorDiv)[0]);
+                anchorElement.push(this);
+            }
+        });
+
+        $(anchorElement[0]).addClass(attr.kkAnchorTab);
+
+        $.each(anchorElement, function () {
+            service.tap(this, function () {
+                // action tab
+                $(anchorElement).removeClass(attr.kkAnchorTab);
+                $(this).addClass(attr.kkAnchorTab);
+
+                // action card
+                var anchorDiv = $(this).attr('data-anchor-tab');
+                if($(anchorDiv).offset()){
+                    var top = $(anchorDiv).offset().top - $(anchorDiv).height() / 30;
+                    $('body, html').animate({scrollTop: top}, 0);
                 }
 
             });
@@ -2277,7 +2328,7 @@ app.directive('kkLocationOnInput', ['service', function (service) {
 /**
  * Directive show modal
  */
-app.directive('kkModal', ['service', '$timeout', function (service, $timeout) {
+app.directive('kkModal', ['service', '$timeout', '$compile', '$interpolate', function (service, $timeout, $compile, $interpolate) {
 
     var command = {
         scope: true,
@@ -2294,12 +2345,18 @@ app.directive('kkModal', ['service', '$timeout', function (service, $timeout) {
          * @param attr.onNo
          * @param attr.onYes
          * @param attr.width
+         * @param attr.backdropClose
          */
         var content;
 
         var tpl;
+        var backdrop = (attr.backdropClose === 'static') ? 'static' : !attr.backdropClose;
+
         if (attr.kkModal.indexOf('/') !== -1) {
+
             tpl = service.bootstrapModal(null, attr);
+            tpl = $compile(tpl)(scope);
+
             service.tap(elem[0], function () {
                 scope.request({
                     api: attr.kkModal,
@@ -2311,7 +2368,7 @@ app.directive('kkModal', ['service', '$timeout', function (service, $timeout) {
 
                         tpl.find('.modal-dialog').css('width', attr.width);
                         tpl.find('.modal-body').html(res.data.message);
-                        tpl.modal();
+                        tpl.modal({backdrop: backdrop});
                     }
                 });
             });
@@ -2324,9 +2381,11 @@ app.directive('kkModal', ['service', '$timeout', function (service, $timeout) {
 
             // content
             tpl = service.bootstrapModal(modal.html(), attr);
+            tpl = $compile(tpl)(scope);
+
             tpl.find('.modal-dialog').css('width', attr.width);
             service.tap(elem[0], function () {
-                tpl.modal();
+                tpl.modal({backdrop: backdrop});
             });
         }
     };

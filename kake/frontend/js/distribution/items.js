@@ -1,7 +1,7 @@
 /**
  * 控制器 - 分销
  */
-app.controller('distribution', ['$scope', '$controller', '$sce', function ($scope, $controller, $sce) {
+app.controller('distribution', ['$scope', '$controller', '$sce', '$interval', function ($scope, $controller, $sce, $interval) {
 
     $controller('generic', {$scope: $scope});
 
@@ -119,6 +119,7 @@ app.controller('distribution', ['$scope', '$controller', '$sce', function ($scop
     $scope.li = '';
     $scope.days = {};
     $scope.cal = function () {
+
         var d1 = new Date(),
             y = d1.getFullYear(),
             m = d1.getMonth() + 1,
@@ -129,41 +130,57 @@ app.controller('distribution', ['$scope', '$controller', '$sce', function ($scop
 
         $scope.li = blank.repeat(firstDay);
 
+        var map = {
+            'signed': 'signed',
+            '0': 'hotel',
+            '1': 'eat',
+            '2': 'play'
+        };
+
         for (var i = 1; i <= dayCount; i++) {
             var day = y + '-' + m + '-' + i;
-            var cls = $scope.days[day] ? $scope.days[day] : '';
-            cls += $scope.days[day]==='0' ? ' hotel' : '';
-            cls += $scope.days[day]==='1' ? ' eat' : '';
-            cls += $scope.days[day]==='2' ? ' play' : '';
-            cls += i<d ? ' prev' : ' next';
+
+            var cls = [];
+
+            if ($scope.days[day]) {
+                cls.push(map[$scope.days[day]]);
+            }
+
+            if (i > d) {
+                cls.push('next');
+            } else if (i < d) {
+                cls.push('prev');
+            } else {
+                cls.push('today');
+            }
+
+            var isToday = new Date().format("yyyy-MM-dd") === day;
+            if (isToday && $scope.days[day]) {
+                cls.push('today_' + map[$scope.days[day]]);
+            }
+
+            cls = cls.join(' ').trim();
 
             var url = requestUrl + 'distribution/activity-boot&date=' + day;
             url = $scope.service.supplyParams(url, ['channel']);
 
-            if($scope.days[day] === 'today'){
-                $scope.li += '<a href="' + url + '"><li class="' + cls.trim() + '">' + i + '<b></b>' + '<div></div>' + '<p></p>' + '</li></a>';
-            }else if ($scope.days[day] === '0' || $scope.days[day] === '1' || $scope.days[day] === '2'){
-                $scope.li += '<a href="' + url + '"><li class="' + cls.trim() + '">' + i + '<div></div>' + '</li></a>';
-            }else if($scope.days[day] === 'signed'){
-                $scope.li += '<a href="' + url + '"><li class="' + cls.trim() + '">' + i + '<div></div>' + '</li></a>';
-            }else {
-                $scope.li += '<li class="' + cls.trim() + '">' + i + '<div></div>' + '</li>';
+            if (isToday) {
+                $scope.li += '<a href="' + url + '"><li class="' + cls + '">' + i + '<b></b><div></div><p></p></li></a>';
+            } else if (typeof $scope.days[day] !== 'undefined') {
+                $scope.li += '<a href="' + url + '"><li class="' + cls + '">' + i + '<div></div></li></a>';
+            } else {
+                $scope.li += '<li class="' + cls + '">' + i + '<div></div></li>';
             }
         }
 
         $scope.li += blank.repeat(7 - (firstDay + dayCount) % 7);
-
         $scope.li = $sce.trustAsHtml($scope.li);
+    };
 
-    //    点击切换日历
-        $scope.showCal = false;
-        $scope.change = function () {
-            $scope.showCal = !$scope.showCal;
-            if($scope.showCal){
-                $('.luck-draw').css({'display':'block'})
-            }else {
-                $('.luck-draw').css({'display':'none'})
-            }
-        }
-    }
+    //日历广告抖动
+    $scope.cls = function () {
+        $interval(function () {
+            $scope.shake = !$scope.shake;
+        }, 2500);
+    };
 }]);

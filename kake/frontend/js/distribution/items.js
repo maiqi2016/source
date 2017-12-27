@@ -183,4 +183,5 @@ app.controller('distribution', ['$scope', '$controller', '$sce', '$interval', fu
     //         $scope.shake = !$scope.shake;
     //     }, 1000);
     // };
+    console.log($('.product_image').first());
 }]);

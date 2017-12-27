@@ -178,9 +178,9 @@ app.controller('distribution', ['$scope', '$controller', '$sce', '$interval', fu
     };
 
     //日历广告抖动
-    $scope.cls = function () {
-        $interval(function () {
-            $scope.shake = !$scope.shake;
-        }, 2500);
-    };
+    // $scope.cls = function (shake) {
+    //     $interval(function () {
+    //         $scope.shake = !$scope.shake;
+    //     }, 1000);
+    // };
 }]);

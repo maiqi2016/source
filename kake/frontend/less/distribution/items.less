@@ -9,52 +9,50 @@ body {
 }
 
 .header {
-    position: relative;
     width: 100%;
-    padding-top: 10px;
-    padding-bottom: 25px;
+    padding: 20px 0;
     background: url("@{img}/distribution/bg.png") no-repeat center center/100% 100%;
     background-size: cover;
-
-    .focus-card {
-        position: relative;
-        width: 100%;
-        overflow-x: hidden;
-        div {
-            z-index: 200;
-            position: absolute;
-            width: 100%;
-            left: 0.3rem;
-            margin: 0.3rem auto;
-            a {
-                display: inline-block;
-                width: 95%;
-                img {
-                    width: 95%;
-                }
-            }
-        }
-        ul.card-carousel {
-            z-index: 199;
-            width: 100%;
-            height: 4.35rem;
-            margin: 0.3rem auto 0.3rem 0.3rem;
+    .kake-theme {
+        .product_image {
+            width: 310px;
             position: relative;
-            li {
-                width: 95%;
-                position: absolute;
-                a {
-                    display: inline-block;
+            margin: 0 0px;
+            overflow: hidden;
+            a {
+                img {
                     width: 100%;
-                    img {
-                        width: 95%;
-                    }
+                    box-shadow: 0 0 5px rgba(8, 10, 10, 0.5);
                 }
+
             }
         }
     }
 }
-
+.carousel {
+    position: relative;
+    overflow: hidden;
+    .scroll {
+    }
+    .carousel-scroller {
+        position: relative;
+        white-space: nowrap;
+        font-size: 0;
+        div {
+            position: relative;
+            display: inline-block;
+            overflow: auto;
+        }
+        .top20 {
+            animation: topchange .6s 1 ease-in-out;
+            animation-fill-mode: forwards;
+        }
+        .top-20 {
+            animation: top-change .6s 1 ease-in-out;
+            animation-fill-mode: forwards;
+        }
+    }
+}
 .blank {
     height: 15px;
 }
@@ -62,11 +60,12 @@ body {
 .body {
     padding-bottom: 0;
     width: 100%;
-    background-color: #fff;
+    background-color: #2c3e50;
     .nav {
         width: 100%;
         height: 1.22rem;
         background-color: #33475c;
+        box-shadow: 0 0 5px rgba(8, 10, 10, 0.5);
         ul {
             background-color: #33475c;
             display: inline-block;
@@ -144,6 +143,7 @@ body {
                             font-size: 18px;
                         }
                         p {
+                            color: #FFFFFF;
                             margin-top: 0.1rem;
                             height: 0.8rem;
                             overflow: hidden;
@@ -183,7 +183,7 @@ body {
         margin: 0 auto;
         li {
             width: 100%;
-            border-top: 0.01rem solid #eee;
+            border-top: 0.01rem solid #ffd000;
             padding-top: 0.53rem;
             a {
                 color: black;
@@ -215,7 +215,8 @@ body {
                     }
                 }
                 h2 {
-                    font-size: 18px;
+                    font-size: 20px;
+                    color: #FFFFFF;
                 }
                 small {
                     display: block;

@@ -117,18 +117,25 @@ app.controller('distribution', ['$scope', '$controller', '$sce', '$interval', fu
 
     //日历
     $scope.li = '';
-    $scope.days = {};
-    $scope.cal = function () {
+    $scope.year = new Date().getFullYear();
+    $scope.month = new Date().getMonth() + 1;
 
-        var d1 = new Date(),
-            y = d1.getFullYear(),
-            m = d1.getMonth() + 1,
-            d = d1.getDate(),
-            firstDay = new Date(y, m - 1, 1).getDay(),
-            dayCount = new Date(y, m, 0).getDate(),
+    $scope.buildCalHtml = function (days, year, month) {
+
+        var date = new Date();
+        year = year || date.getFullYear();
+        month = month || date.getMonth() + 1;
+
+        var todayIndex = date.getDate(),
+            firstDayIndex = new Date(year, month - 1, 1).getDay(),
+            dayCount = new Date(year, month, 0).getDate(),
             blank = '<li></li>';
 
-        $scope.li = blank.repeat(firstDay);
+        if (date.getFullYear() !== year || date.getMonth() + 1 !== month) {
+            todayIndex = 99;
+        }
+
+        $scope.li = blank.repeat(firstDayIndex);
 
         var map = {
             'signed': 'signed',
@@ -138,25 +145,25 @@ app.controller('distribution', ['$scope', '$controller', '$sce', '$interval', fu
         };
 
         for (var i = 1; i <= dayCount; i++) {
-            var day = y + '-' + m + '-' + i;
+            var day = year + '-' + month + '-' + i;
 
             var cls = [];
 
-            if ($scope.days[day]) {
-                cls.push(map[$scope.days[day]]);
+            if (days[day]) {
+                cls.push(map[days[day]]);
             }
 
-            if (i > d) {
+            if (i > todayIndex) {
                 cls.push('next');
-            } else if (i < d) {
+            } else if (i < todayIndex) {
                 cls.push('prev');
             } else {
                 cls.push('today');
             }
 
             var isToday = new Date().format("yyyy-MM-dd") === day;
-            if (isToday && $scope.days[day]) {
-                cls.push('today_' + map[$scope.days[day]]);
+            if (isToday && days[day]) {
+                cls.push('today_' + map[days[day]]);
             }
 
             cls = cls.join(' ').trim();
@@ -166,22 +173,35 @@ app.controller('distribution', ['$scope', '$controller', '$sce', '$interval', fu
 
             if (isToday) {
                 $scope.li += '<a href="' + url + '"><li class="' + cls + '">' + i + '<b></b><div></div><p></p></li></a>';
-            } else if (typeof $scope.days[day] !== 'undefined') {
+            } else if (typeof days[day] !== 'undefined') {
                 $scope.li += '<a href="' + url + '"><li class="' + cls + '">' + i + '<div></div></li></a>';
             } else {
                 $scope.li += '<li class="' + cls + '">' + i + '<div></div></li>';
             }
         }
 
-        $scope.li += blank.repeat(7 - (firstDay + dayCount) % 7);
+        $scope.li += blank.repeat(7 - (firstDayIndex + dayCount) % 7);
         $scope.li = $sce.trustAsHtml($scope.li);
     };
 
-    //日历广告抖动
-    // $scope.cls = function (shake) {
-    //     $interval(function () {
-    //         $scope.shake = !$scope.shake;
-    //     }, 1000);
-    // };
-    console.log($('.product_image').first());
+    $scope.prev = function () {
+        var date = moment($scope.year + '-' + $scope.month).add(-1, 'months');
+        $scope.year = date.year();
+        $scope.month = date.month() + 1;
+
+        // ajax-days {date}
+        $scope.buildCalHtml({}, $scope.year, $scope.month);
+    };
+
+    $scope.next = function () {
+        var date = moment($scope.year + '-' + $scope.month).tz('Asia/ShangHai').add(1, 'months');
+        $scope.year = date.year();
+        $scope.month = date.month() + 1;
+
+        $scope.buildCalHtml({}, $scope.year, $scope.month);
+    };
+
+    $scope.showCalFn = function () {
+        $scope.showCal = !$scope.showCal;
+    }
 }]);

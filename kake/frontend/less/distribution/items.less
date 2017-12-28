@@ -21,7 +21,7 @@ body {
             overflow: hidden;
             a {
                 img {
-                    width: 100%;
+                    width: 300px;
                     box-shadow: 0 0 5px rgba(8, 10, 10, 0.5);
                 }
 
@@ -29,6 +29,7 @@ body {
         }
     }
 }
+
 .carousel {
     position: relative;
     overflow: hidden;
@@ -53,6 +54,7 @@ body {
         }
     }
 }
+
 .blank {
     height: 15px;
 }
@@ -191,7 +193,6 @@ body {
             .photo {
                 position: relative;
                 .outImg {
-                    height: 3rem;
                     overflow: hidden;
                     img {
                         width: 100%;
@@ -456,17 +457,19 @@ body {
     }
 }
 
-//抽奖模块样式
-.luck-draw-img {
-    width: 100%;
-}
-
 .luck-draw {
     width: 100%;
     padding-bottom: 5px;
     background: url("@{img}/distribution/luck-draw-b.png") no-repeat;
     background-size: cover;
     text-align: center;
+    b {
+        color: #fff;
+        width: 30px;
+        font-size: 20px;
+        display: inline-block;
+        margin: 10px 35px 0;
+    }
     span {
         color: #FFFFFF;
         font-size: 20px;
@@ -476,7 +479,7 @@ body {
     img {
         display: block;
         margin: 0 auto;
-        width: 37%;
+        width: 50%;
     }
     .date {
         width: 100%;
@@ -501,11 +504,11 @@ body {
             }
             .today > b {
                 position: absolute;
-                width: 120%;
-                height: 120%;
+                width: 90%;
+                height: 90%;
                 border-radius: 50%;
-                top: -5px;
-                left: -4px;
+                top: -3px;
+                left: -31px;
                 opacity: 0.5;
                 animation: out 2s ease infinite;
             }
@@ -520,27 +523,21 @@ body {
             }
             .hotel > div {
                 background: url("@{img}/distribution/activity-boot/hotel.gif") no-repeat 0rem 0rem;
-                background-size: cover;
-                left: -11px;
-                top: -6px;
-                height: 140%;
-                width: 140%;
+                background-size: 1.1rem;
+                left: -3px;
+                top: 0px;
             }
             .eat > div {
                 background: url("@{img}/distribution/activity-boot/eat.gif") no-repeat 0rem 0rem;
-                background-size: cover;
-                left: -11px;
-                top: -6px;
-                height: 140%;
-                width: 140%;
+                background-size: 1.1rem;
+                left: -3px;
+                top: 0px;
             }
             .play > div {
                 background: url("@{img}/distribution/activity-boot/play.gif") no-repeat 0rem 0rem;
-                background-size: cover;
-                left: -11px;
-                top: -6px;
-                height: 140%;
-                width: 140%;
+                background-size: 1.1rem;
+                left: -3px;
+                top: 0px;
             }
             .today > div {
                 perspective: 200px;
@@ -550,8 +547,8 @@ body {
                 animation-direction: alternate;
             }
             .today_hotel > div {
-                background: url("@{img}/distribution/activity-boot/sprites.png") no-repeat -3.05rem -0.1rem;
-                background-size: 4.2rem;
+                background: url("@{img}/distribution/activity-boot/sprites.png") no-repeat -2.45rem 0.07rem;
+                background-size: 3.5rem;
                 width: 120%;
                 height: 120%;
             }
@@ -596,6 +593,7 @@ body {
             }
             .today {
                 color: red;
+                z-index: 1;
             }
         }
     }

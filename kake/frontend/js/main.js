@@ -1242,6 +1242,7 @@ app.directive('kkFocusCamel', ['service', function (service) {
         /**
          * @param attr.id
          * @param attr.scale
+         * @param attr.index
          */
         var that = {};
 
@@ -1353,7 +1354,7 @@ app.directive('kkFocusCamel', ['service', function (service) {
         }
 
         // Init
-        moveTo(2);
+        moveTo(parseInt(attr.index) || 2);
     };
 
     return command;

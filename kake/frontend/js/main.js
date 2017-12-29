@@ -151,7 +151,7 @@ app.service('service', ['$http', '$q', '$timeout', function ($http, $q, $timeout
         padStr = padStr.toString();
         type = type || 'left';
 
-        if (this.length >= length || !['left', 'right', 'both'].exists(type)) {
+        if (this.length >= length || !['left', 'right', 'both'].contains(type)) {
             return this;
         }
         var last = (length - this.length) % padStr.length;
@@ -190,7 +190,7 @@ app.service('service', ['$http', '$q', '$timeout', function ($http, $q, $timeout
         fillstr = fillstr.toString();
         type = type || 'left';
 
-        if (length < 1 || !['left', 'right', 'both'].exists(type)) {
+        if (length < 1 || !['left', 'right', 'both'].contains(type)) {
             return this;
         }
 
@@ -2414,8 +2414,8 @@ app.directive('kkActivityCal', ['service', function (service) {
             var date = moment(),
                 year = showDate.year(),
                 month = showDate.month() + 1,
-                today = showDate.date(),
-                todayDate = showDate.format('YYYY-MM-DD'),
+                today = date.date(),
+                todayDate = date.format('YYYY-MM-DD'),
                 weeks = new Date(year, month - 1, 1).getDay(),
                 daysInMonth = showDate.daysInMonth(),
                 blank = '<li></li>';
@@ -2433,11 +2433,11 @@ app.directive('kkActivityCal', ['service', function (service) {
             };
 
             for (var i = 1; i <= daysInMonth; i++) {
-                var day = year + '-' + month + '-' + i;
+                var day = year + '-' + month.toString().pad(0, 2) + '-' + i.toString().pad(0, 2);
 
                 var cls = [];
 
-                if (days[day]) {
+                if (typeof days[day] !== 'undefined') {
                     cls.push(map[days[day]]);
                 }
 
@@ -2465,6 +2465,7 @@ app.directive('kkActivityCal', ['service', function (service) {
                 } else {
                     li += '<li class="' + cls + '">' + i + '<div></div></li>';
                 }
+                console.log(day);
             }
 
             var last = (weeks + daysInMonth) % 7;

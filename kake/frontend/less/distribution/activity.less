@@ -40,9 +40,9 @@
                 background: url("@{img}/distribution/loading.png") no-repeat center center/100% 100%;
             }
         }
-        .percent{
+        .percent {
             position: absolute;
-            top:25px;
+            top: 25px;
             right: 0;
         }
     }
@@ -78,6 +78,26 @@
         }
     }
 
+}
+
+//点击分享
+.share {
+    position: fixed;
+    background-color: black;
+    opacity: 0.8;
+    top:0;
+    width: 100%;
+    height: 100%;
+    img {
+        width: 65%;
+        float: right;
+        margin-right: 25px;
+    }
+}
+.rule{
+    img{
+        width: 100%;
+    }
 }
 
 .blank {
@@ -202,7 +222,7 @@
     }
 }
 
-//模态框1样式
+//模态框样式
 .modal.in .modal-dialog {
     top: 200px;
     .modal-body {
@@ -234,13 +254,6 @@
         }
     }
 }
-//模态框2样式
-.modal.in .modal-dialog .modal-body .share{
-    width: 82%;
-    top: -204px;
-    left:75px;
-}
-
 
 //message样式
 div#message .message-bar {

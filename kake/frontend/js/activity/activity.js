@@ -42,39 +42,39 @@ app.controller('activity', ['$scope', '$controller', function ($scope, $controll
                     w: document.body.offsetWidth,
                     h: document.body.offsetHeight
                 };
-				$('textarea').blur();
-				
-				var img = new Image(pos.w, pos.h);
+                $('textarea').blur();
+
+                var img = new Image(pos.w, pos.h);
                 img.src = res.data.img;
                 img.classList.add('screen-shot');
 
                 $('body').append(img);
-                            
-				/*
-                setTimeout(function () {
-                    html2canvas(obj[0], {
-                        useCORS: true,
-                        width: pos.w,
-                        height: pos.h,
-                        onrendered: function (canvas) {
 
-                            $scope.message('提交成功,长按保存图片');
+                /*
+                 $scope.timeout(function () {
+                 html2canvas(obj[0], {
+                 useCORS: true,
+                 width: pos.w,
+                 height: pos.h,
+                 onrendered: function (canvas) {
 
-                            try {
-                                var base64 = canvas.toDataURL();
-                            } catch (e) {
-                                console.log(e);
-                            }
+                 $scope.message('提交成功,长按保存图片');
 
-                            var img = new Image(pos.w, pos.h);
-                            img.src = base64;
-                            img.classList.add('screen-shot');
+                 try {
+                 var base64 = canvas.toDataURL();
+                 } catch (e) {
+                 console.log(e);
+                 }
 
-                            $('body').append(img);
-                        }
-                    });
-                }, 850);
-                */
+                 var img = new Image(pos.w, pos.h);
+                 img.src = base64;
+                 img.classList.add('screen-shot');
+
+                 $('body').append(img);
+                 }
+                 });
+                 }, 850);
+                 */
             }
         });
     };

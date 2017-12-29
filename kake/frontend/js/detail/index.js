@@ -37,7 +37,6 @@ app.controller('detail', ['$scope', '$controller', function ($scope, $controller
         $scope.bind = bind;
     };
 
-
     // 点击选择框
     $scope.packageTap = function (id, showP) {
 

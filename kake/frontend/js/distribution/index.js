@@ -27,7 +27,7 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
             this.target.addClass(this.anIgnition);
             this.gasEntity.addClass(this.anGas);
 
-            setTimeout(function () {
+            $scope.timeout(function () {
                 that.target.removeClass(that.anIgnition);
                 that.gasEntity.removeClass(that.anGas);
                 deferred.resolve();
@@ -87,7 +87,7 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
 
             this.boxEntity.addClass(this.anBrake);
             this.move(distance, time).then(function () {
-                setTimeout(function () {
+                $scope.timeout(function () {
                     that.boxEntity.removeClass(that.anBrake);
                     deferred.resolve();
                 }, 500);
@@ -100,7 +100,7 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
         this.stop = function (time) {
             var deferred = new $.Deferred();
 
-            setTimeout(function () {
+            $scope.timeout(function () {
                 deferred.resolve();
             }, time);
 

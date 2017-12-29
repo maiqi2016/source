@@ -10,7 +10,7 @@ app.controller('producer', ['$scope', '$controller', function ($scope, $controll
         withdraw: null,
         withdrawBegin: 0
     };
-    
+
     $scope.withdrawAll = function () {
         $scope.money.withdraw = parseFloat($('.money').text());
     };

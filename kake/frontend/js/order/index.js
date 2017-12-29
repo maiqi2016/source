@@ -1,12 +1,12 @@
 /**
  * 控制器 - 订单中心
  */
-app.controller('order', ['$scope', '$controller', '$interval', function ($scope, $controller, $interval) {
+app.controller('order', ['$scope', '$controller', function ($scope, $controller) {
 
     $controller('generic', {$scope: $scope});
 
     $scope.f5 = function () {
-        setTimeout(function () {
+        $scope.timeout(function () {
             history.go(0);
         }, 2500);
     };
@@ -57,7 +57,7 @@ app.controller('order', ['$scope', '$controller', '$interval', function ($scope,
                 location.href = res.data;
             },
             fail: function () {
-                setTimeout(function () {
+                $scope.timeout(function () {
                     $scope.pollOrder(orderNumber, userId);
                 }, 3000);
             }
@@ -178,7 +178,7 @@ app.controller('order', ['$scope', '$controller', '$interval', function ($scope,
 
     // 倒计时跳转
     $scope.paidLocation = function (url) {
-        $interval(function () {
+        $scope.interval(function () {
             $scope.second--;
             if ($scope.second <= 0) {
                 location.href = url;

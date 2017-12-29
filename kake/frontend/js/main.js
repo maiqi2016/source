@@ -676,7 +676,7 @@ app.service('service', ['$http', '$q', '$timeout', function ($http, $q, $timeout
         var rank = begin;
         var _end = end - rank;
 
-        return parseInt(new Number(Math.random() * _end).toFixed(0)) + rank;
+        return parseInt(Number(Math.random() * _end).toFixed(0)) + rank;
     };
 
     // Bind key down
@@ -1114,7 +1114,7 @@ app.directive('kkSpread', ['$timeout', 'service', function ($timeout, service) {
 /**
  * Directive focus
  */
-app.directive('kkFocus', ['service', function (service) {
+app.directive('kkFocus', ['service', '$interval', function (service, $interval) {
 
     var command = {
         scope: true,
@@ -1214,7 +1214,7 @@ app.directive('kkFocus', ['service', function (service) {
 
             v = v || touch.max;
 
-            that.plan = setInterval(function () {
+            that.plan = $interval(function () {
                 v -= touch.step;
                 v = (v < touch.min) ? touch.max : v;
                 touch.to(v, that.playTime);
@@ -1363,7 +1363,7 @@ app.directive('kkFocusCamel', ['service', function (service) {
 /**
  * Directive focus card
  */
-app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout) {
+app.directive('kkFocusCard', ['service', '$timeout', '$interval', function (service, $timeout, $interval) {
 
     var command = {
         scope: true,
@@ -1454,11 +1454,11 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
             var first = small.children().first();
             big.addClass(ami);
 
-            setTimeout(function () {
+            $timeout(function () {
                 smallToBig(first);
             }, animateTime / 2);
 
-            setTimeout(function () {
+            $timeout(function () {
                 big.css('opacity', 1).html(first.html()).removeClass(ami);
                 toBig(big);
                 small.append(first);
@@ -1489,7 +1489,7 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
 
             big.html(lastTwo.html());
             big.addClass('fadeInLeft');
-            setTimeout(function () {
+            $timeout(function () {
                 big.removeClass('fadeInLeft');
             }, 1000);
 
@@ -1501,12 +1501,12 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
         var run;
         var auto = function () {
             run && clearInterval(run);
-            run = setInterval(function () {
+            run = $interval(function () {
                 // next();
             }, attr.time || 3000);
         };
 
-        setTimeout(function () {
+        $timeout(function () {
             // auto();
         }, 5000);
 
@@ -1625,7 +1625,7 @@ app.directive('kkScroll', ['service', '$timeout', function (service, $timeout) {
 /**
  * Directive sms
  */
-app.directive('kkSms', ['service', function (service) {
+app.directive('kkSms', ['service', '$interval', function (service, $interval) {
 
     var command = {
         scope: true,
@@ -1670,7 +1670,7 @@ app.directive('kkSms', ['service', function (service) {
                 elem.html(newText);
 
                 var obj = elem.find('i');
-                var smsTime = setInterval(function () {
+                var smsTime = $interval(function () {
                     var sec = parseInt(obj.text());
                     if (sec <= 1) {
                         clearInterval(smsTime);
@@ -1762,7 +1762,7 @@ app.directive('kkMenuLm', ['service', '$timeout', function (service, $timeout) {
     };
     var door = false;
 
-    command.link = function (scope, elem, attr) {
+    command.link = function (scope, elem) {
 
         var animateShadeIn = 'fadeIn',
             animateShadeOut = 'fadeOut',
@@ -1770,8 +1770,7 @@ app.directive('kkMenuLm', ['service', '$timeout', function (service, $timeout) {
             animateMenuOut = 'fadeOutRight';
 
         var menu = $('.menu-lm'),
-            shade = $('<div class="shade hidden animated"></div>'),
-            shapeF = $('.shape-fixed');
+            shade = $('<div class="shade hidden animated"></div>');
 
         menu.css('height', window.screen.height);
         $('body').append(shade);
@@ -1869,7 +1868,7 @@ app.directive('kkFixed', ['service', function (service) {
 /**
  * Directive table card
  */
-app.directive('kkTabCard', ['service','$timeout', function (service,$timeout) {
+app.directive('kkTabCard', ['service', '$timeout', function (service, $timeout) {
 
     var command = {
         scope: true,
@@ -1881,6 +1880,7 @@ app.directive('kkTabCard', ['service','$timeout', function (service,$timeout) {
         /**
          * @param attr.element
          * @param attr.kkTabCard
+         * @param attr.bindClick
          */
         var tabElements = elem.find(attr.element || '*');
         var tab = [];
@@ -1954,7 +1954,7 @@ app.directive('kkAnchor', ['service', function (service) {
 
                 // action card
                 var anchorDiv = $(this).attr('data-anchor');
-                if($(anchorDiv).offset()){
+                if ($(anchorDiv).offset()) {
                     var top = $(anchorDiv).offset().top - $(anchorDiv).height() / 2 + 4;
                     $('body, html').animate({scrollTop: top}, 500);
                 }
@@ -2005,7 +2005,7 @@ app.directive('kkAnchorTab', ['service', function (service) {
 
                 // action card
                 var anchorDiv = $(this).attr('data-anchor-tab');
-                if($(anchorDiv).offset()){
+                if ($(anchorDiv).offset()) {
                     var top = $(anchorDiv).offset().top - $(anchorDiv).height() / 30;
                     $('body, html').animate({scrollTop: top}, 0);
                 }
@@ -2238,7 +2238,7 @@ app.directive('kkPullUp', ['service', function (service) {
 /**
  * Directive print text
  */
-app.directive('kkPrintText', ['service', function (service) {
+app.directive('kkPrintText', ['$interval', function ($interval) {
 
     var command = {
         scope: true,
@@ -2259,7 +2259,7 @@ app.directive('kkPrintText', ['service', function (service) {
             elem.html(attr.kkPrintText.substring(0, index++));
         }
 
-        var interval = setInterval(type, parseInt(attr.time || 250));
+        var interval = $interval(type, parseInt(attr.time || 250));
     };
 
     return command;
@@ -2268,7 +2268,7 @@ app.directive('kkPrintText', ['service', function (service) {
 /**
  * Directive copy text
  */
-app.directive('kkCopyText', ['service', function (service) {
+app.directive('kkCopyText', function () {
 
     var command = {
         scope: true,
@@ -2297,7 +2297,7 @@ app.directive('kkCopyText', ['service', function (service) {
     };
 
     return command;
-}]);
+});
 
 /**
  * Directive location with enter on input
@@ -2329,7 +2329,7 @@ app.directive('kkLocationOnInput', ['service', function (service) {
 /**
  * Directive show modal
  */
-app.directive('kkModal', ['service', '$timeout', '$compile', '$interpolate', function (service, $timeout, $compile, $interpolate) {
+app.directive('kkModal', ['service', '$timeout', '$compile', '$interpolate', function (service, $timeout, $compile) {
 
     var command = {
         scope: true,
@@ -2348,7 +2348,6 @@ app.directive('kkModal', ['service', '$timeout', '$compile', '$interpolate', fun
          * @param attr.width
          * @param attr.backdropClose
          */
-        var content;
 
         var tpl;
         var backdrop = (attr.backdropClose === 'static') ? 'static' : !attr.backdropClose;
@@ -2373,7 +2372,6 @@ app.directive('kkModal', ['service', '$timeout', '$compile', '$interpolate', fun
                     }
                 });
             });
-            content = '';
         } else {
             var modal = $('.kk-modal > ' + attr.kkModal);
             if (!modal.length) {
@@ -2395,13 +2393,136 @@ app.directive('kkModal', ['service', '$timeout', '$compile', '$interpolate', fun
 }]);
 
 /**
+ * Directive show activity producer calendar
+ */
+app.directive('kkActivityCal', ['service', function (service) {
+
+    var command = {
+        scope: true,
+        restrict: 'A'
+    };
+
+    command.link = function (scope, elem, attr) {
+
+        /**
+         * @param attr.kkActivityCal
+         */
+
+        var showDate = moment();
+
+        var buildLi = function (days) {
+            var date = moment(),
+                year = showDate.year(),
+                month = showDate.month() + 1,
+                today = showDate.date(),
+                todayDate = showDate.format('YYYY-MM-DD'),
+                weeks = new Date(year, month - 1, 1).getDay(),
+                daysInMonth = showDate.daysInMonth(),
+                blank = '<li></li>';
+
+            if (date.year() !== year || date.month() + 1 !== month) {
+                today = 0;
+            }
+
+            var li = blank.repeat(weeks);
+            var map = {
+                'signed': 'signed',
+                '0': 'hotel',
+                '1': 'eat',
+                '2': 'play'
+            };
+
+            for (var i = 1; i <= daysInMonth; i++) {
+                var day = year + '-' + month + '-' + i;
+
+                var cls = [];
+
+                if (days[day]) {
+                    cls.push(map[days[day]]);
+                }
+
+                if (i > today) {
+                    cls.push('next');
+                } else if (i < today) {
+                    cls.push('prev');
+                } else {
+                    cls.push('today');
+                }
+
+                if (todayDate === day && days[day]) {
+                    cls.push('today_' + map[days[day]]);
+                }
+
+                cls = cls.join(' ').trim();
+
+                var url = requestUrl + 'distribution/activity-boot&date=' + day;
+                url = service.supplyParams(url, ['channel']);
+
+                if (todayDate === day) {
+                    li += '<a href="' + url + '"><li class="' + cls + '">' + i + '<b></b><div></div><p></p></li></a>';
+                } else if (typeof days[day] !== 'undefined') {
+                    li += '<a href="' + url + '"><li class="' + cls + '">' + i + '<div></div></li></a>';
+                } else {
+                    li += '<li class="' + cls + '">' + i + '<div></div></li>';
+                }
+            }
+
+            var last = (weeks + daysInMonth) % 7;
+            li += blank.repeat(7 - (last ? last: 7));
+
+            return li;
+        };
+
+        var buildUl = function (li) {
+            return '' +
+                '<div class="luck-draw animated">' +
+                '   <b class="prev-month" data-action-month="-1"> < </b>' +
+                '   <span class="cls-m">' + (showDate.month() + 1) + '</span><span>月</span>' +
+                '   <b class="next-month" data-action-month="+1"> > </b>' +
+                '   <img src="' + sourceUrl + '/img/distribution/month-border.png">' +
+                '   <div class="date">' +
+                '       <ul class="clearfix list">' + li + '</ul>' +
+                '   </div>' +
+                '</div>';
+        };
+
+        var build = function (date) {
+            var data = {
+                api: 'distribution/ajax-days',
+                post: {
+                    date: date
+                }
+            };
+
+            data.success = function (res) {
+                elem.html(buildUl(buildLi(res.data)));
+                elem.find('[data-action-month]').each(function () {
+                    var increment = parseInt($(this).attr('data-action-month'));
+                    $(this).on('tap click', function () {
+                        showDate = moment(showDate.format('YYYY-MM-DD')).add(increment, 'months');
+                        build(showDate.format('YYYY-MM-DD'));
+                    });
+                });
+            };
+            scope.request(data);
+        };
+
+        build(showDate.format('YYYY-MM-DD'));
+    };
+
+    return command;
+}]);
+
+/**
  * Controller
  */
-app.controller('generic', ['$scope', '$timeout', '$compile', 'service', function ($scope, $timeout, $compile, service) {
+app.controller('generic', ['$scope', '$timeout', '$interval', '$compile', 'service', function ($scope, $timeout, $interval, $compile, service) {
 
     $scope.timeout = $timeout;
+    $scope.interval = $interval;
     $scope.compile = $compile;
     $scope.service = service;
+
     $scope.conf = {
         ajaxLock: {},
         timeout: null,
@@ -2453,7 +2574,7 @@ NydhxUEs0y8aMzWbGwIDAQAB\
         }
 
         if (time) {
-            hideTag = setTimeout(function () {
+            hideTag = $scope.timeout(function () {
                 $scope.loading(false);
             }, time);
         }
@@ -2483,7 +2604,7 @@ NydhxUEs0y8aMzWbGwIDAQAB\
         };
 
         box.removeClass('hidden').on('click', hide).find('.message-box').html(msg);
-        hideTag = setTimeout(hide, time);
+        hideTag = $scope.timeout(hide, time);
 
         return null;
     };
@@ -2505,7 +2626,7 @@ NydhxUEs0y8aMzWbGwIDAQAB\
 
         clearTimeout(clear);
 
-        setTimeout(function () {
+        $scope.timeout(function () {
             box.addClass('hidden');
             box.removeClass('kk-hide').addClass('kk-show');
             bar.removeClass('kk-b2t-hide').addClass('kk-t2b-show');

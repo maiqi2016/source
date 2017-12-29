@@ -1114,7 +1114,7 @@ app.directive('kkSpread', ['$timeout', 'service', function ($timeout, service) {
 /**
  * Directive focus
  */
-app.directive('kkFocus', ['service', '$interval', function (service, $interval) {
+app.directive('kkFocus', ['service', function (service) {
 
     var command = {
         scope: true,
@@ -1214,7 +1214,7 @@ app.directive('kkFocus', ['service', '$interval', function (service, $interval) 
 
             v = v || touch.max;
 
-            that.plan = $interval(function () {
+            that.plan = setInterval(function () {
                 v -= touch.step;
                 v = (v < touch.min) ? touch.max : v;
                 touch.to(v, that.playTime);
@@ -1363,7 +1363,7 @@ app.directive('kkFocusCamel', ['service', function (service) {
 /**
  * Directive focus card
  */
-app.directive('kkFocusCard', ['service', '$timeout', '$interval', function (service, $timeout, $interval) {
+app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout) {
 
     var command = {
         scope: true,
@@ -1501,7 +1501,7 @@ app.directive('kkFocusCard', ['service', '$timeout', '$interval', function (serv
         var run;
         var auto = function () {
             run && clearInterval(run);
-            run = $interval(function () {
+            run = setInterval(function () {
                 // next();
             }, attr.time || 3000);
         };
@@ -1625,7 +1625,7 @@ app.directive('kkScroll', ['service', '$timeout', function (service, $timeout) {
 /**
  * Directive sms
  */
-app.directive('kkSms', ['service', '$interval', function (service, $interval) {
+app.directive('kkSms', ['service', function (service) {
 
     var command = {
         scope: true,
@@ -1670,7 +1670,7 @@ app.directive('kkSms', ['service', '$interval', function (service, $interval) {
                 elem.html(newText);
 
                 var obj = elem.find('i');
-                var smsTime = $interval(function () {
+                var smsTime = setInterval(function () {
                     var sec = parseInt(obj.text());
                     if (sec <= 1) {
                         clearInterval(smsTime);
@@ -2238,7 +2238,7 @@ app.directive('kkPullUp', ['service', function (service) {
 /**
  * Directive print text
  */
-app.directive('kkPrintText', ['$interval', function ($interval) {
+app.directive('kkPrintText', function () {
 
     var command = {
         scope: true,
@@ -2259,11 +2259,11 @@ app.directive('kkPrintText', ['$interval', function ($interval) {
             elem.html(attr.kkPrintText.substring(0, index++));
         }
 
-        var interval = $interval(type, parseInt(attr.time || 250));
+        var interval = setInterval(type, parseInt(attr.time || 250));
     };
 
     return command;
-}]);
+});
 
 /**
  * Directive copy text

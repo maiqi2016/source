@@ -2465,7 +2465,6 @@ app.directive('kkActivityCal', ['service', function (service) {
                 } else {
                     li += '<li class="' + cls + '">' + i + '<div></div></li>';
                 }
-                console.log(day);
             }
 
             var last = (weeks + daysInMonth) % 7;

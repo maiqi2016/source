@@ -35,5 +35,6 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
                 }
             }
         });
+
     };
 }]);

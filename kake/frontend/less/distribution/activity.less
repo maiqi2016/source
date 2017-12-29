@@ -1,7 +1,7 @@
 @import "../main";
 
 //抽奖码页面
-.header{
+.header {
     width: 100%;
     height: 3.6rem;
     padding-top: 0.55rem;
@@ -12,25 +12,49 @@
         height: 1.5rem;
         border-radius: 50%;
     }
-    .txt{
+    .txt {
         text-align: center;
         margin-top: 0.2rem;
     }
 }
-.lottery-draw{
+
+.lottery-draw {
     padding: 0 0.5rem 20px;
-    span{
+    span {
         display: inline-block;
-    };
-    .up{
+    }
+;
+    .pro {
+        width: 100%;
+        position: relative;
+        p {
+            .some {
+                color: red;
+            }
+        }
+        .progress {
+            width: 88%;
+            height: 10px;
+            border-radius: 30px;
+            .progress-bar-success {
+                background: url("@{img}/distribution/loading.png") no-repeat center center/100% 100%;
+            }
+        }
+        .percent{
+            position: absolute;
+            top:25px;
+            right: 0;
+        }
+    }
+    .up {
         width: 100%;
         height: 0.6rem;
         line-height: 0.6rem;
-        .txt{
+        .txt {
             color: #757575;
             float: left;
         }
-        .invite{
+        .invite {
             padding: 0 8px;
             height: 0.6rem;
             line-height: 0.6rem;
@@ -40,14 +64,14 @@
             float: right;
         }
     }
-    .down{
+    .down {
         margin-top: 10px;
-        .lottery{
+        .lottery {
             font-size: 23px;
             width: 85px;
             word-wrap: break-word;
         }
-        .date{
+        .date {
             float: right;
             color: #757575;
             margin: 0.15rem 0.38rem 0 0;
@@ -55,19 +79,19 @@
     }
 
 }
-.blank{
+
+.blank {
     height: 14px;
     background-color: #f4f4f4;
 }
 
-
 //抽奖页面
-.header-two{
+.header-two {
     position: relative;
-    img{
-        width: 100%;  
+    img {
+        width: 100%;
     }
-    .detail{
+    .detail {
         width: 6.5rem;
         padding: 0 0.6rem 0.2rem;
         position: absolute;
@@ -78,20 +102,20 @@
         text-align: center;
         box-shadow: 0 2px 5px rgba(8, 10, 10, 0.5);
         border-radius: 0.1rem;
-        h1{
+        h1 {
             font-size: 17px;
         }
-        p{
+        p {
             color: #757575;
             margin-bottom: 0;
             text-align: left;
         }
-        span{
+        span {
             font-size: 16px;
             float: left;
             margin-top: 8px;
         }
-        .has-yes{
+        .has-yes {
             float: right;
             width: 2.3rem;
             height: 0.6rem;
@@ -101,7 +125,7 @@
             border-radius: 1rem;
             margin-top: 8px;
         }
-        .has-no{
+        .has-no {
             float: right;
             width: 2.3rem;
             height: 0.6rem;
@@ -113,46 +137,51 @@
         }
     }
 }
-.blank-two{
+
+.blank-two {
     height: 1.6rem;
     background-color: #eeeeee;
 }
-.description{
+
+.description {
     padding: 20px;
 }
-.detail{
+
+.detail {
     color: black;
     display: block;
     width: 100%;
     text-align: center;
     margin-bottom: 20px;
 }
-.hot-list{
+
+.hot-list {
     width: 100%;
-    img{
+    img {
         width: 100%;
     }
-    ul{
+    ul {
         width: 92%;
         margin: 0.6rem auto;
-        li{
+        li {
             width: 100%;
             margin-bottom: 0.45rem;
         }
     }
 }
-.destination{
+
+.destination {
     width: 100%;
-    img{
+    img {
         width: 100%;
     }
-    ul{
+    ul {
         width: 92%;
         margin: 0.6rem auto;
-        li{
+        li {
             width: 3.35rem;
             float: left;
-            img{
+            img {
                 width: 100%;
             }
         }
@@ -164,37 +193,38 @@
         margin-top: 0.35rem;
     }
 }
-.qr-code{
+
+.qr-code {
     width: 92%;
     margin: 0 auto 10px auto;
-    img{
+    img {
         width: 100%;
     }
 }
 
-//模态框样式
-.modal.in .modal-dialog{
-    top:200px;
-    .modal-body{
+//模态框1样式
+.modal.in .modal-dialog {
+    top: 200px;
+    .modal-body {
         padding: 25px 15px;
-        img{
+        img {
             position: absolute;
             width: 27px;
             top: -60px;
             right: 9px;
         }
-        input{
+        input {
             width: 100%;
             border: none;
             border-bottom: 1px solid #eee;
             padding: 13px;
         }
-        span{
+        span {
             position: absolute;
             top: 86px;
             right: 22px;
         }
-        div{
+        div {
             width: 95%;
             background-color: #ffd000;
             margin: 30px 11px 15px;
@@ -204,7 +234,15 @@
         }
     }
 }
+//模态框2样式
+.modal.in .modal-dialog .modal-body .share{
+    width: 82%;
+    top: -204px;
+    left:75px;
+}
+
+
 //message样式
-div#message .message-bar{
+div#message .message-bar {
     margin: 250px auto;
 }

@@ -1003,6 +1003,7 @@ app.directive('kkTap', ['service', '$parse', function (service, $parse) {
     };
 
     command.compile = function ($elem, attr) {
+
         /**
          * @param attr.kkTap
          */
@@ -1380,7 +1381,6 @@ app.directive('kkFocusCard', ['service', '$timeout', function (service, $timeout
          * @param attr.zIndex
          * @param attr.time
          */
-
         if (!attr.id) {
             return service.debug('[kk-focus-card] Current element must has attribute `id`!');
         }
@@ -1569,8 +1569,8 @@ app.directive('kkScroll', ['service', '$timeout', function (service, $timeout) {
     command.link = function (scope, elem, attr) {
 
         /**
-         * @param attr.id
          * @param attr.kkScroll
+         * @param attr.id
          * @param attr.callbackMove
          */
         var that = {};
@@ -1707,9 +1707,9 @@ app.directive('kkMenu', ['service', function (service) {
     command.link = function (scope, elem, attr) {
 
         /**
+         * @param attr.kkMenu
          * @param attr.posX
          * @param attr.posY
-         * @param attr.kkMenu
          */
         var menu = $(attr.kkMenu);
 
@@ -1819,8 +1819,8 @@ app.directive('kkFixed', ['service', function (service) {
     command.link = function (scope, elem, attr) {
 
         /**
-         * @param attr.box
          * @param attr.kkFixed
+         * @param attr.box
          */
         var prefixHeight;
         if (isNaN(attr.kkFixed)) {
@@ -1878,8 +1878,8 @@ app.directive('kkTabCard', ['service', '$timeout', function (service, $timeout) 
     command.link = function (scope, elem, attr) {
 
         /**
-         * @param attr.element
          * @param attr.kkTabCard
+         * @param attr.element
          * @param attr.bindClick
          */
         var tabElements = elem.find(attr.element || '*');
@@ -1916,7 +1916,7 @@ app.directive('kkTabCard', ['service', '$timeout', function (service, $timeout) 
 }]);
 
 /**
- * Directive anchor 滑动到锚点
+ * Directive anchor
  */
 app.directive('kkAnchor', ['service', function (service) {
 
@@ -1928,10 +1928,10 @@ app.directive('kkAnchor', ['service', function (service) {
     command.link = function (scope, elem, attr) {
 
         /**
-         * @param attr.element
          * @param attr.kkAnchor
+         * @param attr.element
+         * @param attr.smooth
          */
-
         var anchorElements = elem.find(attr.element || '*');
         var anchor = [];
         var anchorElement = [];
@@ -1956,60 +1956,8 @@ app.directive('kkAnchor', ['service', function (service) {
                 var anchorDiv = $(this).attr('data-anchor');
                 if ($(anchorDiv).offset()) {
                     var top = $(anchorDiv).offset().top - $(anchorDiv).height() / 2 + 4;
-                    $('body, html').animate({scrollTop: top}, 500);
+                    $('body, html').animate({scrollTop: top}, attr.smooth ? 500 : 0);
                 }
-
-            });
-        });
-    };
-
-    return command;
-}]);
-
-/**
- * Directive anchor tab 直接跳到锚点
- */
-app.directive('kkAnchorTab', ['service', function (service) {
-
-    var command = {
-        scope: true,
-        restrict: 'A'
-    };
-
-    command.link = function (scope, elem, attr) {
-
-        /**
-         * @param attr.element
-         * @param attr.kkAnchorTab
-         */
-
-        var anchorElements = elem.find(attr.element || '*');
-        var anchor = [];
-        var anchorElement = [];
-        anchorElements.each(function () {
-            var anchorDiv = $(this).attr('data-anchor-tab');
-
-            if (anchorDiv) {
-                anchor.push($(anchorDiv)[0]);
-                anchorElement.push(this);
-            }
-        });
-
-        $(anchorElement[0]).addClass(attr.kkAnchorTab);
-
-        $.each(anchorElement, function () {
-            service.tap(this, function () {
-                // action tab
-                $(anchorElement).removeClass(attr.kkAnchorTab);
-                $(this).addClass(attr.kkAnchorTab);
-
-                // action card
-                var anchorDiv = $(this).attr('data-anchor-tab');
-                if ($(anchorDiv).offset()) {
-                    var top = $(anchorDiv).offset().top - $(anchorDiv).height() / 30;
-                    $('body, html').animate({scrollTop: top}, 0);
-                }
-
             });
         });
     };
@@ -2060,11 +2008,10 @@ app.directive('kkAjaxLoad', ['service', '$compile', function (service, $compile)
     command.link = function (scope, elem, attr) {
 
         /**
-         * @param attr.params
          * @param attr.kkAjaxLoad
+         * @param attr.params
          * @param attr.message
          */
-
         var lock = false;
 
         service.reachBottom(function () {
@@ -2134,8 +2081,8 @@ app.directive('kkAjaxUpload', ['service', '$timeout', function (service, $timeou
     command.link = function (scope, elem, attr) {
 
         /**
-         * @param attr.params
          * @param attr.kkAjaxUpload
+         * @param attr.params
          * @param attr.action
          * @param attr.callback
          */
@@ -2246,6 +2193,7 @@ app.directive('kkPrintText', function () {
     };
 
     command.link = function (scope, elem, attr) {
+
         /**
          * @param attr.kkPrintText
          * @param attr.time
@@ -2310,6 +2258,7 @@ app.directive('kkLocationOnInput', ['service', function (service) {
     };
 
     command.link = function (scope, elem, attr) {
+
         /**
          * @param attr.kkLocationOnInput
          */
@@ -2337,6 +2286,7 @@ app.directive('kkModal', ['service', '$timeout', '$compile', '$interpolate', fun
     };
 
     command.link = function (scope, elem, attr) {
+
         /**
          * @param attr.kkModal
          * @param attr.close
@@ -2348,7 +2298,6 @@ app.directive('kkModal', ['service', '$timeout', '$compile', '$interpolate', fun
          * @param attr.width
          * @param attr.backdropClose
          */
-
         var tpl;
         var backdrop = (attr.backdropClose === 'static') ? 'static' : !attr.backdropClose;
 
@@ -2407,7 +2356,6 @@ app.directive('kkActivityCal', ['service', function (service) {
         /**
          * @param attr.kkActivityCal
          */
-
         var showDate = moment();
 
         var buildLi = function (days) {
@@ -2454,9 +2402,7 @@ app.directive('kkActivityCal', ['service', function (service) {
                 }
 
                 cls = cls.join(' ').trim();
-
                 var url = requestUrl + 'distribution/activity-boot&date=' + day;
-                url = service.supplyParams(url, ['channel']);
 
                 if (todayDate === day) {
                     li += '<a href="' + url + '"><li class="' + cls + '">' + i + '<b></b><div></div><p></p></li></a>';
@@ -2777,8 +2723,9 @@ NydhxUEs0y8aMzWbGwIDAQAB\
         var body = $('body');
 
         // 分销商标识
-        $('a').on('tap click', function (e) {
+        body.on('tap click', 'a', function (e) {
             var href = $(this).attr('href');
+
             if (!href || href.indexOf('javascript:') === 0 || href.indexOf('tel:') === 0) {
                 return true;
             }

@@ -5,6 +5,13 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
 
     $controller('generic', {$scope: $scope});
 
+    $scope.share = function () {
+        $scope.showShare = true;
+        $scope.timeout(function () {
+            $scope.showShare = false;
+        },5000)
+    }
+
     $scope.code = function (phone, captcha) {
 
         if (!$scope.service.check(phone, 'phone')) {

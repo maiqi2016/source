@@ -1955,7 +1955,7 @@ app.directive('kkAnchor', ['service', function (service) {
                 // action card
                 var anchorDiv = $(this).attr('data-anchor');
                 if ($(anchorDiv).offset()) {
-                    var top = $(anchorDiv).offset().top - $(anchorDiv).height() / 2 + 4;
+                    var top = $(anchorDiv).offset().top - $(anchorDiv).height() / 15;
                     $('body, html').animate({scrollTop: top}, attr.smooth ? 500 : 0);
                 }
             });
@@ -2691,6 +2691,7 @@ NydhxUEs0y8aMzWbGwIDAQAB\
                 link: service.unsetParams(['code'], url.trim()),
                 imgUrl: cover,
                 success: function () {
+                    $scope.$emit('shareSuccess');
                     $scope.message('分享成功');
                 }
             };

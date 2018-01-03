@@ -33,7 +33,7 @@
             }
         }
         .progress {
-            width: 88%;
+            width: 85%;
             height: 10px;
             border-radius: 30px;
             margin-bottom: 50px;
@@ -175,9 +175,9 @@
             border-radius: 1rem;
             margin-top: 8px;
         }
-        .result{
+        .result {
             color: #337ab7;
-            right: 44px;
+            right: 0.9rem;
             bottom: 8px;
             position: absolute;
         }
@@ -249,35 +249,40 @@
 }
 
 //模态框样式
-.modal.in .modal-dialog {
-    top: 200px;
-    .modal-body {
-        padding: 25px 15px;
-        img {
-            position: absolute;
-            width: 27px;
-            top: -60px;
-            right: 9px;
-        }
-        input {
-            width: 100%;
-            border: none;
-            border-bottom: 1px solid #eee;
-            padding: 13px;
-        }
-        span {
-            position: absolute;
-            top: 86px;
-            right: 22px;
-        }
-        div {
-            width: 95%;
-            background-color: #ffd000;
-            margin: 30px 11px 15px;
-            height: 40px;
-            line-height: 40px;
-            text-align: center;
-        }
+.draw {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    padding: 1.5rem 0.3rem;
+    img {
+        position: absolute;
+        width: 20px;
+        top: 0.6rem;
+        right: 0.6rem;
+    }
+    input {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #eee;
+        padding: 25px;
+        font-size: 16px;
+    }
+    span {
+        position: absolute;
+        top: 3.5rem;
+        right: 0.45rem;
+        font-size: 16px;
+    }
+    div {
+        width: 100%;
+        background-color: #ffd000;
+        margin: 30px 0px 15px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        font-size: 18px;
     }
 }
 

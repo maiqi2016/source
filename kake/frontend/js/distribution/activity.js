@@ -6,11 +6,10 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
     $controller('generic', {$scope: $scope});
 
     $scope.share = function () {
-        $scope.showShare = true;
-        $scope.timeout(function () {
+        $scope.$on('shareSuccess', function (event, data) {
             $scope.showShare = false;
-        },5000)
-    }
+        });
+    };
 
     $scope.code = function (phone, captcha) {
 
@@ -44,5 +43,15 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
             }
         });
 
+    };
+
+    $scope.hide = function () {
+        var currentDate = $scope.service.time(),
+            daytime = $scope.service.time(d);
+        if (daytime < currentDate){
+            $('.goon').remove();
+            $('.little').remove();
+            $('.call').remove();
+        }
     };
 }]);

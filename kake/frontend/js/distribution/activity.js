@@ -30,7 +30,7 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
                 phone: phone,
                 captcha: captcha,
                 channel: query.channel ? query.channel : null,
-                from: query.from ? query.from : null
+                from_user: query.from_user ? query.from_user : (query.from ? query.from : null)
             },
             success: function (res) {
                 if (res.state) {

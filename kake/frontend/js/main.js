@@ -398,11 +398,13 @@ app.service('service', ['$http', '$q', '$timeout', function ($http, $q, $timeout
 
     // Get document offset
     this.offset = function (obj) {
+        obj = obj.jquery ? obj : $(obj);
+        var pos = obj.offset();
         return {
-            left: obj.offsetLeft,
-            top: obj.offsetTop,
-            width: obj.offsetWidth,
-            height: obj.offsetHeight
+            left: pos.left,
+            top: pos.top,
+            width: obj[0].offsetWidth,
+            height: obj[0].offsetHeight
         };
     };
 
@@ -2414,7 +2416,7 @@ app.directive('kkActivityCal', ['service', function (service) {
             }
 
             var last = (weeks + daysInMonth) % 7;
-            li += blank.repeat(7 - (last ? last: 7));
+            li += blank.repeat(7 - (last ? last : 7));
 
             return li;
         };

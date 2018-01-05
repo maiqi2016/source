@@ -1957,7 +1957,7 @@ app.directive('kkAnchor', ['service', function (service) {
                 // action card
                 var anchorDiv = $(this).attr('data-anchor');
                 if ($(anchorDiv).offset()) {
-                    var top = $(anchorDiv).offset().top - $(anchorDiv).height() / 15;
+                    var top = $(anchorDiv).offset().top;
                     $('body, html').animate({scrollTop: top}, attr.smooth ? 500 : 0);
                 }
             });
@@ -2460,6 +2460,7 @@ app.directive('kkActivityCal', ['service', function (service) {
 
     return command;
 }]);
+
 
 /**
  * Controller

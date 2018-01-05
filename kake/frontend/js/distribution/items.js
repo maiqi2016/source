@@ -34,5 +34,9 @@ app.controller('distribution', ['$scope', '$controller', '$sce', function ($scop
 
     $scope.showCalFn = function () {
         $scope.showCal = !$scope.showCal;
+    };
+
+    $scope.showS = function () {
+
     }
 }]);

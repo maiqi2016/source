@@ -36,4 +36,8 @@ app.controller('site', ['$scope', '$controller', function ($scope, $controller) 
 
         o.attr('px', v);
     };
+
+    $scope.showCalFn = function () {
+        $scope.showCal = !$scope.showCal;
+    };
 }]);

@@ -39,5 +39,8 @@ app.controller('site', ['$scope', '$controller', function ($scope, $controller) 
 
     $scope.showCalFn = function () {
         $scope.showCal = !$scope.showCal;
+        $scope.timeout(function () {
+            $scope.showCal = false;
+        }, 7000);
     };
 }]);

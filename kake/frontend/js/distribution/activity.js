@@ -49,7 +49,7 @@ app.controller('distribution', ['$scope', '$controller', function ($scope, $cont
         var current = new Date().format('yyyy-MM-dd'),
             currentDate = $scope.service.time(current),
             toTime = $scope.service.time(d);
-        if (currentDate > toTime){
+        if (currentDate >= toTime){
             $('.goon').remove();
             $('.little').remove();
             $('.call').remove();

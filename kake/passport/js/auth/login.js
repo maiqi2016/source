@@ -7,7 +7,8 @@ app.controller('auth', ['$scope', '$controller', function ($scope, $controller) 
 
     $scope.info = {
         phone: null,
-        captcha: null
+        captcha: null,
+        extra: null
     };
 
     $scope.second = 5;
@@ -34,7 +35,8 @@ app.controller('auth', ['$scope', '$controller', function ($scope, $controller) 
             api: 'auth/ajax-login',
             post: {
                 phone: $scope.info.phone,
-                captcha: $scope.info.captcha
+                captcha: $scope.info.captcha,
+                extra: $scope.info.extra
             },
             success: function (res) {
                 $scope.message(res.info);

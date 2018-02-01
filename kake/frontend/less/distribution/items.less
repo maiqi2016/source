@@ -1,9 +1,5 @@
 @import "../main";
 
-html, body {
-    height: 100%;
-}
-
 body {
     background-color: #2c3e50;
 }
@@ -218,6 +214,7 @@ body {
         }
     }
     .product-two {
+        padding-bottom:30px;
         width: 92%;
         margin: 0 auto;
         li {
@@ -291,54 +288,6 @@ body {
 
 .active {
     background-image: linear-gradient(to bottom, #72cdf1, #229bae);
-}
-
-// 筛选地域样式
-.out {
-    .shade;
-    top: 0.8rem;
-    .select-area {
-        background-color: #fff;
-        z-index: 10;
-        width: 100%;
-        position: absolute;
-        height: 7.2rem;
-        .left {
-            width: 2.25rem;
-            height: 100%;
-            background-color: #f0f0f0;
-            float: left;
-            overflow-y: auto;
-            li {
-                height: 0.9rem;
-                line-height: 0.9rem;
-                text-align: center;
-                margin: 0 auto;
-                font-size: 15px;
-                border-bottom: 1px solid #f0f0f0;
-                &.active {
-                    background-color: white;
-                }
-            }
-        }
-        .right {
-            float: left;
-            width: 5.25rem;
-            height: 100%;
-            background-color: #fff;
-            overflow-y: auto;
-            a {
-                color: black;
-            }
-            li {
-                height: 0.9rem;
-                line-height: 0.9rem;
-                border-bottom: 1px solid #eee;
-                background-color: #fff;
-                text-indent: 0.66rem;
-            }
-        }
-    }
 }
 
 .opening {

@@ -36,9 +36,9 @@ app.controller('distribution', ['$scope', '$controller', '$sce', function ($scop
         $scope.showCal = !$scope.showCal;
     };
 
-    $scope.showBanner = true;
-    $scope.timeout(function () {
-        $scope.showBanner = false;
-    },4000)
+    // $scope.showBanner = true;
+    // $scope.timeout(function () {
+    //     $scope.showBanner = false;
+    // },4000)
 
 }]);

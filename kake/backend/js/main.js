@@ -1283,7 +1283,8 @@ $(function () {
     $.instructions = function (record) {
 
         if ($._isEmpty(record.remark) || record.remark.length < 10) {
-            return '请填写不少于 10 个字的备注';
+            record.remark = '无备注信息';
+            // return '请填写不少于 10 个字的备注';
         }
 
         var type = parseInt(record.type);

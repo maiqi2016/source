@@ -1524,13 +1524,4 @@ $(function () {
         item.val(oldValue);
         blank && form.removeAttr('target');
     });
-
-    // 滚动条美化
-
-    if ($('#menu-div').length) {
-        new PerfectScrollbar('#menu-div', {
-            suppressScrollX: true
-        });
-    }
-    new PerfectScrollbar($('html')[0]);
 });

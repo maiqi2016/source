@@ -1,0 +1,242 @@
+@import "../main";
+
+.body {
+    margin-bottom: 40px;
+    padding-top: 40px;
+}
+
+.detail-hotel-1 {
+    margin: 23px 15px 15px;
+    text-align: left;
+}
+
+.combo {
+    margin-bottom: 20px;
+    ul {
+        li {
+            .combo-1 {
+                overflow: hidden;
+                .lable {
+                    display: block;
+                    padding: 23px 20px;
+                    position: relative;
+                    .click-b {
+                        width: 29px;
+                        height: 30px;
+                        float: left;
+                        b {
+                            display: inline-block;
+                            float: left;
+                            width: 15px;
+                            height: 15px;
+                            background-color: #e5e5e5;
+                            margin: 4px 15px 0 0;
+                            &.current {
+                                background-color: #ffcc00;
+                            }
+                        }
+                    }
+                    span {
+                        width: 64%;
+                        font-size: 14px;
+                        float: left;
+                        line-height: 25px;
+                    }
+                    i {
+                        float: right;
+                        width: 20%;
+                        font-size: 18px;
+                        text-align: right;
+                    }
+                }
+            }
+            .combo-2 {
+                position: relative;
+                background-color: #f4f4f4;
+                border-top: 1px solid #f4f4f4;
+                border-bottom: 1px solid #f4f4f4;
+                padding-bottom: 10px;
+                margin-top: 10px;
+                i {
+                    position: absolute;
+                    top: -10px;
+                    left: 17px;
+                    width: 0;
+                    height: 0;
+                    border-left: 10px solid transparent;
+                    border-right: 10px solid transparent;
+                    border-bottom: 10px solid #f4f4f4;
+                }
+                .combo-3 {
+                    padding-left: 56px;
+                    padding-right: 15px;
+                    font-size: 12px;
+                    color: #a8a8a8;
+                    margin-top: 12px;
+                    pre {
+                        padding: 0;
+                        margin: 0;
+                        font-size: inherit;
+                        word-break: normal;
+                        word-wrap: normal;
+                        white-space: pre-wrap;
+                        background-color: transparent;
+                        border: none;
+                    }
+                }
+                .combo-4 {
+                    padding-left: 56px;
+                    padding-right: 15px;
+                    margin-top: 18px;
+                    height: 30px;
+                    .combo-4-1 {
+                        float: left;
+                        font-size: 15px;
+                    }
+                    .combo-4-2 {
+                        display: block;
+                        float: right;
+                        overflow: hidden;
+                        .reduction, .add {
+                            position: relative;
+                            display: block;
+                            background: #fff;
+                            font-size: 18px;
+                            border: 1px solid #ddd;
+                            float: left;
+                            width: 24px;
+                            height: 24px;
+                            line-height: 20px;
+                            appearance: icon;
+                            font-weight: 100;
+                            text-align: center;
+                            outline: none;
+                            cursor: pointer;
+                        }
+                        .num {
+                            display: block;
+                            background: #fff;
+                            font-size: 20px;
+                            border: 1px solid #ddd;
+                            float: left;
+                            border-left: none;
+                            border-right: none;
+                            width: 45px;
+                            height: 24px;
+                            line-height: 24px;
+                            text-align: center;
+                            box-sizing: border-box;
+                            color: #FFCC00;
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.linkman {
+    margin: 0 15px 40px;
+    .detail-hotel-1 {
+        margin-bottom: 12px;
+        margin-left: -2px;
+    }
+    .input-border {
+        height: 44px;
+        border-bottom: 1px solid #eeeeee;
+        border-radius: 0;
+    }
+    input {
+        height: 20px;
+        width: 100%;
+        border: none;
+        font-size: 14px;
+        padding-left: 15px;
+    }
+    .auth-code {
+        position: relative;
+    }
+    .auth-code-1 {
+        position: absolute;
+        font-size: 15px;
+        color: #333333;
+        right: 15px;
+        top: 12px;
+    }
+}
+
+.payment {
+    margin-right: 15px;
+    padding-bottom: 20px;
+    .detail-hotel-1 {
+        margin-bottom: 17px;
+    }
+    li {
+        padding-left: 15px;
+        padding-right: 15px;
+        height: 50px;
+        line-height: 50px;
+        margin-top: 10px;
+        border: 1px solid #d7d7d7;
+        margin-left: 15px;
+        img {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+        }
+        .pay {
+            float: right;
+            color: #a8a8a8;
+            font-weight: normal;
+        }
+        &.current {
+            border-color: #ffcc00;
+        }
+    }
+}
+
+.blank1 {
+    width: 100%;
+    height: 30px;
+    background-color: #eee;
+}
+
+/*
+ * footer
+ */
+footer {
+    width: 100%;
+    .mw;
+    height: 50px;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    line-height: 50px;
+    .price {
+        flex: 2;
+        background: linear-gradient(to right, #2d3e50, #414141);
+        color: #ffcc00;
+        p {
+            margin-left: 15px;
+            font-size: 15px;
+            span {
+                font-weight: bold;
+                font-size: 20px;
+            }
+        }
+    }
+    .buy {
+        flex: 1;
+        background-color: #ffc81f;
+        text-align: center;
+        line-height: 52px;
+        font-size: 20px;
+        a {
+            color: #323232;
+        }
+    }
+}
+.record {
+    display: none;
+}

@@ -1,0 +1,239 @@
+@source: "//source.kakehotels.com/kake/passport";
+@img: "@{source}/img";
+@font: "@{source}/fonts";
+
+/*
+ * Generic
+ */
+@font-face {
+    font-family: 'optima';
+    src: url("@{font}/optima.ttf");
+    font-style: normal;
+    font-weight: normal;
+}
+
+.margin-top(@top) {
+    margin-top: @top;
+}
+
+.font-size(@size) {
+    font-size: @size;
+}
+
+body {
+    font-family: optima, PingFangSC-Regular, sans-serif, "Noto SansCJK";
+    max-width: 768px;
+    margin: auto;
+    color: #000000;
+    position: relative;
+
+    input, button, select, textarea, input:focus, span:focus {
+        outline: none;
+    }
+
+    button[disabled] {
+        opacity: .4;
+        cursor: default !important;
+        pointer-events: none;
+    }
+    a:hover {
+        text-decoration: none;
+    }
+
+    i {
+        font-style: normal;
+    }
+
+    ul, li {
+        list-style: none;
+        padding: 0;
+    }
+}
+
+.shade (@opacity: .3, @index: 998) {
+    position: fixed;
+    z-index: @index;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, @opacity);
+}
+
+/*
+ * Message
+ */
+div#message {
+    .shade;
+    .message-bar {
+        @height: 80px;
+        @padding: 15px;
+        @color: #333;
+        width: 290px;
+        height: @height;
+        position: relative;
+        z-index: 999;
+        margin: 120px auto;
+        padding: @padding;
+        color: @color;
+        background-color: rgba(255, 204, 0, 0.9);
+        border-radius: 8px;
+        text-align: center;
+        line-height: @height - @padding * 2;
+        font-size: 16px;
+
+        button.close {
+            @length-px: 30px;
+            @margin-px: 10px;
+            width: @length-px;
+            height: @length-px;
+            position: absolute;
+            right: @margin-px;
+            top: (@height - @length-px) / 2;
+            color: @color;
+            font-size: @length-px;
+            line-height: @length-px;
+        }
+    }
+}
+
+/*
+ * Loading
+ */
+div#loading {
+    .shade;
+    .loading-bar {
+        width: 36px;
+        height: 36px;
+        position: relative;
+        z-index: 999;
+        margin: 120px auto;
+
+        &.loading-bounce {
+            @keyframes bounce {
+                0% {
+                    transform: scale(0);
+                }
+                50% {
+                    transform: scale(1);
+                }
+                100% {
+                    transform: scale(0);
+                }
+            }
+            div {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                opacity: .5;
+                animation: bounce 2s infinite ease-in-out;
+                &.in {
+                    animation-delay: -1s;
+                    background-color: #ffab13;
+                    box-shadow: 0 0 5px #ffab13;
+                }
+                &.out {
+                    background-color: #ffd914;
+                    box-shadow: 0 0 5px #ffd914;
+                }
+            }
+        }
+    }
+}
+
+/*
+ * Animation
+ */
+.kk-animate {
+
+    // big scale to small (show)
+    @keyframes big-to-small-show {
+        0% {
+            transform: scale(1.2, 1.2);
+            opacity: 0
+        }
+
+        100% {
+            transform: scale(1, 1);
+            opacity: 1
+        }
+    }
+
+    &.kk-b2s-show {
+        animation: big-to-small-show .7s 1;
+        animation-fill-mode: forwards;
+    }
+
+    // top move to bottom (show)
+    @keyframes top-to-bottom-show {
+        0% {
+            transform: translateY(-80px);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    &.kk-t2b-show {
+        animation: top-to-bottom-show .7s 1;
+        animation-fill-mode: forwards;
+    }
+
+    // bottom move to top (hide)
+    @keyframes bottom-to-top-hide {
+        0% {
+            transform: translateY(0px);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateY(-80px);
+            opacity: 0;
+        }
+    }
+
+    &.kk-b2t-hide {
+        animation: bottom-to-top-hide .7s 1;
+        animation-fill-mode: forwards;
+    }
+
+    // change opacity show
+    @keyframes opacity-show {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    &.kk-show {
+        animation: opacity-show .7s 1;
+        animation-fill-mode: forwards;
+    }
+
+    // change opacity hide
+    @keyframes opacity-hide {
+        0% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
+    &.kk-hide {
+        animation: opacity-hide .7s 1;
+        animation-fill-mode: forwards;
+    }
+}
+
+.scroll-y {
+    overflow-y: hidden;
+}

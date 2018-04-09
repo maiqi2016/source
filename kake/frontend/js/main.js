@@ -2017,6 +2017,7 @@ app.directive('kkAjaxLoad', ['service', '$compile', function (service, $compile)
         var lock = false;
 
         service.reachBottom(function () {
+
             if (lock) {
                 return null;
             }

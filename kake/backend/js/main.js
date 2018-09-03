@@ -761,7 +761,7 @@ $(function () {
 
                 var size = 'lg';
                 if (params && params.modal_size) {
-                    size = modal.modal_size;
+                    size = params.modal_size;
                 }
 
                 $.placeModal({
